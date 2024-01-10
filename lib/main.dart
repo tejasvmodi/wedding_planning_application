@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wedding_planning_application/Screen/OnboardingScreen.dart';
+import 'package:wedding_planning_application/Screen/components/OnboardingScreen.dart';
 
 
 void main() {
