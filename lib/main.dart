@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:wedding_planning_application/Screen/authentication/forms/registration_forms.dart';
+import 'package:wedding_planning_application/Screen/authentication/forms/forgotpassword_form.dart';
 import 'package:wedding_planning_application/Screen/components/OnboardingScreen.dart';
-import 'package:wedding_planning_application/Screen/components/radioButton.dart';
+
 
 
 void main() {
@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const registeration_form(),
+      home: const OnboardingScreen(),
     );
   }
 }

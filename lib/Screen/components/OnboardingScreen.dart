@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
+import 'package:wedding_planning_application/Screen/authentication/forms/login_form.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -12,7 +13,7 @@ class OnboardingScreen extends StatefulWidget {
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
   int activePage = 0;
-
+  bool stopAutoplay= false;
   final List<Map<String, String>> imageData = [
     {
       'imagePath': 'assets/images/Splash1.jpg',
@@ -41,7 +42,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 height: MediaQuery.of(context).size.height,
                 viewportFraction: 1.0,
                 enableInfiniteScroll: true,
-                autoPlay: true,
+                autoPlay: !stopAutoplay,
                 autoPlayInterval: const Duration(seconds: 3),
                 autoPlayAnimationDuration: const Duration(milliseconds: 800),
                 autoPlayCurve: Curves.fastOutSlowIn,
@@ -49,6 +50,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 onPageChanged: (index, reason) {
                   setState(() {
                     activePage = index;
+                    stopAutoplay = index==imageData.length-1;
+
                   });
                 },
               ),
@@ -96,11 +99,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             bottom: 90,
                             child: ElevatedButton(
                               onPressed: () {
-                                // Navigator.push(context, MaterialPageRoute(builder: (context) {
-
-                                // },
-                                // ));
-                                // Handle the button click
+                                 Navigator.push(context, MaterialPageRoute(builder: (context) => const Login_form(),));
+                         
                               },
                               style: ElevatedButton.styleFrom(
                                 shape: RoundedRectangleBorder(
@@ -146,6 +146,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   },
                 );
               }).toList(),
+              
             ),
           ],
         ),
