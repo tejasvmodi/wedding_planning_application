@@ -38,6 +38,7 @@ dependencies:
   carousel_slider: ^4.2.1
   getwidget: ^4.0.0
   dots_indicator: ^3.0.0
+  google_fonts: ^6.1.0
 
 dev_dependencies:
   flutter_test:
@@ -64,6 +65,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
       - assets/images/
+      - assets/images/Wedding Planner Transparent.png
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
@@ -78,7 +80,11 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
+  fonts:
+      - family: EBGaramond
+        fonts:
+          - asset: assets/fonts/EBGaramond-Regular.ttf
+          
   #   - family: Schyler
   #     fonts:
   #       - asset: fonts/Schyler-Regular.ttf

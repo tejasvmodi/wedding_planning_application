@@ -21,13 +21,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     },
     {
       'imagePath': 'assets/images/splash2.jpg',
-      'text':
-          'Creative and elegant event design and planning. ',
+      'text': 'Creative and elegant event design and planning. ',
     },
     {
       'imagePath': 'assets/images/Splash3.jpg',
-      'text':
-          'From smallest details to grandest event ',
+      'text': 'From smallest details to grandest event ',
     },
     // Add more image paths and text as needed
   ];
@@ -78,8 +76,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                   child: Text(
                                     data['text']!,
                                     style: const TextStyle(
-                                      fontFamily: 'EB Garamond',
-                                      color:Color.fromRGBO(255, 254, 254, 1),
+                                      fontFamily: 'EBGaramond',
+                                      color: Color.fromRGBO(255, 254, 254, 1),
                                       fontSize: 18.0,
                                       fontStyle: FontStyle.italic,
                                       fontWeight: FontWeight.bold,
@@ -91,23 +89,27 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
                         const SizedBox(height: 16.0),
                         if (activePage == imageData.length - 1)
-                       
+
                           // third page start button ... code
                           Positioned(
-                            left: 110,bottom: 90,
+                            left: 110,
+                            bottom: 90,
                             child: ElevatedButton(
                               onPressed: () {
                                 // Navigator.push(context, MaterialPageRoute(builder: (context) {
-                          
+
                                 // },
                                 // ));
                                 // Handle the button click
                               },
-                                                  
                               style: ElevatedButton.styleFrom(
-                                  backgroundColor: const Color.fromRGBO(77, 43, 43, 1),
-                                  fixedSize: const Size(150, 50),  
-                                  ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(13),
+                                ),
+                                backgroundColor:
+                                    const Color.fromRGBO(77, 43, 43, 1),
+                                fixedSize: const Size(150, 50),
+                              ),
                               child: const Center(
                                   child: Text(
                                 'Get Started',
@@ -118,7 +120,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               )),
                             ),
                           ),
-                      
+
                         // if (activePage != imageData.length - 1)
                         Positioned(
                           left: 150,
@@ -130,11 +132,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               dotsCount: imageData.length,
                               position: activePage.toInt(),
                               decorator: const DotsDecorator(
-
                                 size: Size.square(10.0),
                                 activeSize: Size(20.0, 9.0),
                                 color: Colors.grey, // Inactive dot color
-                                activeColor: Color.fromRGBO(54, 29, 29, 1) , 
+                                activeColor: Color.fromRGBO(54, 29, 29, 1),
                                 // Active dot color
                               ),
                             ),
