@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wedding_planning_application/Screen/authentication/forms/forgotpassword_form.dart';
-import 'package:wedding_planning_application/Screen/components/OnboardingScreen.dart';
+import 'package:wedding_planning_application/Screen/Onboarding/OnboardingScreen.dart';
 import 'package:wedding_planning_application/Screen/home/home.dart';
 
 
@@ -16,7 +16,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
            colorScheme: ColorScheme.fromSeed(seedColor:const Color.fromRGBO(62, 53, 53, 1),),
