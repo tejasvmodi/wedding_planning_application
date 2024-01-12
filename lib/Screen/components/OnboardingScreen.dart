@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:wedding_planning_application/Screen/authentication/forms/login_form.dart';
+import 'package:wedding_planning_application/Screen/components/DotsIndicator.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -128,17 +129,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           child: Padding(
                             // dot indicator for .....started
                             padding: const EdgeInsets.only(top: 16.0),
-                            child: DotsIndicator(
-                              dotsCount: imageData.length,
-                              position: activePage.toInt(),
-                              decorator: const DotsDecorator(
-                                size: Size.square(10.0),
-                                activeSize: Size(20.0, 9.0),
-                                color: Colors.grey, // Inactive dot color
-                                activeColor: Color.fromRGBO(54, 29, 29, 1),
-                                // Active dot color
-                              ),
-                            ),
+                            child: dots(imageData, activePage),
                           ),
                         ),
                       ],
