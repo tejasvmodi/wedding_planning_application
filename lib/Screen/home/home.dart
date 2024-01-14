@@ -73,12 +73,24 @@ class _homeState extends State<home> {
                         child: Row(
                           children: [
                           
-                            feature('assets/images/Checklist.jpg','CheckList',context,const Login_form()),
+                            feature('assets/images/Checklist.jpg','CheckList',26,context,const Login_form()),
                             const SizedBox(width: 5,),
-                            feature('assets/images/Budget.jpg','Budget',context,const Login_form()),
+                            feature('assets/images/Budget.jpg','Budget',26,context,const Login_form()),
                           ],
                         ),
-                      )
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 0,left: 10,right: 10),
+                        child: Row(
+                          children: [
+                          
+                            feature('assets/images/Checklist.jpg','Vendor',26,context,const Login_form()),
+                            const SizedBox(width: 5,),
+                            feature('assets/images/emergency.jpg','Emergency Contanct',20,context,const Login_form()),
+                          ],
+                        ),
+                      ),
+                     
                     ],
                   ),
                 )
