@@ -22,7 +22,16 @@ class _AppbarHomeState extends State<AppbarHome> {
             height: 40,
             width: 250,
             child: TextField(
-              decoration: InputDecoration(
+              
+              style: TextStyle(
+                        color: Colors.white,
+                        fontFamily: 'EBGaramond',
+                        fontSize: 20,
+                        letterSpacing: 0,
+                        fontWeight: FontWeight.w300,
+                        height: 1),
+              decoration: InputDecoration( 
+                
                   border: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.white),
                     borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -43,7 +52,8 @@ class _AppbarHomeState extends State<AppbarHome> {
                     color: Colors.white,
                   ),
                   fillColor: Color.fromRGBO(53, 22, 22, 0.6399999856948853),
-                  filled: true),
+                  filled: true,),
+                 
             ),
           ),
           const SizedBox(

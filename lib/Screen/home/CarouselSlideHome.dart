@@ -33,7 +33,7 @@ class _CarouselSlideHomeState extends State<CarouselSlideHome> {
                   autoPlayCurve: Curves.fastOutSlowIn,
                   enableInfiniteScroll: true,
                   autoPlayAnimationDuration:
-                      const Duration(milliseconds: 300),
+                      const Duration(milliseconds: 500),
                   viewportFraction: 1.0,
                   scrollDirection: Axis.horizontal,
                   onPageChanged: (index, reason) {
