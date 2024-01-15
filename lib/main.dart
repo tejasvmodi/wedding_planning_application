@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wedding_planning_application/Screen/CheckList/Checklist.dart';
+import 'package:wedding_planning_application/Screen/Profile/profile.dart';
 
 
 
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
            
         useMaterial3: true,
       ),
-      home: const CheckListW(),
+      home: const ProfileW(),
     );
   }
 }
