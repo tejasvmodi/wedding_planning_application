@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wedding_planning_application/Screen/Onboarding/OnboardingScreen.dart';
-import 'package:wedding_planning_application/Screen/home/home.dart';
+import 'package:wedding_planning_application/Screen/CheckList/Checklist.dart';
 
 
 
@@ -21,7 +20,7 @@ class MyApp extends StatelessWidget {
            
         useMaterial3: true,
       ),
-      home: home(),
+      home: const CheckListW(),
     );
   }
 }
