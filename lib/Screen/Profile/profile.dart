@@ -54,7 +54,7 @@ class _ProfileWState extends State<ProfileW> {
         child: Container(
           width: 175,
           height: 175,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             boxShadow: [BoxShadow(
               color: Color.fromRGBO(0, 0, 0, 0.25),
               offset: Offset(0, 4),
