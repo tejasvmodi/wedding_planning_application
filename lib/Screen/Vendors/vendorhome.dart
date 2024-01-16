@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:wedding_planning_application/Screen/Profile/manageprofileFemale.dart/manageFprofile.dart';
 import 'package:wedding_planning_application/Screen/Vendors/vendor%20screen%20components/vendorbox.dart';
 
 class vendorhome extends StatefulWidget {
@@ -54,7 +55,14 @@ class _vendorhomeState extends State<vendorhome> {
         ),
         body: Container(
           decoration: const BoxDecoration(
-            color: Color.fromRGBO(255, 217, 249, 1),
+            gradient: LinearGradient(
+                begin: Alignment(6.123234262925839e-17, 1),
+                end: Alignment(-1, 6.123234262925839e-17),
+                colors: [
+                  Color.fromRGBO(255, 255, 255, 1),
+                  Color.fromRGBO(255, 231, 255, 1),
+                  Color.fromRGBO(255, 219, 249, 1),
+                ]),
           ),
           child: Column(children: [
             SizedBox(
@@ -100,35 +108,39 @@ class _vendorhomeState extends State<vendorhome> {
                   children: [
                     const SizedBox(height: 25),
                     VendorBox('assets/images/Vender_Venue.jpg', 'Venue',
-                        'Lawns/Farmhouse,Banquet Halls, Resorts,\nSmall Function Hall,Destination Wedding,\nHotels'),
+                        'Lawns/Farmhouse,Banquet Halls, Resorts,\nSmall Function Hall,Destination Wedding,\nHotels',const ManageFprofile(),context),
                     const SizedBox(height: 25),
                     VendorBox('assets/images/Vender_Mackup.jpg', 'MakeUp',
-                        'Bridal Makeup,Family Makeup,Jewellery,\nAccessories'),
+                        'Bridal Makeup,Family Makeup,Jewellery,\nAccessories',const ManageFprofile(),context),
                     const SizedBox(height: 25),
-                    VendorBox('assets/images/vender_photography.jpg', 'Photography',
-                        'Pre-Wedding Shoot,Photographers,\nVideographers'),
+                    VendorBox(
+                        'assets/images/vender_photography.jpg',
+                        'Photography',
+                        'Pre-Wedding Shoot,Photographers,\nVideographers',const ManageFprofile(),context),
                     const SizedBox(height: 25),
                     VendorBox('assets/images/Vendor_carting.jpg', 'Catering',
-                        'Catering Services,Food Stalls,Bartenders,\nHome Catering, Cake'),
+                        'Catering Services,Food Stalls,Bartenders,\nHome Catering, Cake',const ManageFprofile(),context),
                     const SizedBox(height: 25),
-                    VendorBox('assets/images/Vendor_bridal_wear.jpg', 'Bridal wear',
-                        'Bridal Lehengas,Silk Sarees,\nWedding Gowns, Trousseau Sarees'),
+                    VendorBox(
+                        'assets/images/Vendor_bridal_wear.jpg',
+                        'Bridal wear',
+                        'Bridal Lehengas,Silk Sarees,\nWedding Gowns, Trousseau Sarees',const ManageFprofile(),context),
                     const SizedBox(height: 25),
-                    VendorBox('assets/images/vendor_Groom_wear.jpg', 'Groom Wear',
-                        'Wedding Suits/Tuxes, Sherwani'),
+                    VendorBox('assets/images/vendor_Groom_wear.jpg',
+                        'Groom Wear', 'Wedding Suits/Tuxes, Sherwani',const ManageFprofile(),context),
                     const SizedBox(height: 25),
                     VendorBox('assets/images/vendors_wedding_decor.jpg',
-                        'Planning and decor', 'Decorators, Wedding Planners'),
+                        'Planning and decor', 'Decorators, Wedding Planners',const ManageFprofile(),context),
                     const SizedBox(height: 25),
                     VendorBox(
                         'assets/images/vendors_musicandDjs.jpg',
                         'Music and Dance',
-                        'Wedding Entertainment, Djs,\nChoreographer'),
+                        'Wedding Entertainment, Djs,\nChoreographer',const ManageFprofile(),context),
                     const SizedBox(height: 25),
                     VendorBox(
                         'assets/images/Vendor_invitations.jpg',
                         'Invites and gifts',
-                        'Invitation gifts, Invitations, Favors,\nTrousseau Packers'),
+                        'Invitation gifts, Invitations, Favors,\nTrousseau Packers',const ManageFprofile(),context),
                     const SizedBox(height: 25),
                   ],
                 ),

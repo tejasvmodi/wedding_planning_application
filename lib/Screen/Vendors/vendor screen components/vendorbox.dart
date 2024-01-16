@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-VendorBox(String Imagelink,String venuename,String venueprovide){
+VendorBox(String Imagelink,String venuename,String venueprovide,Widget redirectp,BuildContext context){
   return InkWell(
                 child: SizedBox(
                   width: 370,
@@ -26,7 +26,7 @@ VendorBox(String Imagelink,String venuename,String venueprovide){
                                   blurRadius: 4,
                                 )
                               ],
-                              color: const Color.fromRGBO(239, 226, 226, 1),
+                              color: const Color.fromRGBO(221, 189, 190, 1),
                               border: Border.all(
                                 color: const Color.fromRGBO(77, 43, 43, 1),
                                 width: 0.5,
@@ -93,7 +93,7 @@ VendorBox(String Imagelink,String venuename,String venueprovide){
                   ),
                 ),
               onTap: () {
-                
+                Navigator.push(context, MaterialPageRoute(builder: (context) => redirectp,));
               },
               );
 }
