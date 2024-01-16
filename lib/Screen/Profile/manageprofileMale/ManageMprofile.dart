@@ -2,19 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:wedding_planning_application/Screen/Profile/Profile%20Component/profiledetails.dart';
 import 'package:wedding_planning_application/Screen/Profile/Profile%20Component/profilephoto.dart';
-import 'package:wedding_planning_application/Screen/Profile/manageprofileMale/ManageMprofile.dart';
+import 'package:wedding_planning_application/Screen/Profile/manageprofileFemale.dart/manageFprofile.dart';
 
-class ManageFprofile extends StatefulWidget {
-  const ManageFprofile({super.key});
+class ManageMprofile extends StatefulWidget {
+  const ManageMprofile({super.key});
 
   @override
-  State<ManageFprofile> createState() => _ManageFprofileState();
+  State<ManageMprofile> createState() => _ManageMprofileState();
 }
 
-class _ManageFprofileState extends State<ManageFprofile> {
+class _ManageMprofileState extends State<ManageMprofile> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return  Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 238, 190, 221),
@@ -47,12 +47,12 @@ class _ManageFprofileState extends State<ManageFprofile> {
           InkWell(
             child: const Image(
               image: AssetImage(
-                'assets/images/icon_groom.png',
+                'assets/images/icon_bride.png',
               ),
               height: 40,
             ),
-            onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => const ManageMprofile(),));
+               onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const ManageFprofile(),));
             },
           ),
           const SizedBox(
@@ -64,7 +64,7 @@ class _ManageFprofileState extends State<ManageFprofile> {
         scrollDirection: Axis.vertical,
         child: Column(
           children: [
-            profilephoto('Anjali', 'assets/images/Account Icon.jpg'),
+            profilephoto('Akash', 'assets/images/Account_Groom.jpg'),
             SizedBox(
               width: 370,
               height: 60,
@@ -121,14 +121,14 @@ class _ManageFprofileState extends State<ManageFprofile> {
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(
                                         borderSide: BorderSide.none),
-                                    hintText: "Anjali",
+                                    hintText: "Akash",
                                   ),
                                 ),
                               ),
                             ),
                           ),
                           const Text(
-                            '|   ',
+                            '| ',
                             textAlign: TextAlign.left,
                             style: TextStyle(
                               color: Color.fromRGBO(125, 122, 112, 1),
@@ -181,9 +181,9 @@ class _ManageFprofileState extends State<ManageFprofile> {
               ),
             ),
             const SizedBox(height: 25,),
-            profiledetails('Email','anjali123@gmail.com'),
+            profiledetails('Email','akash123@gmail.com'),
               const SizedBox(height: 25,),
-            profiledetails('Phone','+91 81000 92000'),
+            profiledetails('Phone','+91 83000 68000'),
               const SizedBox(height: 25,),
             profiledetails('Address','102, Anand Bag Socity , near bob tower '),
               const SizedBox(height: 25,),
@@ -239,7 +239,7 @@ class _ManageFprofileState extends State<ManageFprofile> {
                           ),
                             const Expanded(
                               child: Text(
-                              '   Bride',
+                              '   Groom',
                               textAlign: TextAlign.left,
                               style: TextStyle(
                                 color: Color.fromRGBO(85, 32, 32, 1),
@@ -269,5 +269,6 @@ class _ManageFprofileState extends State<ManageFprofile> {
         ),
       ),
     );
+;
   }
 }
