@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wedding_planning_application/Screen/Profile/manageprofileFemale.dart/manageFprofile.dart';
-import 'package:wedding_planning_application/Screen/Vendors/Vendor%20SIngle%20List/VendorSingleList.dart';
+import 'package:wedding_planning_application/Screen/Vendors/Vendor%20SIngle%20List%20Screen/VendorSingleList.dart';
+import 'package:wedding_planning_application/Screen/Vendors/Vendor%20single%20view%20Screen/vendorsingleview.dart';
 import 'package:wedding_planning_application/Screen/Vendors/vendorhome.dart';
 
 
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
            
         useMaterial3: true,
       ),
-      home:  const VendorSingleList(),
+      home:  const vendorsingleview(),
     );
   }
 }
