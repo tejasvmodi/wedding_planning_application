@@ -1,9 +1,8 @@
-import 'package:date_field/date_field.dart';
+import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:intl/intl_standalone.dart' if (dart.library.html) 'package:intl/intl_browser.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:wedding_planning_application/Screen/Booking/Book%20service/Bookin%20service%20component/bookitem.dart';
 import 'package:wedding_planning_application/Screen/Vendors/Vendor%20single%20view%20Screen/vendorsingleview.dart';
-
 
 class bookservicew extends StatefulWidget {
   const bookservicew({super.key});
@@ -13,17 +12,26 @@ class bookservicew extends StatefulWidget {
 }
 
 class _bookservicewState extends State<bookservicew> {
-  Future<void> main() async{
-    WidgetsFlutterBinding.ensureInitialized();
-    await findSystemLocale();
-  }
-  
+  DateTime selectedDate = DateTime.now();
 
-  DateTime? selectedDate;
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: selectedDate,
+      firstDate: DateTime(2015, 8),
+      lastDate: DateTime(2101),
+    );
+
+    if (picked != null && picked != selectedDate) {
+      setState(() {
+        selectedDate = picked;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       appBar: AppBar(
         backgroundColor: const Color.fromRGBO(255, 217, 249, 1),
         leading: IconButton(
@@ -120,8 +128,8 @@ class _bookservicewState extends State<bookservicew> {
               height: 20,
             ),
             Container(
-              height: 180,
-              width: 340,
+              height: 250,
+              width: 360,
               decoration: BoxDecoration(
                   border: Border.all(color: Colors.black),
                   borderRadius:
@@ -131,16 +139,15 @@ class _bookservicewState extends State<bookservicew> {
                   ]),
               child: Column(children: [
                 SizedBox(
-                  width: 370,
+                  width: 380,
                   height: 80,
                   child: Stack(
                     children: <Widget>[
                       Positioned(
                         top: 20,
                         left: 20,
+                        right: 20,
                         child: Container(
-                          width: 290,
-                          height: 60,
                           decoration: const BoxDecoration(
                             borderRadius:
                                 BorderRadius.all(Radius.elliptical(23, 23)),
@@ -153,27 +160,121 @@ class _bookservicewState extends State<bookservicew> {
                             ],
                             color: Color.fromRGBO(245, 201, 238, 1),
                           ),
-                          child: DateTimeFormField(
-  decoration: const InputDecoration(
-    labelText: 'Enter Date',
-  ),
-  
-  firstDate: DateTime.now().add(const Duration(days: 10)),
-  lastDate: DateTime.now().add(const Duration(days: 40)),
-  initialPickerDateTime: DateTime.now().add(const Duration(days: 20)),
-  onChanged: (DateTime? value) {
-    selectedDate = value;
-  },
-),
-
-
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              const SizedBox(
+                                width: 5,
                               ),
-                            
-                          
+                              const Text(
+                                'Date of Event        ',
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                    color: Color.fromRGBO(85, 32, 32, 1),
+                                    fontFamily: 'EBGaramond',
+                                    fontSize: 20,
+                                    letterSpacing: 0,
+                                    fontWeight: FontWeight.normal,
+                                    height: 1),
+                              ),
+                              Text(
+                                "${selectedDate.toLocal()}".split(' ')[0],
+                                style: const TextStyle(
+                                    color: Color.fromRGBO(85, 32, 32, 1),
+                                    fontFamily: 'EBGaramond',
+                                    fontSize: 17,
+                                    letterSpacing: 0,
+                                    fontWeight: FontWeight.normal,
+                                    height: 1),
+                              ),
+                              TextButton(
+                                  onPressed: () => _selectDate(context),
+                                  child: Icon(
+                                    MdiIcons.calendarTodayOutline,
+                                    size: 30,
+                                  ))
+                            ],
+                          ),
                         ),
-                      
+                      ),
                     ],
                   ),
+                ),
+                SizedBox(
+                  height: 90,
+                  width: 380,
+                  child: Stack(children: [
+                    Positioned(
+                      top: 20,
+                      left: 20,
+                      right: 20,
+                      child: Container(
+                        height: 50,
+                        padding: const EdgeInsets.only(left: 5, right: 15),
+                        decoration: const BoxDecoration(
+                          borderRadius:
+                              BorderRadius.all(Radius.elliptical(23, 23)),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Color.fromRGBO(0, 0, 0, 0.25),
+                              offset: Offset(0, 1),
+                              blurRadius: 4,
+                            )
+                          ],
+                          color: Color.fromRGBO(245, 201, 238, 1),
+                        ),
+                        child: const Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Text(
+                              '  Amount To Be Paid ',
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                  color: Color.fromRGBO(85, 32, 32, 1),
+                                  fontFamily: 'EBGaramond',
+                                  fontSize: 20,
+                                  letterSpacing: 0,
+                                  fontWeight: FontWeight.normal,
+                                  height: 1),
+                            ),
+                            Text(
+                              '1,25,000',
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                  color: Color.fromRGBO(85, 32, 32, 1),
+                                  fontFamily: 'EBGaramond',
+                                  fontSize: 20,
+                                  letterSpacing: 0,
+                                  fontWeight: FontWeight.normal,
+                                  height: 1),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ]),
+                ),
+                SizedBox(
+                  height: 50,
+                  width: 320,
+                  child: TextButton(onPressed: () {}, 
+                   style: ButtonStyle(
+                      backgroundColor: const MaterialStatePropertyAll(
+                          Color.fromRGBO(77, 43, 43, 1)),
+                      shape: MaterialStatePropertyAll(RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(55),
+                      )
+                      ),
+                      shadowColor: const MaterialStatePropertyAll(Colors.grey)
+                      
+                    ),child: const Text('Book Service', textAlign: TextAlign.left,
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'EBGaramond',
+                          fontSize: 23,
+                          letterSpacing: 0,
+                          fontWeight: FontWeight.w400,
+                          height: 1),)),
                 )
               ]),
             ),
