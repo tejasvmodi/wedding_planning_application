@@ -542,6 +542,7 @@ class _vendorsingleviewState extends State<vendorsingleview> {
                                   ))),
                         )
                       ],
+                      
                     )),
               ),
             ],
