@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wedding_planning_application/Screen/Booking/Book%20service/bookservice.dart';
+import 'package:wedding_planning_application/Screen/home/home.dart';
 
 
 void main() {
@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
            
         useMaterial3: true,
       ),
-      home:  const bookservicew(),
+      home:  home(),
     );
   }
 }
