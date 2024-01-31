@@ -10,6 +10,88 @@ class VendorSingleList extends StatefulWidget {
 }
 
 class _VendorSingleListState extends State<VendorSingleList> {
+  final List<Map<String, String>> vendorData = [
+    {
+      'imagedata': 'assets/images/Vendors_Venue_1.jpg',
+      'texttitle': 'Radisson',
+      'textdata': 'Lukhnow in Banquet Hall',
+      
+    },
+    {
+      'imagedata': 'assets/images/Vendors_Venue_2.jpg',
+      'texttitle': 'Radisson',
+      'textdata': 'Lukhnow in Banquet Hall',
+      
+    },
+    {
+      'imagedata': 'assets/images/Vendors_Venue_3.jpg',
+      'texttitle': 'Radisson',
+      'textdata': 'Lukhnow in Banquet Hall',
+      
+    },
+    {
+      'imagedata': 'assets/images/Vendors_Venue_4.jpg',
+      'texttitle': 'Radisson',
+      'textdata': 'Lukhnow in Banquet Hall',
+      
+    },
+    {
+      'imagedata': 'assets/images/Vendors_Venue_5.jpg',
+      'texttitle': 'Radisson',
+      'textdata': 'Lukhnow in Banquet Hall',
+      
+    },
+    {
+      'imagedata': 'assets/images/Vendors_Venue_6.jpg',
+      'texttitle': 'Radisson',
+      'textdata': 'Lukhnow in Banquet Hall',
+      
+    },
+    {
+      'imagedata': 'assets/images/Vendors_Venue_7.jpg',
+      'texttitle': 'Radisson',
+      'textdata': 'Lukhnow in Banquet Hall',
+      
+    },
+    {
+      'imagedata': 'assets/images/Vendors_Venue_8.jpg',
+      'texttitle': 'Radisson',
+      'textdata': 'Lukhnow in Banquet Hall',
+      
+    },
+    {
+      'imagedata': 'assets/images/Vendors_Venue_9.jpg',
+      'texttitle': 'Radisson',
+      'textdata': 'Lukhnow in Banquet Hall',
+    },
+    {
+      'imagedata': 'assets/images/Vendors_Venue_10.jpg',
+      'texttitle': 'Radisson',
+      'textdata': 'Lukhnow in Banquet Hall',
+      
+    },{
+      'imagedata': 'assets/images/Vendors_Venue_11.jpg',
+      'texttitle': 'Radisson',
+      'textdata': 'Lukhnow in Banquet Hall',
+      
+    },{
+      'imagedata': 'assets/images/Vendors_Venue_12.jpg',
+      'texttitle': 'Radisson',
+      'textdata': 'Lukhnow in Banquet Hall',
+      
+    },{
+      'imagedata': 'assets/images/Vendors_Venue_13.jpg',
+      'texttitle': 'Radisson',
+      'textdata': 'Lukhnow in Banquet Hall',
+      
+    },{
+      'imagedata': 'assets/images/Vendors_Venue_1.jpg',
+      'texttitle': 'Radisson',
+      'textdata': 'Lukhnow in Banquet Hall',
+      
+    },
+    // Add more vendor data as needed
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -101,8 +183,30 @@ class _VendorSingleListState extends State<VendorSingleList> {
                 ),
               ),
             ),
-          vendorList('assets/images/Vendors_Venue_1.jpg', 'Raddison', 'Lucknow in Banquet hall'),
-
+          // vendorList('assets/images/Vendors_Venue_1.jpg', 'Radisson', 'Lucknow in Banquet hall'),
+            Expanded(
+              child: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                
+                child: Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: Wrap(
+                    runSpacing: 2,
+                    spacing: 8,
+                  
+                    children:[
+                      ...vendorData
+                  .map((vendor) => vendorList(
+              vendor['imagedata']!,
+              vendor['texttitle']!,
+              vendor['textdata']!,
+                       context
+                      ))
+                  ,
+                    ]
+                  ),
+                )),
+            )
           ]
         ),
       ),

@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:wedding_planning_application/Screen/home/home.dart';
+import 'package:wedding_planning_application/Screen/Booking/My%20Booking/showBooking.dart';
+import 'package:wedding_planning_application/Screen/Vendors/Vendor%20SIngle%20List%20Screen/VendorSingleList.dart';
+import 'package:wedding_planning_application/Screen/otherscreens/example.dart';
+
+import 'package:wedding_planning_application/Screen/otherscreens/inquiry.dart';
+import 'package:wedding_planning_application/Screen/otherscreens/review.dart';
+import 'package:wedding_planning_application/Screen/otherscreens/support.dart';
+
 
 
 void main() {
@@ -18,7 +25,7 @@ class MyApp extends StatelessWidget {
            
         useMaterial3: true,
       ),
-      home:  home(),
+      home:  VendorSingleList(),
     );
   }
 }
