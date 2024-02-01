@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
-Widget vendorList(String imagedata, String texttitle, String textdata, BuildContext context) {
+Widget vendorList(
+    String imagedata, String texttitle, String textdata, BuildContext context) {
   return Container(
-    width: MediaQuery.of(context).size.width / 2 - 12.0, // Divide by the number of photos per row
+    width: MediaQuery.of(context).size.width / 2 -
+        12.0, // Divide by the number of photos per row
     height: 270.0,
     child: Stack(
       children: [
@@ -32,7 +34,7 @@ Widget vendorList(String imagedata, String texttitle, String textdata, BuildCont
         ),
         Positioned(
           top: 150,
-          left: -10,
+          left: -6,
           child: Container(
             margin: EdgeInsetsDirectional.zero,
             width: 180,
@@ -49,22 +51,26 @@ Widget vendorList(String imagedata, String texttitle, String textdata, BuildCont
                 ),
                 Expanded(
                   child: Container(
-                    constraints: BoxConstraints(
-                      maxWidth: 170, 
+                    constraints: const BoxConstraints(
+                      maxWidth: 180,
                     ),
                     child: RichText(
+                       
                       text: TextSpan(
-                        style: const TextStyle(
+                         style: const TextStyle(
                           color: Colors.white,
                           fontFamily: 'EBGaramond',
-                          fontSize: 20,
+                          fontSize: 18,
                           letterSpacing: 0,
                           fontWeight: FontWeight.normal,
                           height: 1,
+                         
                         ),
                         children: [
                           TextSpan(
+                            
                             text: '$texttitle\n',
+                          
                           ),
                           const WidgetSpan(
                             child: SizedBox(height: 15),
@@ -78,6 +84,7 @@ Widget vendorList(String imagedata, String texttitle, String textdata, BuildCont
                           ),
                         ],
                       ),
+                     overflow: TextOverflow.ellipsis,
                     ),
                   ),
                 ),
@@ -97,7 +104,7 @@ Widget vendorList(String imagedata, String texttitle, String textdata, BuildCont
           left: 0,
           bottom: 0,
           child: Container(
-            margin: EdgeInsets.only(top: 0,bottom: 13),
+            margin: const EdgeInsets.only(top: 0, bottom: 13),
             width: 170,
             height: 50,
             child: TextButton(

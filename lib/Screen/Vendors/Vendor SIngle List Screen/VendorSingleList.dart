@@ -13,7 +13,7 @@ class _VendorSingleListState extends State<VendorSingleList> {
   final List<Map<String, String>> vendorData = [
     {
       'imagedata': 'assets/images/Vendors_Venue_1.jpg',
-      'texttitle': 'Radisson',
+      'texttitle': 'Santaba hall dftrtrth',
       'textdata': 'Lukhnow in Banquet Hall',
       
     },
@@ -206,7 +206,7 @@ class _VendorSingleListState extends State<VendorSingleList> {
                     ]
                   ),
                 )),
-            )
+            ),
           ]
         ),
       ),
