@@ -16,6 +16,12 @@ class _WishListWState extends State<WishListW> {
       'content': 'Lucknow in Banquet Hall',
       
     },
+      {
+      'newimage': 'Vendors_Venue_1.jpg',
+      'texttitle': 'Radisson',
+      'content': 'Lucknow in Banquet Hall',
+      
+    },
     {
       'newimage': 'Bookings_Bride_Makeup.jpg',
       'texttitle': 'Palak Sharma',

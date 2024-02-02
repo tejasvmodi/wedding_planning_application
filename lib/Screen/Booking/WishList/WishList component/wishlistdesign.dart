@@ -6,7 +6,7 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 WishListdesign(String newimage, String textdata, String content, BuildContext context) {
   return Container(
    padding: const EdgeInsets.only(top: 10,left: 4),
-    height: 320,
+    height: 250,
     width: MediaQuery.of(context).size.width / 2 - 12.0,
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
