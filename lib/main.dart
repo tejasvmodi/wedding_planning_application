@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:wedding_planning_application/Screen/Emergency%20contancts/Emergency%20contancts%20component/newexam.dart';
-
 import 'package:wedding_planning_application/Screen/Emergency%20contancts/Emergencycontlist.dart';
+import 'package:wedding_planning_application/Screen/Screen_Navigation.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,7 +18,8 @@ class MyApp extends StatelessWidget {
            
         useMaterial3: true,
       ),
-      home:  const EmergencycontlistW(),
+      home:  const Screen_Navigation
+      (),
     );
   }
 }

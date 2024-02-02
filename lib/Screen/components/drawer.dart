@@ -9,9 +9,9 @@ class Drawer123 extends StatelessWidget {
         width: 240,
         shape: const ContinuousRectangleBorder(
             borderRadius:
-                BorderRadius.horizontal(right: Radius.elliptical(150, 150)) ),
+                BorderRadius.horizontal(right: Radius.elliptical(150, 50)) ),
         backgroundColor: const Color.fromRGBO(255, 225, 255, 1),
-
+          
         child: ListView(
           children: [
             SizedBox(

@@ -25,7 +25,7 @@ class _CarouselSlideHomeState extends State<CarouselSlideHome> {
               carouselController: _controller,
               options: CarouselOptions(
                 
-                  height: 350.0,
+                  height: 400.0,
                   enlargeCenterPage: true,
                   autoPlay: true,
                   aspectRatio: 16 / 9,
@@ -53,7 +53,7 @@ class _CarouselSlideHomeState extends State<CarouselSlideHome> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 320,left: 150),
+                      padding: const EdgeInsets.only(top: 370,left: 150),
                       child: dots(items,activeIndex),
                     )
                   ],
