@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wedding_planning_application/Screen/Emergency%20contancts/Emergencycontlist.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:wedding_planning_application/Screen/Screen_Navigation.dart';
 
 void main() {
@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
            colorScheme: ColorScheme.fromSeed(seedColor:const Color.fromRGBO(62, 53, 53, 1),),

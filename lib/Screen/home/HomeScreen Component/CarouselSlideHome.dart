@@ -24,16 +24,16 @@ class _CarouselSlideHomeState extends State<CarouselSlideHome> {
     return  CarouselSlider(
               carouselController: _controller,
               options: CarouselOptions(
-                
+                    animateToClosest: true,
                   height: 400.0,
                   enlargeCenterPage: true,
                   autoPlay: true,
-                  aspectRatio: 16 / 9,
+                  aspectRatio: 16/9,
                   autoPlayCurve: Curves.fastOutSlowIn,
                   enableInfiniteScroll: true,
                   autoPlayAnimationDuration:
                       const Duration(milliseconds: 500),
-                  viewportFraction: 1.0,
+                  viewportFraction: 1,
                   scrollDirection: Axis.horizontal,
                   onPageChanged: (index, reason) {
                     setState(() {

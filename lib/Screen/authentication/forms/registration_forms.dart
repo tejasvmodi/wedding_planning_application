@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:wedding_planning_application/Screen/authentication/forms/login_form.dart';
 
 class registeration_form extends StatefulWidget {

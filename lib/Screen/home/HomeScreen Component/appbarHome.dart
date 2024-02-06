@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:wedding_planning_application/Screen/otherscreens/notification.dart';
 
 class AppbarHome extends StatefulWidget {
   const AppbarHome({super.key});
@@ -60,7 +63,9 @@ class _AppbarHomeState extends State<AppbarHome> {
             width: 23,
           ),
           IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Get.to(const NotificationW());
+              },
               icon: Icon(
                 MdiIcons.messageText,
                 size: 35,
