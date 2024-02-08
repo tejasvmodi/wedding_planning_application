@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 VendorBox(String Imagelink,String venuename,String venueprovide,Widget redirectp,BuildContext context){
   return InkWell(
@@ -93,7 +94,7 @@ VendorBox(String Imagelink,String venuename,String venueprovide,Widget redirectp
                   ),
                 ),
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => redirectp,));
+                Get.to(redirectp);
               },
               );
 }

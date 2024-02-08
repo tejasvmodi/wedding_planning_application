@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:wedding_planning_application/Screen/authentication/forms/login_form.dart';
 import 'package:wedding_planning_application/Screen/components/drawer.dart';
 import 'package:wedding_planning_application/Screen/home/HomeScreen%20Component/CarouselSlideHome.dart';
@@ -14,11 +15,14 @@ class home extends StatefulWidget {
 }
 
 class _homeState extends State<home> {
+   
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
+        
         elevation: 0,
         backgroundColor: Colors.transparent,
         iconTheme: const IconThemeData(color: Colors.white, size: 35),
@@ -26,6 +30,7 @@ class _homeState extends State<home> {
       ),
       drawer: Drawer123(),
       body: Container(
+        
         decoration: const BoxDecoration(
           gradient: LinearGradient(
               begin: Alignment(6.123234262925839e-17, 1),
@@ -36,7 +41,7 @@ class _homeState extends State<home> {
               ]),
         ),
         child: SingleChildScrollView(
-          child: Column(
+          child: Column(       
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const CarouselSlideHome(),
@@ -59,6 +64,7 @@ class _homeState extends State<home> {
                 ),
               ),
               const SizedBox(
+
                 height: 5,
               ),
               SingleChildScrollView(
@@ -116,9 +122,11 @@ class _homeState extends State<home> {
                       child: feature('assets/images/Ceremoney.jpg', 'Ceremony',
                           26, context, const Login_form()),
                     ),
+                    
                   ],
                 ),
-              )
+              ),
+             
             ],
           ),
         ),

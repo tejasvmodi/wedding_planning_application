@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:wedding_planning_application/Screen/Booking/My%20Booking/showBooking.dart';
 import 'package:wedding_planning_application/Screen/Profile/Profile%20Component/accountitems.dart';
 import 'package:wedding_planning_application/Screen/Profile/Profile%20Component/profilephoto.dart';
+import 'package:wedding_planning_application/Screen/Profile/Recommendation%20screen/recommendation.dart';
+import 'package:wedding_planning_application/Screen/Profile/manageprofileFemale.dart/manageFprofile.dart';
 import 'package:wedding_planning_application/Screen/authentication/forms/login_form.dart';
+import 'package:wedding_planning_application/Screen/otherscreens/review.dart';
+import 'package:wedding_planning_application/Screen/otherscreens/support.dart';
 
 class ProfileW extends StatefulWidget {
   const ProfileW({super.key});
@@ -60,21 +65,21 @@ class _ProfileWState extends State<ProfileW> {
              
               profilephoto('Anjali','assets/images/Account Icon.jpg'),
               accountitem('My Booking', MdiIcons.listBoxOutline, context,
-                  const Login_form()),
+                  const ShowBooking()),
               const Divider(
                 indent: 25,
                 endIndent: 25,
                 color: Color.fromRGBO(68, 45, 45, 1),
               ),
               accountitem('Manage Profile', MdiIcons.listBoxOutline, context,
-                  const Login_form()),
+                  const ManageFprofile()),
               const Divider(
                 indent: 25,
                 endIndent: 25,
                 color: Color.fromRGBO(68, 45, 45, 1),
               ),
               accountitem('Recommendation', MdiIcons.thumbUpOutline, context,
-                  const Login_form()),
+                  const Recommendation()),
               const Divider(
                 indent: 25,
                 endIndent: 25,
@@ -95,14 +100,14 @@ class _ProfileWState extends State<ProfileW> {
                 color: Color.fromRGBO(68, 45, 45, 1),
               ),
               accountitem('Contanct Support', MdiIcons.phoneOutline, context,
-                  const Login_form()),
+                  const SupportW()),
               const Divider(
                 indent: 25,
                 endIndent: 25,
                 color: Color.fromRGBO(68, 45, 45, 1),
               ),
               accountitem('Write a Review', MdiIcons.pencilOutline, context,
-                  const Login_form()),
+                  const Revieww()),
               const Divider(
                 indent: 25,
                 endIndent: 25,

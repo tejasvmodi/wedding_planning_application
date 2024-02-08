@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:wedding_planning_application/Screen/authentication/forms/forgotpassword_form.dart';
 import 'package:wedding_planning_application/Screen/authentication/forms/registration_forms.dart';
+import 'package:wedding_planning_application/Screen/home/home.dart';
 
 class Login_form extends StatefulWidget {
   const Login_form({super.key});
@@ -96,7 +98,10 @@ class _Login_formState extends State<Login_form> {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(9, 25, 0, 0),
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+
+                      Get.to(home());
+                    },
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(13),
@@ -121,7 +126,7 @@ class _Login_formState extends State<Login_form> {
                   padding: const EdgeInsets.fromLTRB(9, 14, 0, 0),
                   child: ElevatedButton(
                     onPressed: () {
-                       Navigator.push(context, MaterialPageRoute(builder: (context) => const registeration_form(),));
+                       Get.to(registeration_form());
                          
                     },
                     style: ElevatedButton.styleFrom(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 
 accountitem(String text,IconData iconname,BuildContext context,Widget find){
@@ -16,7 +17,7 @@ accountitem(String text,IconData iconname,BuildContext context,Widget find){
                     fontWeight: FontWeight.w600,
                     height: 1)),
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => find,));
+                     Get.to(()=>find);
                     },),
                    
             ],

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:wedding_planning_application/Screen/Vendors/Vendor%20single%20view%20Screen/vendorsingleview.dart';
 
 Widget vendorList(
     String imagedata, String texttitle, String textdata, BuildContext context) {
@@ -89,7 +91,11 @@ Widget vendorList(
                   ),
                 ),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Icon(MdiIcons.heart,
+                    size: 30,
+                    color: Colors.black,);
+                  },
                   icon: Icon(
                     MdiIcons.heartOutline,
                     size: 30,
@@ -108,7 +114,9 @@ Widget vendorList(
             width: 170,
             height: 50,
             child: TextButton(
-              onPressed: () {},
+              onPressed: () {
+                Get.to(const vendorsingleview());
+              },
               style: ButtonStyle(
                 backgroundColor: const MaterialStatePropertyAll(
                   Color.fromRGBO(77, 43, 43, 1),

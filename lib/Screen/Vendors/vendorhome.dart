@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:wedding_planning_application/Screen/Profile/manageprofileFemale.dart/manageFprofile.dart';
+import 'package:wedding_planning_application/Screen/Vendors/Vendor%20SIngle%20List%20Screen/VendorSingleList.dart';
 import 'package:wedding_planning_application/Screen/Vendors/vendor%20screen%20components/vendorbox.dart';
 
 class vendorhome extends StatefulWidget {
@@ -108,39 +109,39 @@ class _vendorhomeState extends State<vendorhome> {
                   children: [
                     const SizedBox(height: 25),
                     VendorBox('assets/images/Vender_Venue.jpg', 'Venue',
-                        'Lawns/Farmhouse,Banquet Halls, Resorts,\nSmall Function Hall,Destination Wedding,\nHotels',const ManageFprofile(),context),
+                        'Lawns/Farmhouse,Banquet Halls, Resorts,\nSmall Function Hall,Destination Wedding,\nHotels',const VendorSingleList(),context),
                     const SizedBox(height: 25),
                     VendorBox('assets/images/Vender_Mackup.jpg', 'MakeUp',
-                        'Bridal Makeup,Family Makeup,Jewellery,\nAccessories',const ManageFprofile(),context),
+                        'Bridal Makeup,Family Makeup,Jewellery,\nAccessories',const VendorSingleList(),context),
                     const SizedBox(height: 25),
                     VendorBox(
                         'assets/images/vender_photography.jpg',
                         'Photography',
-                        'Pre-Wedding Shoot,Photographers,\nVideographers',const ManageFprofile(),context),
+                        'Pre-Wedding Shoot,Photographers,\nVideographers',const VendorSingleList(),context),
                     const SizedBox(height: 25),
                     VendorBox('assets/images/Vendor_carting.jpg', 'Catering',
-                        'Catering Services,Food Stalls,Bartenders,\nHome Catering, Cake',const ManageFprofile(),context),
+                        'Catering Services,Food Stalls,Bartenders,\nHome Catering, Cake',const VendorSingleList(),context),
                     const SizedBox(height: 25),
                     VendorBox(
                         'assets/images/Vendor_bridal_wear.jpg',
                         'Bridal wear',
-                        'Bridal Lehengas,Silk Sarees,\nWedding Gowns, Trousseau Sarees',const ManageFprofile(),context),
+                        'Bridal Lehengas,Silk Sarees,\nWedding Gowns, Trousseau Sarees',const VendorSingleList(),context),
                     const SizedBox(height: 25),
                     VendorBox('assets/images/vendor_Groom_wear.jpg',
-                        'Groom Wear', 'Wedding Suits/Tuxes, Sherwani',const ManageFprofile(),context),
+                        'Groom Wear', 'Wedding Suits/Tuxes, Sherwani',const VendorSingleList(),context),
                     const SizedBox(height: 25),
                     VendorBox('assets/images/vendors_wedding_decor.jpg',
-                        'Planning and decor', 'Decorators, Wedding Planners',const ManageFprofile(),context),
+                        'Planning and decor', 'Decorators, Wedding Planners',const VendorSingleList(),context),
                     const SizedBox(height: 25),
                     VendorBox(
                         'assets/images/vendors_musicandDjs.jpg',
                         'Music and Dance',
-                        'Wedding Entertainment, Djs,\nChoreographer',const ManageFprofile(),context),
+                        'Wedding Entertainment, Djs,\nChoreographer',const VendorSingleList(),context),
                     const SizedBox(height: 25),
                     VendorBox(
                         'assets/images/Vendor_invitations.jpg',
                         'Invites and gifts',
-                        'Invitation gifts, Invitations, Favors,\nTrousseau Packers',const ManageFprofile(),context),
+                        'Invitation gifts, Invitations, Favors,\nTrousseau Packers',const VendorSingleList(),context),
                     const SizedBox(height: 25),
                   ],
                 ),
