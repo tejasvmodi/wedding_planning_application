@@ -278,81 +278,103 @@ class _CheckListWState extends State<CheckListW> {
           ),
         ),
         onTap: () {
-          showModalBottomSheet<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return  Container(
-            height:200,
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.elliptical(23, 23)),
-              color: Color.fromRGBO(244, 225, 225, 1),
-            ),
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  const SizedBox(
-                    width: 280,
+          showModalBottomSheet(
+            isScrollControlled: true,
+            context: context,
+            builder: (BuildContext context) {
+              return Container(
+                decoration: const BoxDecoration(
+                    color: Color.fromRGBO(244, 225, 225, 1),
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.elliptical(23, 23),
+                        topRight: Radius.elliptical(23, 23))),
+                child: Form(
                     child: SingleChildScrollView(
-                      child: TextField(
-                        maxLines: 3,
-                        decoration: InputDecoration(
-                            hintText: 'Browse and save wedding dress',
-                            hintStyle: TextStyle(
-                              color: Color.fromRGBO(62, 53, 53, 1),
-                              fontFamily: 'EBGaramond',
-                              fontSize: 15,
-                              letterSpacing: 0,
-                              fontWeight: FontWeight.normal,
-                              height: 1,
-                            ),
-                            filled: true,
-                            fillColor: Color.fromRGBO(217, 184, 184, 1),
-                            border: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.elliptical(23, 23)))),
+                  child: AnimatedPadding(
+                    padding: MediaQuery.of(context).viewInsets,
+                    duration: const Duration(milliseconds: 23),
+                    child: Center(
+                      child: Column(
+                        children: <Widget>[
+                          Container(
+                              decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Colors.grey.withOpacity(0.9),
+                                      blurRadius: 10.0)
+                                ],
+                              ),
+                              width: 250,
+                              margin: const EdgeInsets.all(10),
+                              child: const TextField(
+                                maxLines: 4,
+                                minLines: 4,
+                                decoration: InputDecoration(
+                                  filled: true,
+                                  fillColor: Color.fromRGBO(217, 184, 184, 1),
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.elliptical(23, 23))),
+                                  hintText: 'Browse and save Wedding dress',
+                                  hintStyle: TextStyle(
+                                    color: Color.fromRGBO(96, 67, 67, 1),
+                                    fontFamily: 'EBGaramond',
+                                    fontSize: 18,
+                                    letterSpacing: 0,
+                                    fontWeight: FontWeight.normal,
+                                    height: 1,
+                                  ),
+                                ),
+                                style: TextStyle(
+                                  color: Color.fromRGBO(96, 67, 67, 1),
+                                  fontFamily: 'EBGaramond',
+                                  fontSize: 18,
+                                  letterSpacing: 0,
+                                  fontWeight: FontWeight.normal,
+                                  height: 1,
+                                ),
+                              )),
+                          TextButton(
+                              onPressed: () {
+                                _showMyDialog(context);
+                              },
+                              style: const ButtonStyle(
+                                minimumSize:
+                                    MaterialStatePropertyAll(Size(210, 60)),
+                                backgroundColor: MaterialStatePropertyAll(
+                                    Color.fromRGBO(54, 29, 29, 1)),
+                                shape: MaterialStatePropertyAll(
+                                  RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.elliptical(8, 8))),
+                                ),
+                              ),
+                              child: const Text(
+                                'Confirm entry',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: 'EBGaramond',
+                                  fontSize: 25,
+                                  letterSpacing: 0,
+                                  fontWeight: FontWeight.bold,
+                                  height: 1,
+                                ),
+                              )),
+                          const SizedBox(
+                            height: 15,
+                          )
+                        ],
                       ),
                     ),
                   ),
-                  const SizedBox(height: 8,),
-                  TextButton(
-                      onPressed: () {},
-                      style: ButtonStyle(         
-                        backgroundColor: const MaterialStatePropertyAll(
-                          Color.fromRGBO(96, 67, 67, 1),
-                        ),
-                        shape: MaterialStatePropertyAll(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(7),
-                          ),
-                        ),
-                      ),
-                      child: const Text(
-                        'Confirm Entry..',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'EBGaramond',
-                          fontSize: 15,
-                          letterSpacing: 0,
-                          fontWeight: FontWeight.normal,
-                          height: 1,
-                        ),
-                      )),
-                ],
-              ),
-            ),
+                )),
+              );
+            },
           );
-        
-      },
-    );
         },
       ),
     );
   }
-
-
-  
 
   Container checklistitem(String itemdetail, {bool check = false}) {
     return Container(
@@ -398,4 +420,67 @@ class _CheckListWState extends State<CheckListW> {
       ),
     );
   }
+}
+
+Future<void> _showMyDialog(BuildContext context) async {
+  return showDialog<void>(
+    context: context,
+    barrierDismissible: true, // user must tap button!
+    builder: (BuildContext context) {
+      return AlertDialog(
+        shadowColor: Colors.black38,
+        title: Center(
+
+          child: Icon(MdiIcons.check,size: 50,),
+        ),
+        content: const SingleChildScrollView(
+          child: ListBody(
+            children: <Widget>[
+              Text(
+                'Your Checklist has been saved successfully',
+                style: TextStyle(
+                  color: const Color.fromRGBO(62, 53, 53, 1),
+                  fontFamily: 'EBGaramond',
+                  fontSize:20 ,
+                  letterSpacing: 0,
+                  fontWeight: FontWeight.bold,
+                  height: 1,
+                ),
+              )
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          Center(
+          
+            child: TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                style: const ButtonStyle(
+                  minimumSize: MaterialStatePropertyAll(Size(210, 60)),
+                  backgroundColor:
+                      MaterialStatePropertyAll(Color.fromRGBO(54, 29, 29, 1)),
+                  shape: MaterialStatePropertyAll(
+                    RoundedRectangleBorder(
+                        borderRadius:
+                            BorderRadius.all(Radius.elliptical(8, 8))),
+                  ),
+                ),
+                child: const Text(
+                  'Back to the checklist',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontFamily: 'EBGaramond',
+                    fontSize: 18,
+                    letterSpacing: 0,
+                    fontWeight: FontWeight.bold,
+                    height: 1,
+                  ),
+                )),
+          ),
+        ],
+      );
+    },
+  );
 }
