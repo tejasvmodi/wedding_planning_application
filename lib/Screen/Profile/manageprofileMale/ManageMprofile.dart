@@ -269,6 +269,6 @@ class _ManageMprofileState extends State<ManageMprofile> {
         ),
       ),
     );
-;
+
   }
 }

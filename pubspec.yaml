@@ -45,6 +45,7 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   date_field: ^4.0.1
   flutter_phone_direct_caller: ^2.1.1
+  bottom_sheet: ^4.0.0
 
 
 dev_dependencies:
