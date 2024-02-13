@@ -17,13 +17,13 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
            colorScheme: ColorScheme.fromSeed(seedColor:const Color.fromRGBO(62, 53, 53, 1),),
-         inputDecorationTheme: const InputDecorationTheme(
-    enabledBorder: OutlineInputBorder(
-      borderSide: BorderSide(color: Colors.black), // Your desired enabled border color
-    ),
-     disabledBorder: OutlineInputBorder(
-      borderSide: BorderSide(color: Colors.black), // Your desired disabled border color
-    ),),
+    //      inputDecorationTheme: const InputDecorationTheme(
+    // enabledBorder: OutlineInputBorder(
+    //   borderSide: BorderSide(color: Colors.black), // Your desired enabled border color
+    // ),
+    //  disabledBorder: OutlineInputBorder(
+    //   borderSide: BorderSide(color: Colors.black), // Your desired disabled border color
+    // ),),
         useMaterial3: true,
       ),
       home:  const Screen_Navigation

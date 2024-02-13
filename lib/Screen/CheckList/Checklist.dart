@@ -310,6 +310,11 @@ class _CheckListWState extends State<CheckListW> {
                                 maxLines: 4,
                                 minLines: 4,
                                 decoration: InputDecoration(
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors
+                                            .black), // Your desired enabled border color
+                                  ),
                                   filled: true,
                                   fillColor: Color.fromRGBO(217, 184, 184, 1),
                                   border: OutlineInputBorder(
@@ -425,13 +430,15 @@ class _CheckListWState extends State<CheckListW> {
 Future<void> _showMyDialog(BuildContext context) async {
   return showDialog<void>(
     context: context,
-    barrierDismissible: true, // user must tap button!
+    barrierDismissible: true,
     builder: (BuildContext context) {
       return AlertDialog(
         shadowColor: Colors.black38,
         title: Center(
-
-          child: Icon(MdiIcons.check,size: 50,),
+          child: Icon(
+            MdiIcons.check,
+            size: 50,
+          ),
         ),
         content: const SingleChildScrollView(
           child: ListBody(
@@ -441,7 +448,7 @@ Future<void> _showMyDialog(BuildContext context) async {
                 style: TextStyle(
                   color: const Color.fromRGBO(62, 53, 53, 1),
                   fontFamily: 'EBGaramond',
-                  fontSize:20 ,
+                  fontSize: 20,
                   letterSpacing: 0,
                   fontWeight: FontWeight.bold,
                   height: 1,
@@ -452,7 +459,6 @@ Future<void> _showMyDialog(BuildContext context) async {
         ),
         actions: <Widget>[
           Center(
-          
             child: TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();

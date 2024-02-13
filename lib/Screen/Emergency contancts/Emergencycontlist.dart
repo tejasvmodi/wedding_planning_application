@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/get_navigation.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:wedding_planning_application/Screen/Emergency%20contancts/Emergency%20contancts%20component/Emergencycontactdesign.dart';
-
-
+import 'package:wedding_planning_application/Screen/Emergency%20contancts/addEmergencycont.dart';
 
 class EmergencycontlistW extends StatefulWidget {
   const EmergencycontlistW({super.key});
@@ -13,11 +14,10 @@ class EmergencycontlistW extends StatefulWidget {
 }
 
 class _EmergencycontlistWState extends State<EmergencycontlistW> {
-   
-
-  directcall()async{
+  directcall() async {
     await FlutterPhoneDirectCaller.callNumber('8140800864');
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -98,12 +98,17 @@ class _EmergencycontlistWState extends State<EmergencycontlistW> {
                 indent: 20,
                 endIndent: 20,
               ),
-              emergencycalldesign('Vijay Joshi','Brother','6354492871','8140800864'),
-              emergencycalldesign('Radhika Joshi','Sister','6354492871','8140800864'),
-              emergencycalldesign('Chetan Joshi','Father','6354492871','8140800864'),
-              emergencycalldesign('Jay Joshi','Uncle','6354492871','8140800864'),
-              emergencycalldesign('Paras Joshi','Uncle','6354492871','8140800864'),
-               Row(
+              emergencycalldesign(
+                  'Vijay Joshi', 'Brother', '6354492871', '8140800864'),
+              emergencycalldesign(
+                  'Radhika Joshi', 'Sister', '6354492871', '8140800864'),
+              emergencycalldesign(
+                  'Chetan Joshi', 'Father', '6354492871', '8140800864'),
+              emergencycalldesign(
+                  'Jay Joshi', 'Uncle', '6354492871', '8140800864'),
+              emergencycalldesign(
+                  'Paras Joshi', 'Uncle', '6354492871', '8140800864'),
+              Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Container(
@@ -136,22 +141,30 @@ class _EmergencycontlistWState extends State<EmergencycontlistW> {
                 indent: 20,
                 endIndent: 20,
               ),
-              emergencycalldesign('Vijay Joshi','Brother','6354492871','8140800864'),
-              emergencycalldesign('Radhika Joshi','Sister','6354492871','8140800864'),
-              emergencycalldesign('Chetan Joshi','Father','6354492871','8140800864'),
-              emergencycalldesign('Jay Joshi','Uncle','6354492871','8140800864'),
-              emergencycalldesign('Paras Joshi','Uncle','6354492871','8140800864'),
-        
+              emergencycalldesign(
+                  'Vijay Joshi', 'Brother', '6354492871', '8140800864'),
+              emergencycalldesign(
+                  'Radhika Joshi', 'Sister', '6354492871', '8140800864'),
+              emergencycalldesign(
+                  'Chetan Joshi', 'Father', '6354492871', '8140800864'),
+              emergencycalldesign(
+                  'Jay Joshi', 'Uncle', '6354492871', '8140800864'),
+              emergencycalldesign(
+                  'Paras Joshi', 'Uncle', '6354492871', '8140800864'),
             ],
           ),
         ),
       ),
-      floatingActionButton:IconButton(onPressed: () {
-        
-      },
-      style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(Color.fromRGBO(85, 32, 32, 1)),iconSize: MaterialStatePropertyAll(40)),
-      color: Colors.white,
-       icon: Icon(MdiIcons.plus)) ,
+      floatingActionButton: IconButton(
+          onPressed: () {
+            Get.to(()=>AddEmergencyContanct());
+          },
+          style: const ButtonStyle(
+              backgroundColor:
+                  MaterialStatePropertyAll(const Color.fromRGBO(85, 32, 32, 1)),
+              iconSize: MaterialStatePropertyAll(40)),
+          color: Colors.white,
+          icon: Icon(MdiIcons.plus)),
     );
   }
 }
