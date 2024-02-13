@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:wedding_planning_application/Screen/Chat%20Screen/chatinbox%20screen/chatinbox.dart';
 import 'package:wedding_planning_application/Screen/otherscreens/notification.dart';
 
 class AppbarHome extends StatefulWidget {
@@ -64,7 +65,7 @@ class _AppbarHomeState extends State<AppbarHome> {
           ),
           IconButton(
               onPressed: () {
-                Get.to(const NotificationW());
+                Get.to(const ChatInboxW());
               },
               icon: Icon(
                 MdiIcons.messageText,

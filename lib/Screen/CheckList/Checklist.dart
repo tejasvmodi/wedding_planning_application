@@ -446,7 +446,7 @@ Future<void> _showMyDialog(BuildContext context) async {
               Text(
                 'Your Checklist has been saved successfully',
                 style: TextStyle(
-                  color: const Color.fromRGBO(62, 53, 53, 1),
+                  color: Color.fromRGBO(62, 53, 53, 1),
                   fontFamily: 'EBGaramond',
                   fontSize: 20,
                   letterSpacing: 0,
