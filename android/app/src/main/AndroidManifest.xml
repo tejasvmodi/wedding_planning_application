@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
      <uses-permission android:name="android.permission.CALL_PHONE" />
+     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <application
         android:enableOnBackInvokedCallback="true"
         android:label="wedding_planning_application"

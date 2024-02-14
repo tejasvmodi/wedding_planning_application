@@ -33,9 +33,9 @@ class _EmergencycontlistWState extends State<EmergencycontlistW> {
           ),
         ),
         title: const Padding(
-          padding: EdgeInsets.only(left: 80),
+          padding: EdgeInsets.only(left: 20),
           child: Text(
-            'WishList',
+            'Emergency Contacts',
             textAlign: TextAlign.left,
             style: TextStyle(
               color: Color.fromRGBO(85, 32, 32, 1),

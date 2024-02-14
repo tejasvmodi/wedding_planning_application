@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-profilephoto(String name,String image) {
+profilephoto(String name, String image) {
   return SizedBox(
     width: 400,
     height: 370,
@@ -14,17 +14,19 @@ profilephoto(String name,String image) {
               end: Alignment(0, 123234262925839e-17),
               colors: [
                 Color.fromRGBO(177, 83, 159, 1),
-                 Color.fromRGBO(255, 217, 247, 0.6)
+                Color.fromRGBO(255, 217, 247, 0.6)
               ]),
         ),
         child: Container(
-          decoration: const BoxDecoration(boxShadow: [
-            BoxShadow(
-                color: Color.fromRGBO(177, 73, 129, 0.25),
-                blurRadius: 10,
-                spreadRadius: 3,
-                blurStyle: BlurStyle.inner)
-          ]),
+          decoration: const BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                  color: Color.fromRGBO(177, 73, 129, 0.25),
+                  blurRadius: 10,
+                  spreadRadius: 3,
+                  blurStyle: BlurStyle.inner),
+            ],
+          ),
         ),
       ),
       Positioned(
@@ -33,7 +35,8 @@ profilephoto(String name,String image) {
         child: Container(
           width: 195,
           height: 195,
-          decoration:  BoxDecoration(
+          decoration: BoxDecoration(
+            border: const Border(bottom: BorderSide(color: Colors.black)),
             boxShadow: const [
               BoxShadow(
                   color: Color.fromRGBO(0, 0, 0, 0.5),
@@ -42,14 +45,15 @@ profilephoto(String name,String image) {
                   spreadRadius: 1)
             ],
             image: DecorationImage(
-              opacity: 1,scale: 12,
+                opacity: 1,
+                scale: 12,
                 image: AssetImage(image),
                 fit: BoxFit.fitWidth),
             borderRadius: const BorderRadius.all(Radius.elliptical(195, 195)),
           ),
         ),
       ),
-       Padding(
+      Padding(
         padding: const EdgeInsets.only(top: 325, left: 155),
         child: SizedBox(
           height: 50,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:wedding_planning_application/Screen/components/drawer.dart';
 
 class CheckListW extends StatefulWidget {
   const CheckListW({Key? key}) : super(key: key);
@@ -17,15 +18,6 @@ class _CheckListWState extends State<CheckListW> {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: const Icon(
-            Icons.arrow_back_ios,
-            color: Color.fromRGBO(62, 53, 53, 1),
-          ),
-        ),
         backgroundColor: const Color.fromRGBO(255, 217, 249, 1),
         elevation: 0,
         title: const Padding(
@@ -54,6 +46,7 @@ class _CheckListWState extends State<CheckListW> {
           ),
         ],
       ),
+      drawer: Drawer123(),
       body: Container(
           decoration: const BoxDecoration(
             border:

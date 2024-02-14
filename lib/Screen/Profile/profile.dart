@@ -6,6 +6,7 @@ import 'package:wedding_planning_application/Screen/Profile/Profile%20Component/
 import 'package:wedding_planning_application/Screen/Profile/Recommendation%20screen/recommendation.dart';
 import 'package:wedding_planning_application/Screen/Profile/manageprofileFemale.dart/manageFprofile.dart';
 import 'package:wedding_planning_application/Screen/authentication/forms/login_form.dart';
+import 'package:wedding_planning_application/Screen/components/drawer.dart';
 import 'package:wedding_planning_application/Screen/otherscreens/review.dart';
 import 'package:wedding_planning_application/Screen/otherscreens/support.dart';
 
@@ -23,15 +24,6 @@ class _ProfileWState extends State<ProfileW> {
         extendBodyBehindAppBar: true,
         appBar: AppBar(
           backgroundColor: const Color.fromARGB(255, 238, 190, 221),
-          leading: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: const Icon(
-              Icons.arrow_back_ios,
-              color: Color.fromRGBO(62, 53, 53, 1),
-            ),
-          ),
           title: const Padding(
             padding: EdgeInsets.only(left: 70),
             child: Text(
@@ -58,6 +50,7 @@ class _ProfileWState extends State<ProfileW> {
                 ))
           ],
         ),
+        drawer: Drawer123(),
         body: SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: Column(
