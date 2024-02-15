@@ -1,8 +1,6 @@
-// import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-// import 'package:video_player/video_player.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HelpW extends StatefulWidget {
   const HelpW({super.key});
@@ -45,6 +43,8 @@ class _HelpWState extends State<HelpW> {
           'The app is Designed as simple as possible to use, there are many services like vendors checklist, and inspiration section, you can play for a while and get familiar.'
     },
   ];
+
+  final String videoUrl = 'https://youtu.be/x9l2VRJ5-3k?si=IH-Cx46hJIm1UXZh';
 
   @override
   Widget build(BuildContext context) {
@@ -134,46 +134,76 @@ class _HelpWState extends State<HelpW> {
                       height: 1,
                     )),
               ),
-              const SingleChildScrollView(
+              SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       width: 20,
                     ),
-                    SizedBox(
-                      height: 160,
-                      width: 190,
-                      child: VideoPlayerWidget(
-                        videoUrl:
-                            'https://www.youtube.com/watch?v=tyBJioe8gOs', // Replace with your video URL
-                      ),
-                    ),
-                    SizedBox(
+                    GestureDetector(
+                        onTap: () => _launchYouTubeVideo(context, 'https://youtu.be/x9l2VRJ5-3k?si=IH-Cx46hJIm1UXZh'),
+                        child: Container(
+                          height: 160,
+                          width: 190,
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.black),
+                              borderRadius: const BorderRadius.all(
+                                  Radius.elliptical(23, 23)),
+                              image: const DecorationImage(
+                                  image: AssetImage('assets/images/help_1.jpg'),
+                                  fit: BoxFit.cover)),
+                          child: Icon(
+                            MdiIcons.playCircleOutline,
+                            color: Colors.black87,
+                            size: 60,
+                          ),
+                        )),
+                    const SizedBox(
                       width: 20,
                     ),
-                    SizedBox(
-                      height: 160,
-                      width: 190,
-                      child: VideoPlayerWidget(
-                        videoUrl:
-                            'https://www.youtube.com/watch?v=GBS6BXGAoAo', // Replace with your video URL
-                      ),
-                    ),
-                    SizedBox(
+                    GestureDetector(
+                        onTap: () => _launchYouTubeVideo(context, 'https://youtu.be/DsROfrRB-1k?si=DvmKorCh11JfHTVw'),
+                        child: Container(
+                          height: 160,
+                          width: 190,
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.black),
+                              borderRadius: const BorderRadius.all(
+                                  Radius.elliptical(23, 23)),
+                              image: const DecorationImage(
+                                  image: AssetImage('assets/images/help_2.jpg'),
+                                  fit: BoxFit.cover)),
+                          child: Icon(
+                            MdiIcons.playCircleOutline,
+                            color: Colors.black87,
+                            size: 60,
+                          ),
+                        )),
+                    const SizedBox(
                       width: 20,
                     ),
-                    SizedBox(
-                      height: 160,
-                      width: 190,
-                      child: VideoPlayerWidget(
-                        videoUrl:
-                            'https://www.youtube.com/watch?v=x9l2VRJ5-3k', // Replace with your video URL
-                      ),
-                    ),
-                    SizedBox(
+                    GestureDetector(
+                        onTap: () => _launchYouTubeVideo(context, 'https://youtu.be/tyBJioe8gOs?si=DZUd5e5bSE7H-MUc'),
+                        child: Container(
+                          height: 160,
+                          width: 190,
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.black),
+                              borderRadius: const BorderRadius.all(
+                                  Radius.elliptical(23, 23)),
+                              image: const DecorationImage(
+                                  image: AssetImage('assets/images/help_3.jpg'),
+                                  fit: BoxFit.cover)),
+                          child: Icon(
+                            MdiIcons.playCircleOutline,
+                            color: Colors.black87,
+                            size: 60,
+                          ),
+                        )),
+                    const SizedBox(
                       width: 20,
-                    ),
+                    )
                   ],
                 ),
               ),
@@ -258,89 +288,14 @@ class _HelpWState extends State<HelpW> {
   }
 }
 
-//for youtube videos
-class VideoPlayerWidget extends StatefulWidget {
-  final String videoUrl;
-
-  const VideoPlayerWidget({required this.videoUrl, super.key});
-
-  @override
-  // ignore: library_private_types_in_public_api
-  _VideoPlayerWidgetState createState() => _VideoPlayerWidgetState();
-}
-
-class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
-  late YoutubePlayerController _youtubeController;
-
-  @override
-  void initState() {
-    super.initState();
-    _youtubeController = YoutubePlayerController(
-      initialVideoId: YoutubePlayer.convertUrlToId(widget.videoUrl) ?? '',
-      flags: const YoutubePlayerFlags(autoPlay: false, loop: true),
-    );
-  }
-
-  @override
-  void dispose() {
-    _youtubeController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-          border: Border.all(color: Colors.black),
-          borderRadius: const BorderRadius.all(Radius.elliptical(8, 0)),
-          boxShadow: const [BoxShadow(blurRadius: 4)]),
-      child: YoutubePlayer(
-        controller: _youtubeController,
-        showVideoProgressIndicator: true,
-        progressIndicatorColor: Colors.amber,
-        aspectRatio: 16 / 9,
+Future<void> _launchYouTubeVideo(BuildContext context, String url) async {
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Could not launch YouTube video'),
       ),
     );
   }
 }
-
-//for local videos 
-// 
-// 
-// class VideoPlayerWidget extends StatefulWidget {
-//   final String videoUrl;
-
-//   const VideoPlayerWidget({required this.videoUrl, Key? key}) : super(key: key);
-
-//   @override
-//   _VideoPlayerWidgetState createState() => _VideoPlayerWidgetState();
-// }
-
-// class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
-//   late VideoPlayerController _videoPlayerController;
-//   late ChewieController _chewieController;
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     _videoPlayerController = VideoPlayerController.network(widget.videoUrl);
-//     _chewieController = ChewieController(
-//       videoPlayerController: _videoPlayerController,
-//       autoPlay: true,
-//       looping: true,
-//     );
-//   }
-
-//   @override
-//   void dispose() {
-//     _videoPlayerController.dispose();
-//     _chewieController.dispose();
-//     super.dispose();
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Chewie(controller: _chewieController);
-//   }
-// }
-
