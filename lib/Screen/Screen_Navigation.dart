@@ -9,14 +9,16 @@ import 'package:wedding_planning_application/Screen/Vendors/vendorhome.dart';
 import 'package:wedding_planning_application/Screen/home/home.dart';
 
 class Screen_Navigation extends StatefulWidget {
-  const Screen_Navigation({super.key});
+
+
+  Screen_Navigation({super.key, this.currentIndex=0});
+    int currentIndex;
 
   @override
   State<Screen_Navigation> createState() => _Screen_NavigationState();
 }
 
 class _Screen_NavigationState extends State<Screen_Navigation> {
-  int _currentIndex = 0;
 
   final List<Widget> list = [
     home(),
@@ -34,7 +36,7 @@ class _Screen_NavigationState extends State<Screen_Navigation> {
         maintainBottomViewPadding: true,
         child: Container(
           color: Colors.greenAccent.withOpacity(0.1),
-          child: list[_currentIndex],
+          child: list[widget.currentIndex],
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -63,44 +65,44 @@ class _Screen_NavigationState extends State<Screen_Navigation> {
         items: [
           BottomNavigationBarItem(
             tooltip: 'Home',
-            icon: _currentIndex == 0
+            icon: widget.currentIndex == 0
                 ? Icon(MdiIcons.home, size: 35)
                 : Icon(MdiIcons.homeOutline, size: 35),
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: _currentIndex == 1
+            icon: widget.currentIndex == 1
                 ? Icon(MdiIcons.listBox, size: 35)
                 : Icon(MdiIcons.listBoxOutline, size: 35),
             label: 'CheckList',
             tooltip: 'CheckList',
           ),
           BottomNavigationBarItem(
-            icon: _currentIndex == 2
+            icon: widget.currentIndex == 2
                 ? Icon(MdiIcons.store, size: 35)
                 : Icon(MdiIcons.storeOutline, size: 35),
             label: 'Vendors',
             tooltip: 'Vendors',
           ),
           BottomNavigationBarItem(
-            icon: _currentIndex == 3
+            icon: widget.currentIndex == 3
                 ? Icon(MdiIcons.lightbulb, size: 35)
                 : Icon(MdiIcons.lightbulbOutline, size: 35),
             label: 'Inspiration',
             tooltip: 'Inspiration',
           ),
           BottomNavigationBarItem(
-            icon: _currentIndex == 4
+            icon: widget.currentIndex == 4
                 ? Icon(MdiIcons.account, size: 35)
                 : Icon(MdiIcons.accountOutline, size: 35),
             label: 'Profile',
             tooltip: 'Profile',
           ),
         ],
-        currentIndex: _currentIndex,
+        currentIndex: widget.currentIndex,
         onTap: (index) {
           setState(() {
-            _currentIndex = index;
+            widget.currentIndex = index;
           });
         },
       ),
