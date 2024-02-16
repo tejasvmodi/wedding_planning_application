@@ -99,7 +99,7 @@ class _homeState extends State<home> {
                           feature('assets/images/Checklist.jpg', 'CheckList',
                               26, context, Screen_Navigation(currentIndex: 1,)),
                           feature('assets/images/Budget.jpg', 'Budget', 26,
-                              context,const HelpW()),
+                              context,const Budget()),
                         ],
                       ),
                     ),

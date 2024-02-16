@@ -91,7 +91,7 @@ class _HelpWState extends State<HelpW> {
                 padding: EdgeInsets.all(8.0),
                 child: TextField(
                   style: TextStyle(
-                    color: Color.fromRGBO(96, 66, 66, 1),
+                    color: Colors.white,
                     fontFamily: 'EBGaramond',
                     fontSize: 20,
                     letterSpacing: 0,
@@ -108,7 +108,7 @@ class _HelpWState extends State<HelpW> {
                         color: Colors.white,
                         fontFamily: 'EBGaramond',
                         fontSize: 20,
-                        letterSpacing: 0,
+                        letterSpacing: 0,  
                         fontWeight: FontWeight.bold,
                         height: 1,
                       ),
@@ -276,6 +276,7 @@ class _HelpWState extends State<HelpW> {
                                     height: 1,
                                   ),
                                 ),
+                                
                                 // This button is used to remove this item
                               ]),
                         );

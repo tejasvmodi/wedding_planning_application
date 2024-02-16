@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/get_navigation.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:wedding_planning_application/Screen/Chat%20Screen/chatinbox.dart';
+import 'package:wedding_planning_application/Screen/Screen_Navigation.dart';
+import 'package:wedding_planning_application/Screen/otherscreens/Budget.dart';
+import 'package:wedding_planning_application/Screen/otherscreens/help.dart';
+import 'package:wedding_planning_application/Screen/otherscreens/notification.dart';
 
 class Drawer123 extends StatelessWidget {
+  const Drawer123({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -72,7 +81,9 @@ class Drawer123 extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                           height: 1),
                     ),
-                    onTap: () {},
+                    onTap: () {
+                      Get.to(() => Screen_Navigation(currentIndex: 2,));
+                    },
                   ),
                 ],
               ),
@@ -108,7 +119,9 @@ class Drawer123 extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                               height: 1),
                         ),
-                        onTap: () {},
+                        onTap: () {
+                          Get.to(() => const NotificationW());
+                        },
                       ),
                     ],
                   ),
@@ -143,7 +156,9 @@ class Drawer123 extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                               height: 1),
                         ),
-                        onTap: () {},
+                        onTap: () {
+                          Get.to(() => Budget());
+                        },
                       ),
                     ],
                   ),
@@ -177,7 +192,9 @@ class Drawer123 extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                               height: 1),
                         ),
-                        onTap: () {},
+                        onTap: () {
+                          Get.to(()=>ChatInboxW());
+                        },
                       ),
                     ],
                   ),
@@ -214,7 +231,9 @@ class Drawer123 extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                               height: 1),
                         ),
-                        onTap: () {},
+                        onTap: () {
+                          Get.to(()=>Screen_Navigation(currentIndex: 1,));
+                        },
                       ),
                     ],
                   ),
@@ -248,7 +267,9 @@ class Drawer123 extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                               height: 1),
                         ),
-                        onTap: () {},
+                        onTap: () {
+                          Get.to(()=>Screen_Navigation(currentIndex: 4,));
+                        },
                       ),
                     ],
                   ),
@@ -282,7 +303,9 @@ class Drawer123 extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                               height: 1),
                         ),
-                        onTap: () {},
+                        onTap: () {
+                          Get.to(()=>const HelpW());
+                        },
                       ),
                     ],
                   ),
