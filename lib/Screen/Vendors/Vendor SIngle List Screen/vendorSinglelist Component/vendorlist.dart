@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:wedding_planning_application/Screen/Booking/WishList/Wishlist.dart';
 import 'package:wedding_planning_application/Screen/Vendors/Vendor%20single%20view%20Screen/vendorsingleview.dart';
 
 Widget vendorList(
@@ -44,7 +45,7 @@ Widget vendorList(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {   Get.to(() => const WishListW());},
                   icon: Icon(
                     MdiIcons.bookmarkOutline,
                     size: 30,
@@ -115,7 +116,7 @@ Widget vendorList(
             height: 50,
             child: TextButton(
               onPressed: () {
-                Get.to(const vendorsingleview());
+                Get.to(()=> vendorsingleview(imagedata: imagedata,name:texttitle,));
               },
               style: ButtonStyle(
                 backgroundColor: const MaterialStatePropertyAll(

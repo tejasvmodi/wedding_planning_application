@@ -92,7 +92,7 @@ Widget bookingdesign(String newimage, String textdata, String content, int money
                       ),
                     ),
                      Text(
-                       NumberFormat.currency(locale: 'en_IN',symbol: '₹').format(money) as String,
+                       NumberFormat.currency(locale: 'en_IN',symbol: '₹').format(money),
                       
                       style: const TextStyle(
                         color: Color.fromRGBO(85, 32, 32, 1),

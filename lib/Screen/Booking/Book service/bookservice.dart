@@ -1,9 +1,13 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:wedding_planning_application/Screen/Booking/Book%20service/Bookin%20service%20component/bookitem.dart';
+import 'package:wedding_planning_application/Screen/Chat%20Screen/chatinbox.dart';
 import 'package:wedding_planning_application/Screen/Vendors/Vendor%20single%20view%20Screen/vendorsingleview.dart';
+import 'package:wedding_planning_application/Screen/otherscreens/Budget.dart';
 
+// ignore: camel_case_types
 class bookservicew extends StatefulWidget {
   const bookservicew({super.key});
 
@@ -11,6 +15,7 @@ class bookservicew extends StatefulWidget {
   State<bookservicew> createState() => _bookservicewState();
 }
 
+// ignore: camel_case_types
 class _bookservicewState extends State<bookservicew> {
   DateTime selectedDate = DateTime.now();
 
@@ -83,7 +88,7 @@ class _bookservicewState extends State<bookservicew> {
                 'assets/images/Vender_Venue.jpg',
                 'Venue',
                 context,
-                const vendorsingleview(),
+                const vendorsingleview(name: 'ITC Grand', imagedata: 'assets/images/Vender_Venue.jpg',),
                 'ITC Grand',
                 'Vendor name',
                 121000,
@@ -93,7 +98,9 @@ class _bookservicewState extends State<bookservicew> {
               height: 50,
               width: 360,
               child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.to(()=>const ChatInboxW());
+                  },
                   style: ButtonStyle(
                     backgroundColor: const MaterialStatePropertyAll(
                         Color.fromRGBO(77, 43, 43, 1)),
@@ -257,7 +264,9 @@ class _bookservicewState extends State<bookservicew> {
                 SizedBox(
                   height: 50,
                   width: 320,
-                  child: TextButton(onPressed: () {}, 
+                  child: TextButton(onPressed: () {
+                    Get.to(()=>const Budget());
+                  }, 
                    style: ButtonStyle(
                       backgroundColor: const MaterialStatePropertyAll(
                           Color.fromRGBO(77, 43, 43, 1)),

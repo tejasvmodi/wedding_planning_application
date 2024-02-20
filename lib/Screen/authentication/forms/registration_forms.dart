@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wedding_planning_application/Screen/authentication/forms/login_form.dart';
 
+// ignore: camel_case_types
 class registeration_form extends StatefulWidget {
   const registeration_form({super.key});
 
@@ -8,9 +9,11 @@ class registeration_form extends StatefulWidget {
   State<registeration_form> createState() => _registeration_formState();
 }
 
+// ignore: camel_case_types
 class _registeration_formState extends State<registeration_form> {
   String _selectedGender = 'Bride';
 
+  @override
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(

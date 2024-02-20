@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:wedding_planning_application/Screen/Booking/Book%20service/bookservice.dart';
+import 'package:wedding_planning_application/Screen/Booking/WishList/Wishlist.dart';
+import 'package:wedding_planning_application/Screen/otherscreens/inquiry.dart';
 
 class vendorsingleview extends StatefulWidget {
-  const vendorsingleview({super.key});
+  const vendorsingleview({super.key, required this.name, required this.imagedata});
+  final String name;
+  final String imagedata;
 
   @override
   State<vendorsingleview> createState() => _vendorsingleviewState();
@@ -43,7 +49,7 @@ class _vendorsingleviewState extends State<vendorsingleview> {
         elevation: 0,
         actions: [
           IconButton(
-              onPressed: () {},
+              onPressed: () {   Get.to(() => const WishListW());},
               icon: Icon(
                 MdiIcons.heartOutline,
                 size: 40,
@@ -110,11 +116,12 @@ class _vendorsingleviewState extends State<vendorsingleview> {
                     child: Column(
                       children: [
                         Container(
+                          padding: const EdgeInsets.only(left: 20,right: 20),
                           alignment: Alignment.topLeft,
-                          child: const Text(
-                            '   ITC Grand, Goa',
+                          child:  Text(
+                            widget.name,
                             textAlign: TextAlign.left,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 color: Color.fromRGBO(62, 53, 53, 1),
                                 fontFamily: 'EBGaramond',
                                 fontSize: 28,
@@ -126,10 +133,10 @@ class _vendorsingleviewState extends State<vendorsingleview> {
                         Container(
                           height: 300,
                           width: 360,
-                          decoration: const BoxDecoration(
+                          decoration:  BoxDecoration(
                             image: DecorationImage(
                                 image: AssetImage(
-                                  'assets/images/Vendor_Single_View_1.jpg',
+                                  widget.imagedata,
                                 ),
                                 opacity: 1),
                           ),
@@ -462,7 +469,9 @@ class _vendorsingleviewState extends State<vendorsingleview> {
                                   width: 160,
                                   height: 45,
                                   child: TextButton(
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        Get.to(() => const InquiryW());
+                                      },
                                       style: ButtonStyle(
                                         backgroundColor:
                                             const MaterialStatePropertyAll(
@@ -488,7 +497,9 @@ class _vendorsingleviewState extends State<vendorsingleview> {
                                   width: 170,
                                   height: 45,
                                   child: TextButton(
-                                      onPressed: () {},
+                                      onPressed: () {
+                                         Get.to(() => const WishListW());
+                                      },
                                       style: ButtonStyle(
                                         backgroundColor:
                                             const MaterialStatePropertyAll(
@@ -519,7 +530,9 @@ class _vendorsingleviewState extends State<vendorsingleview> {
                               width: 370,
                               height: 50,
                               child: TextButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                     Get.to(() => const bookservicew());
+                                  },
                                   style: ButtonStyle(
                                     backgroundColor:
                                         const MaterialStatePropertyAll(

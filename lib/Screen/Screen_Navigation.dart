@@ -1,4 +1,3 @@
-// ignore_for_file: camel_case_types
 
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -8,6 +7,7 @@ import 'package:wedding_planning_application/Screen/Profile/profile.dart';
 import 'package:wedding_planning_application/Screen/Vendors/vendorhome.dart';
 import 'package:wedding_planning_application/Screen/home/home.dart';
 
+// ignore: must_be_immutable, camel_case_types
 class Screen_Navigation extends StatefulWidget {
 
 
@@ -18,6 +18,7 @@ class Screen_Navigation extends StatefulWidget {
   State<Screen_Navigation> createState() => _Screen_NavigationState();
 }
 
+// ignore: camel_case_types
 class _Screen_NavigationState extends State<Screen_Navigation> {
 
   final List<Widget> list = [

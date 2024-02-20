@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wedding_planning_application/Screen/Emergency%20contancts/Emergencycontlist.dart';
 import 'package:wedding_planning_application/Screen/Screen_Navigation.dart';
 import 'package:wedding_planning_application/Screen/authentication/forms/login_form.dart';
 import 'package:wedding_planning_application/Screen/components/drawer.dart';
@@ -7,7 +8,6 @@ import 'package:wedding_planning_application/Screen/home/HomeScreen%20Component/
 import 'package:wedding_planning_application/Screen/home/HomeScreen%20Component/categorywrapper.dart';
 import 'package:wedding_planning_application/Screen/home/HomeScreen%20Component/feature.dart';
 import 'package:wedding_planning_application/Screen/otherscreens/Budget.dart';
-import 'package:wedding_planning_application/Screen/otherscreens/help.dart';
 
 class home extends StatefulWidget {
   home({super.key});
@@ -30,7 +30,7 @@ class _homeState extends State<home> {
         iconTheme: const IconThemeData(color: Colors.white, size: 35),
         actions: const [AppbarHome()],
       ),
-      drawer: Drawer123(),
+      drawer: const Drawer123(),
       body: Container(
         
         decoration: const BoxDecoration(
@@ -80,7 +80,7 @@ class _homeState extends State<home> {
                     categoryWrapper('assets/images/PhotoShoot.jpg',
                         'Photo Shoot', context, const Login_form()),
                     categoryWrapper('assets/images/Decor.jpg', 'Decoration',
-                        context, const Login_form()),
+                        context,Screen_Navigation(currentIndex: 2,), ),
                   ],
                 ),
               ),
@@ -115,14 +115,14 @@ class _homeState extends State<home> {
                               'Emergency Contanct',
                               18,
                               context,
-                              const Login_form()),
+                              const EmergencycontlistW()),
                         ],
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 0, right: 185),
                       child: feature('assets/images/Ceremoney.jpg', 'Ceremony',
-                          26, context, const Login_form()),
+                          26, context, Screen_Navigation(currentIndex: 2,),)
                     ),
                     
                   ],

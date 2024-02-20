@@ -4,6 +4,7 @@ import 'package:wedding_planning_application/Screen/authentication/forms/forgotp
 import 'package:wedding_planning_application/Screen/authentication/forms/registration_forms.dart';
 import 'package:wedding_planning_application/Screen/home/home.dart';
 
+// ignore: camel_case_types
 class Login_form extends StatefulWidget {
   const Login_form({super.key});
 
@@ -11,6 +12,7 @@ class Login_form extends StatefulWidget {
   State<Login_form> createState() => _Login_formState();
 }
 
+// ignore: camel_case_types
 class _Login_formState extends State<Login_form> {
   @override
   Widget build(BuildContext context) {
@@ -100,7 +102,7 @@ class _Login_formState extends State<Login_form> {
                   child: ElevatedButton(
                     onPressed: () {
 
-                      Get.to(home());
+                      Get.to(()=>home());
                     },
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
@@ -126,7 +128,7 @@ class _Login_formState extends State<Login_form> {
                   padding: const EdgeInsets.fromLTRB(9, 14, 0, 0),
                   child: ElevatedButton(
                     onPressed: () {
-                       Get.to(registeration_form());
+                       Get.to(()=>const registeration_form());
                          
                     },
                     style: ElevatedButton.styleFrom(

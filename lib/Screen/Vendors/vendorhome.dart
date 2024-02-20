@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:wedding_planning_application/Screen/Profile/manageprofileFemale.dart/manageFprofile.dart';
+import 'package:wedding_planning_application/Screen/Booking/WishList/Wishlist.dart';
 import 'package:wedding_planning_application/Screen/Vendors/Vendor%20SIngle%20List%20Screen/VendorSingleList.dart';
 import 'package:wedding_planning_application/Screen/Vendors/vendor%20screen%20components/vendorbox.dart';
 import 'package:wedding_planning_application/Screen/components/drawer.dart';
@@ -37,7 +38,7 @@ class _vendorhomeState extends State<vendorhome> {
           elevation: 0,
           actions: [
             IconButton(
-                onPressed: () {},
+                onPressed: () {   Get.to(() => const WishListW());},
                 icon: Icon(
                   MdiIcons.heartOutline,
                   size: 40,
