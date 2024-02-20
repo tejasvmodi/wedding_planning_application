@@ -59,76 +59,36 @@ class _ChatInboxWState extends State<ChatInboxW> {
               const SizedBox(
                 height: 15,
               ),
-              Chatlistdesign('Ashok Verma', 'Venue Starting from 1 Lakhs ',
+              Chatlistdesign('Rohan Patel', 'Venue Starting from 1 Lakhs',
                   'Venue Provider', 'chat_avatar_1.jpg'),
-              const SizedBox(
-                height: 10,
-              ),
-              Chatlistdesign('Ashok Verma', 'Venue Starting from 1 Lakhs',
+              const SizedBox(height: 10),
+              Chatlistdesign('Aisha Khan', 'Venue Starting from 1 Lakhs',
                   'Venue Provider', 'chat_avatar_2.jpg'),
-              const SizedBox(
-                height: 10,
-              ),
-              Chatlistdesign('Ashok Verma', 'Venue Starting from 1 Lakhs ',
+              const SizedBox(height: 10),
+              Chatlistdesign('Maya Singh', 'Venue Starting from 1 Lakhs',
                   'Venue Provider', 'chat_avatar_3.jpg'),
-              const SizedBox(
-                height: 10,
-              ),
-              Chatlistdesign('Ashok Verma', 'Venue Starting from 1 Lakhs',
+              const SizedBox(height: 10),
+              Chatlistdesign('Natasha Malik', 'Venue Starting from 1 Lakhs',
                   'Venue Provider', 'chat_avatar_4.jpg'),
-              const SizedBox(
-                height: 10,
-              ),
-              Chatlistdesign('Ashok Verma', 'Venue Starting from 1 Lakhs ',
+              const SizedBox(height: 10),
+              Chatlistdesign('Simran Choudhary', 'Venue Starting from 1 Lakhs',
                   'Venue Provider', 'chat_avatar_5.jpg'),
-              const SizedBox(
-                height: 10,
-              ),
-              Chatlistdesign('Ashok Verma', 'Venue Starting from 1 Lakhs',
+              const SizedBox(height: 10),
+              Chatlistdesign('Arjun Singh', 'Venue Starting from 1 Lakhs',
                   'Venue Provider', 'chat_avatar_6.jpg'),
-              const SizedBox(
-                height: 10,
-              ),
-              Chatlistdesign('Ashok Verma', 'Venue Starting from 1 Lakhs ',
+              const SizedBox(height: 10),
+              Chatlistdesign('Naina Shah', 'Venue Starting from 1 Lakhs',
                   'Venue Provider', 'chat_avatar_7.jpg'),
-              const SizedBox(
-                height: 10,
-              ),
-              Chatlistdesign('Ashok Verma', 'Venue Starting from 1 Lakhs',
+              const SizedBox(height: 10),
+              Chatlistdesign('Anaya Ahmed', 'Venue Starting from 1 Lakhs',
                   'Venue Provider', 'chat_avatar_1.jpg'),
-              const SizedBox(
-                height: 10,
-              ),
-              Chatlistdesign('Ashok Verma', 'Venue Starting from 1 Lakhs ',
+              const SizedBox(height: 10),
+              Chatlistdesign('Riya Desai', 'Venue Starting from 1 Lakhs',
                   'Venue Provider', 'chat_avatar_2.jpg'),
-              const SizedBox(
-                height: 10,
-              ),
-              Chatlistdesign('Ashok Verma', 'Venue Starting from 1 Lakhs',
+              const SizedBox(height: 10),
+              Chatlistdesign('Amara Khan', 'Venue Starting from 1 Lakhs',
                   'Venue Provider', 'chat_avatar_3.jpg'),
-              const SizedBox(
-                height: 10,
-              ),
-              Chatlistdesign('Ashok Verma', 'Venue Starting from 1 Lakhs ',
-                  'Venue Provider', 'chat_avatar_4.jpg'),
-              const SizedBox(
-                height: 10,
-              ),
-              Chatlistdesign('Ashok Verma', 'Venue Starting from 1 Lakhs',
-                  'Venue Provider', 'chat_avatar_5.jpg'),
-              const SizedBox(
-                height: 10,
-              ),
-              Chatlistdesign('Ashok Verma', 'Venue Starting from 1 Lakhs ',
-                  'Venue Provider', 'chat_avatar_6.jpg'),
-              const SizedBox(
-                height: 10,
-              ),
-              Chatlistdesign('Ashok Verma', 'Venue Starting from 1 Lakhs',
-                  'Venue Provider', 'chat_avatar_7.jpg'),
-              const SizedBox(
-                height: 10,
-              ),
+              const SizedBox(height: 10),
             ],
           ),
         ),
@@ -148,8 +108,7 @@ Chatlistdesign(String name, String descript, String value, String imagelink) {
           border: const Border(bottom: BorderSide(color: Colors.black12)),
           borderRadius: BorderRadius.circular(17),
           boxShadow: const [
-            BoxShadow(
-                blurRadius: 5, spreadRadius: 2, color: Colors.black26)
+            BoxShadow(blurRadius: 5, spreadRadius: 2, color: Colors.black26)
           ]),
       child: Row(
         children: [
@@ -205,7 +164,10 @@ Chatlistdesign(String name, String descript, String value, String imagelink) {
       ),
     ),
     onTap: () {
-      Get.to(()=>ChatScreen());
+      Get.to(() => ChatMessageW(
+            image: imagelink,
+            Name: name,
+          ));
     },
   );
 }
