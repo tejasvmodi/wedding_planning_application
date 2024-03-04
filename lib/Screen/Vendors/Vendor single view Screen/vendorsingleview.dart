@@ -7,7 +7,8 @@ import 'package:wedding_planning_application/Screen/Booking/WishList/Wishlist.da
 import 'package:wedding_planning_application/Screen/otherscreens/inquiry.dart';
 
 class vendorsingleview extends StatefulWidget {
-  const vendorsingleview({super.key, required this.name, required this.imagedata});
+  const vendorsingleview(
+      {super.key, required this.name, required this.imagedata});
   final String name;
   final String imagedata;
 
@@ -31,9 +32,10 @@ class _vendorsingleviewState extends State<vendorsingleview> {
             color: Color.fromRGBO(62, 53, 53, 1),
           ),
         ),
-        title: const Padding(
-          padding: EdgeInsets.only(left: 80),
-          child: Text(
+        title: Padding(
+          padding:
+              EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.23),
+          child: const Text(
             'Venues',
             textAlign: TextAlign.left,
             style: TextStyle(
@@ -49,13 +51,15 @@ class _vendorsingleviewState extends State<vendorsingleview> {
         elevation: 0,
         actions: [
           IconButton(
-              onPressed: () {   Get.to(() => const WishListW());},
+              onPressed: () {
+                Get.to(() => const WishListW());
+              },
               icon: Icon(
                 MdiIcons.heartOutline,
-                size: 40,
+                size: MediaQuery.of(context).size.height * 0.056,
               )),
-          const SizedBox(
-            width: 5,
+          SizedBox(
+            width: MediaQuery.of(context).size.width * 0.01,
           )
         ],
       ),
@@ -73,7 +77,7 @@ class _vendorsingleviewState extends State<vendorsingleview> {
           child: Column(
             children: [
               SizedBox(
-                  height: 60,
+                  height: MediaQuery.of(context).size.height * 0.07,
                   child: Container(
                     decoration: BoxDecoration(
                       color: const Color.fromRGBO(255, 217, 249, 1),
@@ -90,35 +94,37 @@ class _vendorsingleviewState extends State<vendorsingleview> {
                             onPressed: () {},
                             icon: Icon(
                               MdiIcons.tuneVertical,
-                              size: 45,
+                              size: MediaQuery.of(context).size.height * 0.056,
                             )),
                         IconButton(
                             onPressed: () {},
-                            icon: const Icon(
+                            icon: Icon(
                               Icons.search,
-                              size: 45,
+                              size: MediaQuery.of(context).size.height * 0.056,
                             )),
                         IconButton(
                             onPressed: () {},
                             icon: Icon(
                               MdiIcons.bookmarkOutline,
-                              size: 45,
+                              size: MediaQuery.of(context).size.height * 0.056,
                             )),
                       ],
                     ),
                   )),
-              const SizedBox(
-                height: 30,
-              ),
               Expanded(
                 child: SingleChildScrollView(
                     scrollDirection: Axis.vertical,
                     child: Column(
                       children: [
                         Container(
-                          padding: const EdgeInsets.only(left: 20,right: 20),
+                          padding: EdgeInsets.only(
+                              bottom: MediaQuery.of(context).size.height * 0.02,
+                              top: MediaQuery.of(context).size.height * 0.036,
+                              left: MediaQuery.of(context).size.height * 0.02,
+                              right:
+                                  MediaQuery.of(context).size.height * 0.036),
                           alignment: Alignment.topLeft,
-                          child:  Text(
+                          child: Text(
                             widget.name,
                             textAlign: TextAlign.left,
                             style: const TextStyle(
@@ -131,81 +137,100 @@ class _vendorsingleviewState extends State<vendorsingleview> {
                           ),
                         ),
                         Container(
-                          height: 300,
-                          width: 360,
-                          decoration:  BoxDecoration(
+                          height: MediaQuery.of(context).size.height * 0.32,
+                          width: MediaQuery.of(context).size.height * 0.45,
+                          decoration: BoxDecoration(
                             image: DecorationImage(
                                 image: AssetImage(
                                   widget.imagedata,
                                 ),
+                                fit: BoxFit.cover,
                                 opacity: 1),
                           ),
                         ),
-                        const SingleChildScrollView(
+                        SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
-                          child: Row(
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.only(
-                                  left: 13,
+                          child: Container(
+                            padding: EdgeInsets.only(
+                              top: MediaQuery.of(context).size.height * 0.02,
+                            ),
+                            child: Row(
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                    left: MediaQuery.of(context).size.height *
+                                        0.01,
+                                  ),
+                                  child: Image(
+                                    image: const AssetImage(
+                                        'assets/images/Vendor_Single_View_2.jpg'),
+                                    width: MediaQuery.of(context).size.height *
+                                        0.15,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.135,
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
-                                child: Image(
-                                  image: AssetImage(
-                                      'assets/images/Vendor_Single_View_2.jpg'),
-                                  width: 112,
-                                  height: 112,
-                                  fit: BoxFit.cover,
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                    left: MediaQuery.of(context).size.height *
+                                        0.01,
+                                  ),
+                                  child: Image(
+                                    image: const AssetImage(
+                                        'assets/images/Vendor_Single_View_3.jpg'),
+                                    width: MediaQuery.of(context).size.height *
+                                        0.15,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.135,
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(
-                                  left: 5,
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                    left: MediaQuery.of(context).size.height *
+                                        0.01,
+                                  ),
+                                  child: Image(
+                                    image: const AssetImage(
+                                        'assets/images/Vendor_Single_View_4.jpg'),
+                                    width: MediaQuery.of(context).size.height *
+                                        0.15,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.135,
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
-                                child: Image(
-                                  image: AssetImage(
-                                      'assets/images/Vendor_Single_View_3.jpg'),
-                                  width: 112,
-                                  height: 112,
-                                  fit: BoxFit.cover,
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.only(left: 5, right: 13),
+                                  child: Image(
+                                    image: const AssetImage(
+                                        'assets/images/Vendor_Single_View_4_.jpg'),
+                                    width: MediaQuery.of(context).size.height *
+                                        0.15,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.135,
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(
-                                  left: 5,
-                                ),
-                                child: Image(
-                                  image: AssetImage(
-                                      'assets/images/Vendor_Single_View_4.jpg'),
-                                  width: 112,
-                                  height: 112,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(left: 5, right: 13),
-                                child: Image(
-                                  image: AssetImage(
-                                      'assets/images/Vendor_Single_View_4_.jpg'),
-                                  width: 112,
-                                  height: 112,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
-                        const SizedBox(
-                          height: 13,
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.01,
                         ),
                         Row(
                           children: [
-                            const SizedBox(
-                              width: 13,
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.02,
                             ),
                             RatingBar(
                                 maxRating: 5,
                                 minRating: 1,
-                                itemSize: 30,
+                                itemSize:
+                                    MediaQuery.of(context).size.height * 0.035,
                                 initialRating: 2.5,
                                 direction: Axis.horizontal,
                                 allowHalfRating: true,
@@ -227,8 +252,8 @@ class _vendorsingleviewState extends State<vendorsingleview> {
                                     _ratingValue = value;
                                   });
                                 }),
-                            const SizedBox(
-                              width: 10,
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.05,
                             ),
                             const Text(
                               'Rating : ',
@@ -253,8 +278,8 @@ class _vendorsingleviewState extends State<vendorsingleview> {
                                   fontWeight: FontWeight.normal,
                                   height: 1),
                             ),
-                            const SizedBox(
-                              width: 10,
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.05,
                             ),
                             const Text(
                               '5,310 Reviews',
@@ -302,48 +327,54 @@ class _vendorsingleviewState extends State<vendorsingleview> {
                         Container(
                             alignment: Alignment.bottomLeft,
                             padding: const EdgeInsets.all(13),
-                            child: const Row(
+                            child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Free Parking ',
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                          color: Color.fromRGBO(85, 32, 32, 1),
-                                          fontFamily: 'EBGaramond',
-                                          fontSize: 14,
-                                          letterSpacing: 0,
-                                          fontWeight: FontWeight.normal,
-                                          height: 1),
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      'Pool ',
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                          color: Color.fromRGBO(85, 32, 32, 1),
-                                          fontFamily: 'EBGaramond',
-                                          fontSize: 14,
-                                          letterSpacing: 0,
-                                          fontWeight: FontWeight.normal,
-                                          height: 1),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  width: 70,
-                                ),
                                 Flexible(
+                                  flex: 2,
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text(
+                                      const Text(
+                                        'Free Parking ',
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                            color:
+                                                Color.fromRGBO(85, 32, 32, 1),
+                                            fontFamily: 'EBGaramond',
+                                            fontSize: 14,
+                                            letterSpacing: 0,
+                                            fontWeight: FontWeight.normal,
+                                            height: 1),
+                                      ),
+                                      SizedBox(
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.02,
+                                      ),
+                                      const Text(
+                                        'Pool ',
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                            color:
+                                                Color.fromRGBO(85, 32, 32, 1),
+                                            fontFamily: 'EBGaramond',
+                                            fontSize: 14,
+                                            letterSpacing: 0,
+                                            fontWeight: FontWeight.normal,
+                                            height: 1),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Flexible(
+                                  flex: 2,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const Text(
                                         'Free High Speed Internet(WI-FI)',
                                         textAlign: TextAlign.left,
                                         style: TextStyle(
@@ -356,9 +387,11 @@ class _vendorsingleviewState extends State<vendorsingleview> {
                                             height: 1),
                                       ),
                                       SizedBox(
-                                        height: 10,
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.02,
                                       ),
-                                      Text(
+                                      const Text(
                                         'Fitness Center with Gym/Workout Room ',
                                         textAlign: TextAlign.left,
                                         style: TextStyle(
@@ -392,71 +425,87 @@ class _vendorsingleviewState extends State<vendorsingleview> {
                         Container(
                             alignment: Alignment.bottomLeft,
                             padding: const EdgeInsets.all(13),
-                            child: const Row(
+                            child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Allergy Free room ',
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                          color: Color.fromRGBO(85, 32, 32, 1),
-                                          fontFamily: 'EBGaramond',
-                                          fontSize: 14,
-                                          letterSpacing: 0,
-                                          fontWeight: FontWeight.normal,
-                                          height: 1),
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      'Air Conditioning ',
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                          color: Color.fromRGBO(85, 32, 32, 1),
-                                          fontFamily: 'EBGaramond',
-                                          fontSize: 14,
-                                          letterSpacing: 0,
-                                          fontWeight: FontWeight.normal,
-                                          height: 1),
-                                    ),
-                                  ],
+                                Flexible(
+                                  flex: 2,
+                                  child: Column(
+                                    // crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      const Text(
+                                        'Allergy Free room ',
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                            color:
+                                                Color.fromRGBO(85, 32, 32, 1),
+                                            fontFamily: 'EBGaramond',
+                                            fontSize: 14,
+                                            letterSpacing: 0,
+                                            fontWeight: FontWeight.normal,
+                                            height: 1),
+                                      ),
+                                      SizedBox(
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.02,
+                                      ),
+                                      const Text(
+                                        'Air Conditioning ',
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                            color:
+                                                Color.fromRGBO(85, 32, 32, 1),
+                                            fontFamily: 'EBGaramond',
+                                            fontSize: 14,
+                                            letterSpacing: 0,
+                                            fontWeight: FontWeight.normal,
+                                            height: 1),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                                 SizedBox(
-                                  width: 70,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.21,
                                 ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Bath rolls ',
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                          color: Color.fromRGBO(85, 32, 32, 1),
-                                          fontFamily: 'EBGaramond',
-                                          fontSize: 14,
-                                          letterSpacing: 0,
-                                          fontWeight: FontWeight.normal,
-                                          height: 1),
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      'Desk ',
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                          color: Color.fromRGBO(85, 32, 32, 1),
-                                          fontFamily: 'EBGaramond',
-                                          fontSize: 14,
-                                          letterSpacing: 0,
-                                          fontWeight: FontWeight.normal,
-                                          height: 1),
-                                    ),
-                                  ],
+                                Flexible(
+                                  flex: 2,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const Text(
+                                        'Bath rolls ',
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                            color:
+                                                Color.fromRGBO(85, 32, 32, 1),
+                                            fontFamily: 'EBGaramond',
+                                            fontSize: 14,
+                                            letterSpacing: 0,
+                                            fontWeight: FontWeight.normal,
+                                            height: 1),
+                                      ),
+                                      SizedBox(
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.02,
+                                      ),
+                                      const Text(
+                                        'Desk ',
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                            color:
+                                                Color.fromRGBO(85, 32, 32, 1),
+                                            fontFamily: 'EBGaramond',
+                                            fontSize: 14,
+                                            letterSpacing: 0,
+                                            fontWeight: FontWeight.normal,
+                                            height: 1),
+                                      ),
+                                    ],
+                                  ),
                                 )
                               ],
                             )),
@@ -466,8 +515,10 @@ class _vendorsingleviewState extends State<vendorsingleview> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               SizedBox(
-                                  width: 160,
-                                  height: 45,
+                                  width:
+                                      MediaQuery.of(context).size.height * 0.21,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.06,
                                   child: TextButton(
                                       onPressed: () {
                                         Get.to(() => const InquiryW());
@@ -494,11 +545,13 @@ class _vendorsingleviewState extends State<vendorsingleview> {
                                             height: 1),
                                       ))),
                               SizedBox(
-                                  width: 170,
-                                  height: 45,
+                                  width:
+                                      MediaQuery.of(context).size.height * 0.21,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.06,
                                   child: TextButton(
                                       onPressed: () {
-                                         Get.to(() => const WishListW());
+                                        Get.to(() => const WishListW());
                                       },
                                       style: ButtonStyle(
                                         backgroundColor:
@@ -525,13 +578,16 @@ class _vendorsingleviewState extends State<vendorsingleview> {
                           ),
                         ),
                         Container(
-                          padding: const EdgeInsets.only(left: 15,right: 15,bottom: 15),
+                          padding: EdgeInsets.only(
+                              left: MediaQuery.of(context).size.width * 0.03,
+                              right: MediaQuery.of(context).size.width * 0.03,
+                              bottom: 15),
                           child: SizedBox(
-                              width: 370,
-                              height: 50,
+                              width: MediaQuery.of(context).size.width * 0.96,
+                              height: MediaQuery.of(context).size.height * 0.06,
                               child: TextButton(
                                   onPressed: () {
-                                     Get.to(() => const bookservicew());
+                                    Get.to(() => const bookservicew());
                                   },
                                   style: ButtonStyle(
                                     backgroundColor:
@@ -555,7 +611,6 @@ class _vendorsingleviewState extends State<vendorsingleview> {
                                   ))),
                         )
                       ],
-                      
                     )),
               ),
             ],

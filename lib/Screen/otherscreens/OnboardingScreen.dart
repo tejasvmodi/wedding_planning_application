@@ -1,5 +1,8 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:get/get.dart';
 import 'package:wedding_planning_application/Screen/authentication/forms/login_form.dart';
 import 'package:wedding_planning_application/Screen/components/DotsIndicator.dart';
 
@@ -13,7 +16,8 @@ class OnboardingScreen extends StatefulWidget {
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
   int activePage = 0;
-  bool stopAutoplay= false;
+  bool stopAutoplay = false;
+
   final List<Map<String, String>> imageData = [
     {
       'imagePath': 'assets/images/Splash1.jpg',
@@ -51,8 +55,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   onPageChanged: (index, reason) {
                     setState(() {
                       activePage = index;
-                      stopAutoplay = index==imageData.length-1;
-      
+                      stopAutoplay = index == imageData.length - 1;
                     });
                   },
                 ),
@@ -61,25 +64,27 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     builder: (BuildContext context) {
                       return Stack(
                         children: [
-                          
                           Image.asset(
                             data['imagePath']!,
                             opacity: const AlwaysStoppedAnimation(1),
                             fit: BoxFit.cover,
                             width: double.infinity,
                             height: double.infinity,
-                            
                           ),
                           Positioned(
-                            top: 20.0,
-                            left: 20.0,
+                            top: MediaQuery.of(context).size.width * 0.04,
+                            left: MediaQuery.of(context).size.width * 0.04,
+                            right: MediaQuery.of(context).size.width * 0.04,
                             child: Center(
                                 child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     children: [
                                   SizedBox(
-                                    width: 345, // Adjust the width as needed
+                                    width: MediaQuery.of(context)
+                                        .size
+                                        .width, // Adjust the width as needed
                                     child: Text(
                                       data['text']!,
                                       style: const TextStyle(
@@ -93,28 +98,26 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                   ),
                                 ])),
                           ),
-      
-                          const SizedBox(height: 16.0),
+
                           if (activePage == imageData.length - 1)
                             // third page start button ... code
                             Positioned(
-                              left: 110,
-                              bottom: 90,
+                              left: MediaQuery.of(context).size.width * 0.3,
+                              bottom: MediaQuery.of(context).size.height * 0.12,
                               child: Container(
                                 decoration: BoxDecoration(
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.5),
-                                  offset: Offset(2, 2),
-                                  blurRadius: 5,
-                                  spreadRadius: 2,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(0.5),
+                                      offset: const Offset(2, 2),
+                                      blurRadius: 5,
+                                      spreadRadius: 2,
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
                                 child: ElevatedButton(
                                   onPressed: () {
-                                     Navigator.push(context, MaterialPageRoute(builder: (context) => const Login_form(),));
-                                                         
+                                    Get.to(() => Login_form());
                                   },
                                   style: ElevatedButton.styleFrom(
                                     shape: RoundedRectangleBorder(
@@ -135,23 +138,21 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                 ),
                               ),
                             ),
-      
+
                           // if (activePage != imageData.length - 1)
                           Positioned(
-                            left: 150,
-                            bottom: 30,
-                            child: Padding(
-                              // dot indicator for .....started
-                              padding: const EdgeInsets.only(top: 16.0),
-                              child: dots(imageData, activePage),
-                            ),
+                            left: MediaQuery.of(context).size.width * 0.43,
+                            bottom: MediaQuery.of(context).size.height * 0.05,
+
+                            // dot indicator for .....started
+
+                            child: dots(imageData, activePage),
                           ),
                         ],
                       );
                     },
                   );
                 }).toList(),
-                
               ),
             ],
           ),

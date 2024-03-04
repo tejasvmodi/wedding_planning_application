@@ -44,9 +44,9 @@ class _WishListWState extends State<WishListW> {
             color: Color.fromRGBO(62, 53, 53, 1),
           ),
         ),
-        title: const Padding(
-          padding: EdgeInsets.only(left: 80),
-          child: Text(
+        title: Padding(
+          padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.19 ,),
+          child: const Text(
             'WishList',
             textAlign: TextAlign.left,
             style: TextStyle(

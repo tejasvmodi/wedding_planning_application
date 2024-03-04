@@ -18,9 +18,9 @@ WishListdesign(
           children: [
             Container(
               alignment: Alignment.bottomLeft,
-              padding: const EdgeInsets.only(left: 8),
-              height: 170,
-              width: 190,
+              padding: EdgeInsets.only(left:  MediaQuery.of(context).size.height * 0.02,),
+              height:  MediaQuery.of(context).size.height * 0.2,
+              width:  MediaQuery.of(context).size.width * 0.5,
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.black),
                 boxShadow: const [
@@ -52,8 +52,8 @@ WishListdesign(
                         TextSpan(
                           text: '$textdata\n',
                         ),
-                        const WidgetSpan(
-                          child: SizedBox(height: 15),
+                        WidgetSpan(
+                          child: SizedBox(height:  MediaQuery.of(context).size.height * 0.02,),
                         ),
                         TextSpan(
                           text: content,
@@ -78,14 +78,14 @@ WishListdesign(
                 ],
               ),
             ),
-            const SizedBox(
-              height: 10,
+             SizedBox(
+              height:  MediaQuery.of(context).size.height * 0.01,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 SizedBox(
-                  width: 80,
+                  width:  MediaQuery.of(context).size.width * 0.23,
                   child: TextButton(
                     onPressed: () {},
                     style: ButtonStyle(
@@ -113,7 +113,7 @@ WishListdesign(
                   ),
                 ),
                 SizedBox(
-                  width: 80,
+                        width:  MediaQuery.of(context).size.width * 0.21,
                   child: TextButton(
                     onPressed: () {
                       Get.to(()=>vendorsingleview(name: textdata, imagedata: newimage));

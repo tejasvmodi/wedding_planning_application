@@ -4,16 +4,17 @@ import 'package:get/get.dart';
 VendorBox(String Imagelink,String venuename,String venueprovide,Widget redirectp,BuildContext context){
   return InkWell(
                 child: SizedBox(
-                  width: 370,
-                  height: 100,
+                  width:  MediaQuery.of(context).size.width * 0.97,
+                  height:  MediaQuery.of(context).size.width * 0.26,
                   child: Stack(
                     children: <Widget>[
                       Positioned(
-                        top: 0,
-                        left: 10,
+                        top:  MediaQuery.of(context).size.height * 0.0,
+                        left:  MediaQuery.of(context).size.width * 0.01,
+                        right:  MediaQuery.of(context).size.width * 0.01,
                         child: Container(
-                          width: 350,
-                          height: 100,
+                          width:  MediaQuery.of(context).size.width * 0.97,
+                          height:  MediaQuery.of(context).size.height * 0.12,
                           decoration: BoxDecoration(
                               borderRadius: const BorderRadius.only(
                                   topRight: Radius.circular(10),
@@ -34,8 +35,8 @@ VendorBox(String Imagelink,String venuename,String venueprovide,Widget redirectp
                               )),
                           child: Row(
                             children: [
-                              const SizedBox(
-                                width: 10,
+                               SizedBox(
+                                width:  MediaQuery.of(context).size.width * 0.02,
                               ),
                               Container(
                                 height: 65,
@@ -51,8 +52,8 @@ VendorBox(String Imagelink,String venuename,String venueprovide,Widget redirectp
                                       const BorderRadius.all(Radius.elliptical(65, 65)),
                                 ),
                               ),
-                              const SizedBox(
-                                width: 25,
+                              SizedBox(
+                                width:  MediaQuery.of(context).size.width * 0.05,
                               ),
                               RichText(
                                 text:  TextSpan(
@@ -68,10 +69,10 @@ VendorBox(String Imagelink,String venuename,String venueprovide,Widget redirectp
                                     TextSpan(
                                       text: '$venuename\n',
                                     ),
-                                    const WidgetSpan(
+                                     WidgetSpan(
                                       child: SizedBox(
                                           height:
-                                              25), 
+                                               MediaQuery.of(context).size.height * 0.035), 
                                     ),
                                     TextSpan(
                                       text:
@@ -94,7 +95,7 @@ VendorBox(String Imagelink,String venuename,String venueprovide,Widget redirectp
                   ),
                 ),
               onTap: () {
-                Get.to(redirectp);
+                Get.to(()=>redirectp);
               },
               );
 }

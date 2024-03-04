@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wedding_planning_application/Screen/Emergency%20contancts/Emergencycontlist.dart';
 import 'package:wedding_planning_application/Screen/Screen_Navigation.dart';
-import 'package:wedding_planning_application/Screen/authentication/forms/login_form.dart';
 import 'package:wedding_planning_application/Screen/components/drawer.dart';
 import 'package:wedding_planning_application/Screen/home/HomeScreen%20Component/CarouselSlideHome.dart';
 import 'package:wedding_planning_application/Screen/home/HomeScreen%20Component/appbarHome.dart';
@@ -20,7 +19,8 @@ class _homeState extends State<home> {
    
   @override
   Widget build(BuildContext context) {
-    
+    final screenSize = MediaQuery.of(context).size;
+  
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -32,6 +32,7 @@ class _homeState extends State<home> {
       ),
       drawer: const Drawer123(),
       body: Container(
+        
         
         decoration: const BoxDecoration(
           gradient: LinearGradient(
@@ -48,42 +49,44 @@ class _homeState extends State<home> {
             children: [
               const CarouselSlideHome(),
               Container(
-                height: 50,
+                height:  MediaQuery.of(context).size.width * 0.12,
+                  
                 color: const Color.fromRGBO(85, 32, 32, 1),
-                child: const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text(
-                    '120 days until big day',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: Color.fromRGBO(255, 255, 255, 1),
-                        fontFamily: 'EBGaramond',
-                        fontSize: 25,
-                        letterSpacing: 0,
-                        fontWeight: FontWeight.w400,
-                        height: 1),
+                child:  Padding(
+                  padding: EdgeInsets.all(MediaQuery.of(context).size.width *0.02),
+                  child: const Center(
+                    child: Text(
+                      '120 days until big day',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: Color.fromRGBO(255, 255, 255, 1),
+                          fontFamily: 'EBGaramond',
+                          fontSize: 25,
+                          letterSpacing: 0,
+                          fontWeight: FontWeight.w400,
+                          height: 1),
+                    ),
                   ),
                 ),
               ),
-              const SizedBox(
-
-                height: 5,
+               SizedBox(
+                height:  MediaQuery.of(context).size.width * 0.02,
               ),
-              SingleChildScrollView(
+              SingleChildScrollView( 
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   children: [
                     categoryWrapper('assets/images/Vanues.jpg', 'Venue',
-                        context, const Login_form()),
+                        context, Screen_Navigation(currentIndex: 2,)),
                     categoryWrapper('assets/images/catering.jpg', 'Catering',
-                        context, const Login_form()),
+                        context, Screen_Navigation(currentIndex: 2,)),
                     categoryWrapper('assets/images/PhotoShoot.jpg',
-                        'Photo Shoot', context, const Login_form()),
+                        'Photo Shoot', context, Screen_Navigation(currentIndex: 2,)),
                     categoryWrapper('assets/images/Decor.jpg', 'Decoration',
                         context,Screen_Navigation(currentIndex: 2,), ),
                   ],
                 ),
-              ),
+              ), 
               const Divider(
                 color: Color.fromARGB(50, 0, 0, 0),
               ),
@@ -93,7 +96,7 @@ class _homeState extends State<home> {
                   children: [
                     Padding(
                       padding:
-                          const EdgeInsets.only(top: 0, left: 10, right: 10),
+                           EdgeInsets.only(top: 0, left: MediaQuery.of(context).size.width * 0.04, right: MediaQuery.of(context).size.width * 0.04,),
                       child: Row(
                         children: [
                           feature('assets/images/Checklist.jpg', 'CheckList',
@@ -105,7 +108,7 @@ class _homeState extends State<home> {
                     ),
                     Padding(
                       padding:
-                          const EdgeInsets.only(top: 0, left: 10, right: 10),
+                            EdgeInsets.only(top: 0, left: MediaQuery.of(context).size.width * 0.0, right: MediaQuery.of(context).size.width * 0.04,),
                       child: Row(
                         children: [
                           feature('assets/images/Vendors.jpg', 'Vendor', 26,
@@ -120,10 +123,11 @@ class _homeState extends State<home> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 0, right: 185),
+                      padding: const EdgeInsets.only(left: 0, right: 195),
                       child: feature('assets/images/Ceremoney.jpg', 'Ceremony',
                           26, context, Screen_Navigation(currentIndex: 2,),)
                     ),
+                    
                     
                   ],
                 ),

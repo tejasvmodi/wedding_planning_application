@@ -99,9 +99,9 @@ class _VendorSingleListState extends State<VendorSingleList> {
             color: Color.fromRGBO(62, 53, 53, 1),
           ),
         ),
-        title: const Padding(
-          padding: EdgeInsets.only(left: 80),
-          child: Text(
+        title: Padding(
+          padding: EdgeInsets.only( left:  MediaQuery.of(context).size.width * 0.21,),
+          child: const Text(
             'Venues',
             textAlign: TextAlign.left,
             style: TextStyle(
@@ -122,10 +122,10 @@ class _VendorSingleListState extends State<VendorSingleList> {
               },
               icon: Icon(
                 MdiIcons.heartOutline,
-                size: 40,
+                size:  MediaQuery.of(context).size.height * 0.056,
               )),
-          const SizedBox(
-            width: 5,
+          SizedBox(
+            width: MediaQuery.of(context).size.width * 0.01,
           )
         ],
       ),
@@ -142,7 +142,7 @@ class _VendorSingleListState extends State<VendorSingleList> {
         ),
         child: Column(children: [
           SizedBox(
-            height: 60,
+            height: MediaQuery.of(context).size.height * 0.07,
             child: Container(
               decoration: BoxDecoration(
                 color: const Color.fromRGBO(255, 217, 249, 1),
@@ -159,19 +159,19 @@ class _VendorSingleListState extends State<VendorSingleList> {
                       onPressed: () {},
                       icon: Icon(
                         MdiIcons.tuneVertical,
-                        size: 45,
+                        size:  MediaQuery.of(context).size.height * 0.056,
                       )),
                   IconButton(
                       onPressed: () {},
-                      icon: const Icon(
+                      icon:  Icon(
                         Icons.search,
-                        size: 45,
+                    size:  MediaQuery.of(context).size.height * 0.056,
                       )),
                   IconButton(
                       onPressed: () {},
                       icon: Icon(
                         MdiIcons.bookmarkOutline,
-                        size: 45,
+                      size:  MediaQuery.of(context).size.height * 0.056,
                       )),
                 ],
               ),

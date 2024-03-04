@@ -5,15 +5,15 @@ categoryWrapper(
   return Align(
     alignment: Alignment.topLeft,
     child: SizedBox(
-      height: 125,
-      width: 170,
+      height: MediaQuery.of(context).size.height * 0.16,
+      width: MediaQuery.of(context).size.width * 0.45,
       child: Column(
         children: [
           Container(
             decoration: BoxDecoration(
               boxShadow: [
                 BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
+                  color: Colors.grey.withOpacity(0.4),
                   offset: Offset(2, 2),
                   blurRadius: 08,
                   spreadRadius: 2,
@@ -24,8 +24,9 @@ categoryWrapper(
             child: InkWell(
               child: Image(
                 image: AssetImage(assetpath),
-                fit: BoxFit.cover,
-                height: 100,
+                fit: BoxFit.fitWidth,
+                height: MediaQuery.of(context).size.height *0.12,
+                width: MediaQuery.of(context).size.width *0.42,
                 alignment: Alignment.topLeft,
                 opacity: const AlwaysStoppedAnimation(1),
               ),

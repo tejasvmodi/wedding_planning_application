@@ -9,15 +9,15 @@ Widget vendorList(
   return Container(
     width: MediaQuery.of(context).size.width / 2 -
         12.0, // Divide by the number of photos per row
-    height: 270.0,
+    height: MediaQuery.of(context).size.height * 0.34,
     child: Stack(
       children: [
         Positioned(
-          top: 0,
-          left: 0,
+          top: MediaQuery.of(context).size.height * 0,
+          left: MediaQuery.of(context).size.height * 0.0,
           child: Container(
-            height: 200,
-            width: 170,
+            height: MediaQuery.of(context).size.height * 0.25,
+            width: MediaQuery.of(context).size.width * 0.44,
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: AssetImage(imagedata),
@@ -36,11 +36,11 @@ Widget vendorList(
           ),
         ),
         Positioned(
-          top: 150,
+          top: MediaQuery.of(context).size.height * 0.19,
           left: -6,
           child: Container(
             margin: EdgeInsetsDirectional.zero,
-            width: 180,
+            width: MediaQuery.of(context).size.width * 0.47,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -54,9 +54,9 @@ Widget vendorList(
                 ),
                 Expanded(
                   child: Container(
-                    constraints: const BoxConstraints(
-                      maxWidth: 180,
-                    ),
+                    // constraints:  BoxConstraints(
+                    //   maxWidth: MediaQuery.of(context).size.width * 0.37,
+                    // ),
                     child: RichText(
                        
                       text: TextSpan(
@@ -75,8 +75,8 @@ Widget vendorList(
                             text: '$texttitle\n',
                           
                           ),
-                          const WidgetSpan(
-                            child: SizedBox(height: 15),
+                           WidgetSpan(
+                            child: SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                           ),
                           const TextSpan(
                             text: 'Lukhnow in Banquet Hall',
@@ -111,9 +111,9 @@ Widget vendorList(
           left: 0,
           bottom: 0,
           child: Container(
-            margin: const EdgeInsets.only(top: 0, bottom: 13),
-            width: 170,
-            height: 50,
+            margin:  EdgeInsets.only(top: 0, bottom: MediaQuery.of(context).size.height * 0.02),
+            width: MediaQuery.of(context).size.width * 0.445,
+            height: MediaQuery.of(context).size.height * 0.06,
             child: TextButton(
               onPressed: () {
                 Get.to(()=> vendorsingleview(imagedata: imagedata,name:texttitle,));

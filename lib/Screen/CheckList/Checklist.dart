@@ -20,13 +20,14 @@ class _CheckListWState extends State<CheckListW> {
       appBar: AppBar(
         backgroundColor: const Color.fromRGBO(255, 217, 249, 1),
         elevation: 0,
-        title: const Padding(
-          padding: EdgeInsets.only(left: 60),
-          child: Text(
+        title: Padding(
+          padding:
+              EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.17),
+          child: const Text(
             'CheckList',
             textAlign: TextAlign.left,
             style: TextStyle(
-              color: Color.fromRGBO(62, 53, 53, 1),
+              color: const Color.fromRGBO(62, 53, 53, 1),
               fontFamily: 'EBGaramond',
               fontSize: 30,
               letterSpacing: 0,
@@ -46,7 +47,7 @@ class _CheckListWState extends State<CheckListW> {
           ),
         ],
       ),
-      drawer: Drawer123(),
+      drawer: const Drawer123(),
       body: Container(
           decoration: const BoxDecoration(
             border:
@@ -67,14 +68,18 @@ class _CheckListWState extends State<CheckListW> {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Container(
-                      margin:
-                          const EdgeInsets.only(top: 15, left: 15, right: 15),
-                      height: 50,
-                      width: 70,
+                      margin: EdgeInsets.only(
+                          top: MediaQuery.of(context).size.height * 0.03,
+                          left: MediaQuery.of(context).size.width * 0.05,
+                          right: MediaQuery.of(context).size.width * 0.05),
+                      height: MediaQuery.of(context).size.height * 0.06,
+                      width: MediaQuery.of(context).size.width * 0.13,
                       decoration: const BoxDecoration(
                           image: DecorationImage(
-                              image:
-                                  AssetImage('assets/images/icon_bride.png'))),
+                              image: AssetImage(
+                                'assets/images/icon_bride.png',
+                              ),
+                              fit: BoxFit.cover)),
                     ),
                     const Text('Bride',
                         textAlign: TextAlign.left,
@@ -142,14 +147,16 @@ class _CheckListWState extends State<CheckListW> {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Container(
-                      margin:
-                          const EdgeInsets.only(top: 25, left: 15, right: 15),
-                      height: 50,
-                      width: 70,
+                      margin: EdgeInsets.only(
+                          top: MediaQuery.of(context).size.height * 0.02,
+                          left: MediaQuery.of(context).size.width * 0.05,
+                          right: MediaQuery.of(context).size.width * 0.02),
+                      height: MediaQuery.of(context).size.height * 0.07,
+                      width: MediaQuery.of(context).size.width * 0.13,
                       decoration: const BoxDecoration(
                           image: DecorationImage(
-                              image:
-                                  AssetImage('assets/images/icon_groom.png'))),
+                              image: AssetImage('assets/images/icon_groom.png'),
+                              fit: BoxFit.cover)),
                     ),
                     const Text('Groom',
                         textAlign: TextAlign.left,
@@ -237,16 +244,16 @@ class _CheckListWState extends State<CheckListW> {
                     color: Color.fromRGBO(214, 187, 187, 1),
                     spreadRadius: 5)
               ]),
-          height: 70,
-          width: 400,
+          height: MediaQuery.of(context).size.width * 0.2,
+          width: MediaQuery.of(context).size.width,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                const SizedBox(
-                  width: 10,
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.01,
                 ),
                 Icon(
                   MdiIcons.plusCircleOutline,
@@ -297,7 +304,7 @@ class _CheckListWState extends State<CheckListW> {
                                       blurRadius: 10.0)
                                 ],
                               ),
-                              width: 250,
+                              width: MediaQuery.of(context).size.width * 0.7,
                               margin: const EdgeInsets.all(10),
                               child: const TextField(
                                 maxLines: 4,
@@ -336,12 +343,13 @@ class _CheckListWState extends State<CheckListW> {
                               onPressed: () {
                                 _showMyDialog(context);
                               },
-                              style: const ButtonStyle(
-                                minimumSize:
-                                    MaterialStatePropertyAll(Size(210, 60)),
-                                backgroundColor: MaterialStatePropertyAll(
+                              style: ButtonStyle(
+                                minimumSize: MaterialStatePropertyAll(Size(
+                                    MediaQuery.of(context).size.width * 0.50,
+                                    MediaQuery.of(context).size.height * 0.07)),
+                                backgroundColor: const MaterialStatePropertyAll(
                                     Color.fromRGBO(54, 29, 29, 1)),
-                                shape: MaterialStatePropertyAll(
+                                shape: const MaterialStatePropertyAll(
                                   RoundedRectangleBorder(
                                       borderRadius: BorderRadius.all(
                                           Radius.elliptical(8, 8))),
@@ -456,11 +464,13 @@ Future<void> _showMyDialog(BuildContext context) async {
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                style: const ButtonStyle(
-                  minimumSize: MaterialStatePropertyAll(Size(210, 60)),
-                  backgroundColor:
-                      MaterialStatePropertyAll(Color.fromRGBO(54, 29, 29, 1)),
-                  shape: MaterialStatePropertyAll(
+                style: ButtonStyle(
+                  minimumSize: MaterialStatePropertyAll(Size(
+                      MediaQuery.of(context).size.width * 0.50,
+                      MediaQuery.of(context).size.height * 0.07)),
+                  backgroundColor: const MaterialStatePropertyAll(
+                      Color.fromRGBO(54, 29, 29, 1)),
+                  shape: const MaterialStatePropertyAll(
                     RoundedRectangleBorder(
                         borderRadius:
                             BorderRadius.all(Radius.elliptical(8, 8))),

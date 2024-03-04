@@ -20,9 +20,9 @@ class _vendorhomeState extends State<vendorhome> {
         appBar: AppBar(
           backgroundColor: const Color.fromRGBO(255, 217, 249, 1),
         
-          title: const Padding(
-            padding: EdgeInsets.only(left: 75),
-            child: Text(
+          title: Padding(
+            padding: EdgeInsets.only(left:  MediaQuery.of(context).size.width * 0.19,),
+            child: const Text(
               'Vendors',
               textAlign: TextAlign.left,
               style: TextStyle(
@@ -41,14 +41,14 @@ class _vendorhomeState extends State<vendorhome> {
                 onPressed: () {   Get.to(() => const WishListW());},
                 icon: Icon(
                   MdiIcons.heartOutline,
-                  size: 40,
+              size:  MediaQuery.of(context).size.height * 0.056,
                 )),
-            const SizedBox(
-              width: 5,
+            SizedBox(
+              width:  MediaQuery.of(context).size.width * 0.01,
             )
           ],
         ),
-        drawer: Drawer123(),
+        drawer: const Drawer123(),
         body: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(
@@ -62,7 +62,7 @@ class _vendorhomeState extends State<vendorhome> {
           ),
           child: Column(children: [
             SizedBox(
-              height: 60,
+              height:  MediaQuery.of(context).size.height * 0.07,
               child: Container(
                 decoration: BoxDecoration(
                   color: const Color.fromRGBO(255, 217, 249, 1),
@@ -79,19 +79,19 @@ class _vendorhomeState extends State<vendorhome> {
                         onPressed: () {},
                         icon: Icon(
                           MdiIcons.tuneVertical,
-                          size: 45,
+                          size:  MediaQuery.of(context).size.height * 0.056,
                         )),
                     IconButton(
                         onPressed: () {},
-                        icon: const Icon(
+                        icon: Icon(
                           Icons.search,
-                          size: 45,
+                         size:  MediaQuery.of(context).size.height * 0.056,
                         )),
                     IconButton(
                         onPressed: () {},
                         icon: Icon(
                           MdiIcons.bookmarkOutline,
-                          size: 45,
+                         size:  MediaQuery.of(context).size.height * 0.056,
                         )),
                   ],
                 ),
