@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:wedding_planning_application/Screen/Booking/My%20Booking/showBooking.dart';
+import 'package:wedding_planning_application/Screen/Chat%20Screen/chatinbox.dart';
 import 'package:wedding_planning_application/Screen/Profile/Profile%20Component/accountitems.dart';
 import 'package:wedding_planning_application/Screen/Profile/Profile%20Component/profilephoto.dart';
+import 'package:wedding_planning_application/Screen/Profile/Recommendation%20screen/location.dart';
 import 'package:wedding_planning_application/Screen/Profile/Recommendation%20screen/recommendation.dart';
 import 'package:wedding_planning_application/Screen/Profile/manageprofileFemale.dart/manageFprofile.dart';
 import 'package:wedding_planning_application/Screen/authentication/forms/login_form.dart';
@@ -79,14 +81,14 @@ class _ProfileWState extends State<ProfileW> {
                 color: Color.fromRGBO(68, 45, 45, 1),
               ),
               accountitem('Location', Icons.location_on_outlined, context,
-                  const Login_form()),
+                  const LocationW()),
               const Divider(
                 indent: 25,
                 endIndent: 25,
                 color: Color.fromRGBO(68, 45, 45, 1),
               ),
               accountitem('Chats', MdiIcons.messageOutline, context,
-                  const Login_form()),
+                   const ChatInboxW()),
               const Divider(
                 indent: 25,
                 endIndent: 25,

@@ -142,7 +142,7 @@ class _HelpWState extends State<HelpW> {
                       width: 20,
                     ),
                     GestureDetector(
-                        onTap: () => _launchYouTubeVideo(context, 'https://youtu.be/x9l2VRJ5-3k?si=IH-Cx46hJIm1UXZh'),
+                        onTap: () => _launchYouTubeVideo(context, 'https://youtu.be/x9l2VRJ5-3k?si=70Y4-TvNxGrlHyaj'),
                         child: Container(
                           height: 160,
                           width: 190,
@@ -288,11 +288,13 @@ class _HelpWState extends State<HelpW> {
         ));
   }
 }
-
 Future<void> _launchYouTubeVideo(BuildContext context, String url) async {
+  // 1. Check if the URL can be launched
   if (await canLaunch(url)) {
+    // 2. Launch the URL
     await launch(url);
   } else {
+    // 3. Show an error snackbar if launching fails
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Text('Could not launch YouTube video'),
