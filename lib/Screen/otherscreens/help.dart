@@ -142,7 +142,7 @@ class _HelpWState extends State<HelpW> {
                       width: 20,
                     ),
                     GestureDetector(
-                        onTap: () => _launchYouTubeVideo(context, 'https://youtu.be/x9l2VRJ5-3k?si=70Y4-TvNxGrlHyaj'),
+                        onTap: () => launchUrl(Uri.parse('https://youtu.be/JtKjcyc5wh0?si=bFciwnMu3zY3V-f0')),
                         child: Container(
                           height: 160,
                           width: 190,
@@ -163,7 +163,7 @@ class _HelpWState extends State<HelpW> {
                       width: 20,
                     ),
                     GestureDetector(
-                        onTap: () => _launchYouTubeVideo(context, 'https://youtu.be/DsROfrRB-1k?si=DvmKorCh11JfHTVw'),
+                        onTap: () => launchUrl(Uri.parse('https://youtu.be/guHHhEUYAQ4?si=5qRpnjro5WyBGAcD')),
                         child: Container(
                           height: 160,
                           width: 190,
@@ -184,7 +184,7 @@ class _HelpWState extends State<HelpW> {
                       width: 20,
                     ),
                     GestureDetector(
-                        onTap: () => _launchYouTubeVideo(context, 'https://youtu.be/tyBJioe8gOs?si=DZUd5e5bSE7H-MUc'),
+                        onTap: () => launchUrl(Uri.parse('https://youtu.be/v941giGV-Tg?si=kCQvm1wWRtlzD6Vx')),
                         child: Container(
                           height: 160,
                           width: 190,
@@ -288,17 +288,17 @@ class _HelpWState extends State<HelpW> {
         ));
   }
 }
-Future<void> _launchYouTubeVideo(BuildContext context, String url) async {
-  // 1. Check if the URL can be launched
-  if (await canLaunch(url)) {
-    // 2. Launch the URL
-    await launch(url);
-  } else {
-    // 3. Show an error snackbar if launching fails
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Could not launch YouTube video'),
-      ),
-    );
-  }
-}
+// Future<void> _launchYouTubeVideo(BuildContext context, String url) async {
+//   // 1. Check if the URL can be launched
+//   if (await canLaunch(url)) {
+//     // 2. Launch the URL
+//     await launch(url);
+//   } else {
+//     // 3. Show an error snackbar if launching fails
+//     ScaffoldMessenger.of(context).showSnackBar(
+//       const SnackBar(
+//         content: Text('Could not launch YouTube video'),
+//       ),
+//     );
+//   }
+// }
