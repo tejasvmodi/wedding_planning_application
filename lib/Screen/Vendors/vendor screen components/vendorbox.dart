@@ -5,7 +5,7 @@ VendorBox(String Imagelink,String venuename,String venueprovide,Widget redirectp
   return InkWell(
                 child: SizedBox(
                   width:  MediaQuery.of(context).size.width * 0.97,
-                  height:  MediaQuery.of(context).size.width * 0.26,
+                  height:  MediaQuery.of(context).size.width * 0.29,
                   child: Stack(
                     children: <Widget>[
                       Positioned(
@@ -43,7 +43,7 @@ VendorBox(String Imagelink,String venuename,String venueprovide,Widget redirectp
                                 width: 65,
                                 decoration: BoxDecoration(
                                   image: DecorationImage(
-                                      image: AssetImage(
+                                      image: NetworkImage(
                                        Imagelink,
                                       ),
                                       fit: BoxFit.cover,
@@ -57,7 +57,8 @@ VendorBox(String Imagelink,String venuename,String venueprovide,Widget redirectp
                               ),
                               RichText(
                                 text:  TextSpan(
-                                  style: const TextStyle(
+                                  
+                                  style:  TextStyle(
                                     color: Color.fromRGBO(85, 32, 32, 1),
                                     fontFamily: 'EBGaramond',
                                     fontSize: 20,
@@ -75,6 +76,7 @@ VendorBox(String Imagelink,String venuename,String venueprovide,Widget redirectp
                                                MediaQuery.of(context).size.height * 0.035), 
                                     ),
                                     TextSpan(
+                                      
                                       text:
                                         venueprovide,
                                              style: const TextStyle(
@@ -86,6 +88,7 @@ VendorBox(String Imagelink,String venuename,String venueprovide,Widget redirectp
                                     ),
                                   ],
                                 ),
+                                overflow: TextOverflow.ellipsis,
                               )
                             ],
                           ),

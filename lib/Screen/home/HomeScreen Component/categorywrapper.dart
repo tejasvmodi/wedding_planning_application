@@ -23,7 +23,7 @@ categoryWrapper(
             ),
             child: InkWell(
               child: Image(
-                image: AssetImage(assetpath),
+                image: NetworkImage(assetpath),
                 fit: BoxFit.fitWidth,
                 height: MediaQuery.of(context).size.height *0.12,
                 width: MediaQuery.of(context).size.width *0.42,

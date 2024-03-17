@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:wedding_planning_application/Screen/Screen_Navigation.dart';
+import 'package:wedding_planning_application/Repository/Login/login_form.dart';
 import 'package:wedding_planning_application/Screen/authentication/forms/forgotpassword_form.dart';
 import 'package:wedding_planning_application/Screen/authentication/forms/registration_forms.dart';
 
@@ -14,7 +14,9 @@ class Login_form extends StatefulWidget {
 
 // ignore: camel_case_types
 class _Login_formState extends State<Login_form> {
-  @override 
+  TextEditingController username = new TextEditingController();
+  TextEditingController password = new TextEditingController();
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
@@ -61,8 +63,9 @@ class _Login_formState extends State<Login_form> {
                           MediaQuery.of(context).size.width * 0.03,
                           0,
                           0),
-                      child: const TextField(
-                        decoration: InputDecoration(
+                      child: TextField(
+                        controller: username,
+                        decoration: const InputDecoration(
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.only(
                                   topLeft: Radius.circular(10),
@@ -89,8 +92,9 @@ class _Login_formState extends State<Login_form> {
                           MediaQuery.of(context).size.width * 0.05,
                           0,
                           0),
-                      child: const TextField(
-                        decoration: InputDecoration(
+                      child: TextField(
+                        controller: password,
+                        decoration: const InputDecoration(
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.only(
                                   topLeft: Radius.circular(10),
@@ -119,7 +123,13 @@ class _Login_formState extends State<Login_form> {
                           0),
                       child: ElevatedButton(
                         onPressed: () {
-                          Get.to(() => Screen_Navigation());
+                            AuthenticationRepo auth = AuthenticationRepo();
+                            auth.loginUserWithNameEmailAndPassword(username.text, password.text);
+                            // log(username.text);
+                            // log(password.text);
+
+                          setState(() {});
+                          // Get.to(() => Screen_Navigation());
                         },
                         style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(
@@ -148,7 +158,7 @@ class _Login_formState extends State<Login_form> {
                           0,
                           0),
                       child: ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
                           Get.to(() => const registeration_form());
                         },
                         style: ElevatedButton.styleFrom(

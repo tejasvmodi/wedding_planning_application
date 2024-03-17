@@ -17,6 +17,7 @@ accountitem(String text,IconData iconname,BuildContext context,Widget find){
                     fontWeight: FontWeight.w600,
                     height: 1)),
                     onTap: () {
+                      
                      Get.to(()=>find);
                     },),
                    

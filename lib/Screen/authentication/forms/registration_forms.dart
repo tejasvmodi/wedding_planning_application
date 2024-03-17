@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wedding_planning_application/Repository/Login/registrationrepo.dart';
 import 'package:wedding_planning_application/Screen/authentication/forms/login_form.dart';
 
 // ignore: camel_case_types
@@ -11,7 +12,11 @@ class registeration_form extends StatefulWidget {
 
 // ignore: camel_case_types
 class _registeration_formState extends State<registeration_form> {
-  String _selectedGender = 'Bride';
+  String _selectedGender = 'BRIDE';
+  TextEditingController FirstName = new TextEditingController();
+  TextEditingController LastName = new TextEditingController();
+  TextEditingController Email = new TextEditingController();
+  TextEditingController Password = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -53,39 +58,67 @@ class _registeration_formState extends State<registeration_form> {
               color: Colors.transparent,
               child: Column(
                 children: [
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.02,
-                          MediaQuery.of(context).size.width * 0.03, 0, 0),
-                    child: const TextField(
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(10),
-                                topRight: Radius.circular(10),
-                                bottomLeft: Radius.circular(10),
-                                bottomRight: Radius.circular(10)),
-                          ),
-                          label: Text(
-                            'Name',
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                                color: Color.fromRGBO(62, 53, 53, 1),
-                                fontFamily: 'EBGaramond',
-                                fontSize: 23,
-                                letterSpacing: 0,
-                                fontWeight: FontWeight.bold,
-                                height: 1),
-                          )),
-                    ),
-                  ),
+                Padding(
+  padding: EdgeInsets.fromLTRB(
+    MediaQuery.of(context).size.width * 0.02,
+    MediaQuery.of(context).size.width * 0.03,
+    0,
+    0,
+  ),
+  child: Row(
+    children: [
+      Expanded(
+        child: TextField(
+          controller: FirstName,
+          decoration: InputDecoration(
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            labelText: 'First Name',
+            labelStyle: const TextStyle(
+              color: Color.fromRGBO(62, 53, 53, 1),
+              fontFamily: 'EBGaramond',
+              fontSize: 23,
+              letterSpacing: 0,
+              fontWeight: FontWeight.bold,
+              height: 1,
+            ),
+          ),
+        ),
+      ),
+      const SizedBox(width: 8), // Add spacing between text fields
+      Expanded(
+        child: TextField(
+          controller: LastName,
+          decoration: InputDecoration(
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            labelText: 'Last Name',
+            labelStyle: const TextStyle(
+              color: Color.fromRGBO(62, 53, 53, 1),
+              fontFamily: 'EBGaramond',
+              fontSize: 23,
+              letterSpacing: 0,
+              fontWeight: FontWeight.bold,
+              height: 1,
+            ),
+          ),
+        ),
+      ),
+    ],
+  ),
+),
+
                   const SizedBox(
                     height: 5,
                   ),
                  Padding(
                     padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.02,
                           MediaQuery.of(context).size.width * 0.03, 0, 0),
-                    child: const TextField(
-                      decoration: InputDecoration(
+                    child:  TextField(
+                      controller: Email,
+                      decoration: const InputDecoration(
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(10),
@@ -112,8 +145,9 @@ class _registeration_formState extends State<registeration_form> {
                    Padding(
                     padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.02,
                           MediaQuery.of(context).size.width * 0.03, 0, 0),
-                    child: const TextField(
-                      decoration: InputDecoration(
+                    child: TextField(
+                      controller: Password,
+                      decoration: const InputDecoration(
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(10),
@@ -147,7 +181,7 @@ class _registeration_formState extends State<registeration_form> {
                           child: ListTile(
                             leading: Radio<String>(
                               activeColor: const Color.fromRGBO(54, 29, 29, 1),
-                              value: 'Bride',
+                              value: 'BRIDE',
                               groupValue: _selectedGender,
                               onChanged: (value) {
                                 setState(() {
@@ -171,7 +205,7 @@ class _registeration_formState extends State<registeration_form> {
                           child: ListTile(
                             leading: Radio<String>(
                               activeColor: const Color.fromRGBO(54, 29, 29, 1),
-                              value: 'Groom',
+                              value: 'GROOM',
                               groupValue: _selectedGender,
                               onChanged: (value) {
                                 setState(() {
@@ -199,7 +233,13 @@ class _registeration_formState extends State<registeration_form> {
                     padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.02,
                           MediaQuery.of(context).size.width * 0.03, 0, 0),
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        RegistrationRepository registration = RegistrationRepository();
+                        registration.registerUser(FirstName.text, LastName.text, Email.text, Password.text, _selectedGender);
+                        setState(() {
+                          
+                        });
+                      },
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(13),

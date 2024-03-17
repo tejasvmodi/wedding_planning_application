@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:wedding_planning_application/Repository/Login/login_form.dart';
 import 'package:wedding_planning_application/Screen/Booking/My%20Booking/showBooking.dart';
 import 'package:wedding_planning_application/Screen/Chat%20Screen/chatinbox.dart';
 import 'package:wedding_planning_application/Screen/Profile/Profile%20Component/accountitems.dart';
@@ -52,13 +54,12 @@ class _ProfileWState extends State<ProfileW> {
                 ))
           ],
         ),
-        drawer: Drawer123(),
+        drawer: const Drawer123(),
         body: SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: Column(
             children: [
-             
-              profilephoto('Anjali','assets/images/Account Icon.jpg'),
+              profilephoto('Anjali', 'assets/images/Account Icon.jpg'),
               accountitem('My Booking', MdiIcons.listBoxOutline, context,
                   const ShowBooking()),
               const Divider(
@@ -88,7 +89,7 @@ class _ProfileWState extends State<ProfileW> {
                 color: Color.fromRGBO(68, 45, 45, 1),
               ),
               accountitem('Chats', MdiIcons.messageOutline, context,
-                   const ChatInboxW()),
+                  const ChatInboxW()),
               const Divider(
                 indent: 25,
                 endIndent: 25,
@@ -108,8 +109,40 @@ class _ProfileWState extends State<ProfileW> {
                 endIndent: 25,
                 color: Color.fromRGBO(68, 45, 45, 1),
               ),
-              accountitem(
-                  'Log In/Out', MdiIcons.login, context, const Login_form()),
+              // accountitem(
+              // 'Log In/Out', MdiIcons.login, context, const Login_form()),
+              Row(
+                children: [
+                  const SizedBox(
+                    width: 25,
+                  ),
+                  Icon(
+                    MdiIcons.login,
+                    size: 45,
+                    color: const Color.fromRGBO(68, 45, 45, 1),
+                  ),
+                  const SizedBox(
+                    width: 25,
+                  ),
+                  InkWell(
+                    child: const Text('Log In/Out',
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                            color: Color.fromRGBO(68, 45, 45, 1),
+                            fontFamily: 'EBGaramond',
+                            fontSize: 26,
+                            letterSpacing: 0,
+                            fontWeight: FontWeight.w600,
+                            height: 1)),
+                    onTap: () {
+                      AuthenticationRepo auth = new AuthenticationRepo()
+                      ;
+                      auth.logOut();
+                      Get.to(() => const Login_form());
+                    },
+                  ),
+                ],
+              ),
               const Divider(
                 indent: 25,
                 endIndent: 25,
