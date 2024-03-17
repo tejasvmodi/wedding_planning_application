@@ -1,32 +1,27 @@
-
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:wedding_planning_application/Screen/CheckList/Checklist.dart';
-import 'package:wedding_planning_application/Screen/Inspiration%20Screen/inspiration.dart';
 import 'package:wedding_planning_application/Screen/Profile/profile.dart';
-import 'package:wedding_planning_application/Screen/Vendors/vendorhome.dart';
 import 'package:wedding_planning_application/Screen/home/home.dart';
+import 'package:wedding_planning_application/Screen/inspiration_screen/inspiration.dart';
+import 'package:wedding_planning_application/screen/checklist/check_list.dart';
+import 'package:wedding_planning_application/screen/vendor/vendor_home.dart';
 
-// ignore: must_be_immutable, camel_case_types
-class Screen_Navigation extends StatefulWidget {
-
-
-  Screen_Navigation({super.key, this.currentIndex=0});
-    int currentIndex;
+// ignore: must_be_immutable
+class ScreenNavigation extends StatefulWidget {
+  ScreenNavigation({super.key, this.currentIndex = 0});
+  int currentIndex;
 
   @override
-  State<Screen_Navigation> createState() => _Screen_NavigationState();
+  State<ScreenNavigation> createState() => _ScreenNavigationState();
 }
 
-// ignore: camel_case_types
-class _Screen_NavigationState extends State<Screen_Navigation> {
-
+class _ScreenNavigationState extends State<ScreenNavigation> {
   final List<Widget> list = [
-    home(),
+    const Home(),
     const CheckListW(),
-    const vendorhome(),
-     const InspirationW(),
-    const ProfileW(),
+    const VendorHome(),
+    const InspirationW(),
+    const Profile(),
   ];
 
   @override

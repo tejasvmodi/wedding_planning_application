@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:wedding_planning_application/Repository/Login/login_form.dart';
 import 'package:wedding_planning_application/Screen/authentication/forms/forgotpassword_form.dart';
 import 'package:wedding_planning_application/Screen/authentication/forms/registration_forms.dart';
+import 'package:wedding_planning_application/services/authentication/auth_service.dart';
 
-// ignore: camel_case_types
-class Login_form extends StatefulWidget {
-  const Login_form({super.key});
+class LoginForm extends StatefulWidget {
+  const LoginForm({super.key});
 
   @override
-  State<Login_form> createState() => _Login_formState();
+  State<LoginForm> createState() => _LoginFormState();
 }
 
-// ignore: camel_case_types
-class _Login_formState extends State<Login_form> {
-  TextEditingController username = new TextEditingController();
-  TextEditingController password = new TextEditingController();
+class _LoginFormState extends State<LoginForm> {
+  final AuthenticationService authService = Get.find();
+
+  TextEditingController username = TextEditingController();
+  TextEditingController password = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -123,13 +123,8 @@ class _Login_formState extends State<Login_form> {
                           0),
                       child: ElevatedButton(
                         onPressed: () {
-                            AuthenticationRepo auth = AuthenticationRepo();
-                            auth.loginUserWithNameEmailAndPassword(username.text, password.text);
-                            // log(username.text);
-                            // log(password.text);
-
-                          setState(() {});
-                          // Get.to(() => Screen_Navigation());
+                          authService.loginWithUsernameAndPassword(
+                              username.text, password.text);
                         },
                         style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(
@@ -159,7 +154,7 @@ class _Login_formState extends State<Login_form> {
                           0),
                       child: ElevatedButton(
                         onPressed: () async {
-                          Get.to(() => const registeration_form());
+                          Get.to(() => const RegistrationForm());
                         },
                         style: ElevatedButton.styleFrom(
                           side: const BorderSide(

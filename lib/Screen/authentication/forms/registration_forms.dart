@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:wedding_planning_application/Repository/Login/registrationrepo.dart';
+import 'package:get/get.dart';
 import 'package:wedding_planning_application/Screen/authentication/forms/login_form.dart';
+import 'package:wedding_planning_application/services/authentication/auth_service.dart';
 
-// ignore: camel_case_types
-class registeration_form extends StatefulWidget {
-  const registeration_form({super.key});
+class RegistrationForm extends StatefulWidget {
+  const RegistrationForm({super.key});
 
   @override
-  State<registeration_form> createState() => _registeration_formState();
+  State<RegistrationForm> createState() => _RegistrationFormState();
 }
 
-// ignore: camel_case_types
-class _registeration_formState extends State<registeration_form> {
+class _RegistrationFormState extends State<RegistrationForm> {
+  final AuthenticationService authService = Get.find();
   String _selectedGender = 'BRIDE';
-  TextEditingController FirstName = new TextEditingController();
-  TextEditingController LastName = new TextEditingController();
-  TextEditingController Email = new TextEditingController();
-  TextEditingController Password = new TextEditingController();
+  TextEditingController firstName = TextEditingController();
+  TextEditingController lastName = TextEditingController();
+  TextEditingController email = TextEditingController();
+  TextEditingController password = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -34,14 +34,16 @@ class _registeration_formState extends State<registeration_form> {
                 Color.fromRGBO(255, 235, 255, 1),
               ]),
         ),
-        padding:  EdgeInsets.symmetric( horizontal: MediaQuery.of(context).size.width * 0.04,
-              vertical: MediaQuery.of(context).size.height * 0.02 ,),
+        padding: EdgeInsets.symmetric(
+          horizontal: MediaQuery.of(context).size.width * 0.04,
+          vertical: MediaQuery.of(context).size.height * 0.02,
+        ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Container(
-             width: MediaQuery.of(context).size.width * 0.6,
-                  height: MediaQuery.of(context).size.height * 0.3,
+              width: MediaQuery.of(context).size.width * 0.6,
+              height: MediaQuery.of(context).size.height * 0.3,
               decoration: const BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage(
@@ -52,72 +54,76 @@ class _registeration_formState extends State<registeration_form> {
             const SizedBox(
               height: 25,
             ),
-      
+
             //TextField Started
             Material(
               color: Colors.transparent,
               child: Column(
                 children: [
-                Padding(
-  padding: EdgeInsets.fromLTRB(
-    MediaQuery.of(context).size.width * 0.02,
-    MediaQuery.of(context).size.width * 0.03,
-    0,
-    0,
-  ),
-  child: Row(
-    children: [
-      Expanded(
-        child: TextField(
-          controller: FirstName,
-          decoration: InputDecoration(
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            labelText: 'First Name',
-            labelStyle: const TextStyle(
-              color: Color.fromRGBO(62, 53, 53, 1),
-              fontFamily: 'EBGaramond',
-              fontSize: 23,
-              letterSpacing: 0,
-              fontWeight: FontWeight.bold,
-              height: 1,
-            ),
-          ),
-        ),
-      ),
-      const SizedBox(width: 8), // Add spacing between text fields
-      Expanded(
-        child: TextField(
-          controller: LastName,
-          decoration: InputDecoration(
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            labelText: 'Last Name',
-            labelStyle: const TextStyle(
-              color: Color.fromRGBO(62, 53, 53, 1),
-              fontFamily: 'EBGaramond',
-              fontSize: 23,
-              letterSpacing: 0,
-              fontWeight: FontWeight.bold,
-              height: 1,
-            ),
-          ),
-        ),
-      ),
-    ],
-  ),
-),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(
+                      MediaQuery.of(context).size.width * 0.02,
+                      MediaQuery.of(context).size.width * 0.03,
+                      0,
+                      0,
+                    ),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: TextField(
+                            controller: firstName,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              labelText: 'First Name',
+                              labelStyle: const TextStyle(
+                                color: Color.fromRGBO(62, 53, 53, 1),
+                                fontFamily: 'EBGaramond',
+                                fontSize: 23,
+                                letterSpacing: 0,
+                                fontWeight: FontWeight.bold,
+                                height: 1,
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                            width: 8), // Add spacing between text fields
+                        Expanded(
+                          child: TextField(
+                            controller: lastName,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              labelText: 'Last Name',
+                              labelStyle: const TextStyle(
+                                color: Color.fromRGBO(62, 53, 53, 1),
+                                fontFamily: 'EBGaramond',
+                                fontSize: 23,
+                                letterSpacing: 0,
+                                fontWeight: FontWeight.bold,
+                                height: 1,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
 
                   const SizedBox(
                     height: 5,
                   ),
-                 Padding(
-                    padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.02,
-                          MediaQuery.of(context).size.width * 0.03, 0, 0),
-                    child:  TextField(
-                      controller: Email,
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(
+                        MediaQuery.of(context).size.width * 0.02,
+                        MediaQuery.of(context).size.width * 0.03,
+                        0,
+                        0),
+                    child: TextField(
+                      controller: email,
                       decoration: const InputDecoration(
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.only(
@@ -142,11 +148,14 @@ class _registeration_formState extends State<registeration_form> {
                   const SizedBox(
                     height: 5,
                   ),
-                   Padding(
-                    padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.02,
-                          MediaQuery.of(context).size.width * 0.03, 0, 0),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(
+                        MediaQuery.of(context).size.width * 0.02,
+                        MediaQuery.of(context).size.width * 0.03,
+                        0,
+                        0),
                     child: TextField(
-                      controller: Password,
+                      controller: password,
                       decoration: const InputDecoration(
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.only(
@@ -168,13 +177,13 @@ class _registeration_formState extends State<registeration_form> {
                           )),
                     ),
                   ),
-      
+
                   //TextField Ended
                   // Radio Button Started
-      
+
                   Padding(
-                    padding: EdgeInsets.fromLTRB(0,
-                          MediaQuery.of(context).size.width * 0.01, 0, 0),
+                    padding: EdgeInsets.fromLTRB(
+                        0, MediaQuery.of(context).size.width * 0.01, 0, 0),
                     child: Row(
                       children: [
                         Expanded(
@@ -230,15 +239,16 @@ class _registeration_formState extends State<registeration_form> {
                   // Radio Button Ended
                   //Buttons Started
                   Padding(
-                    padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.02,
-                          MediaQuery.of(context).size.width * 0.03, 0, 0),
+                    padding: EdgeInsets.fromLTRB(
+                        MediaQuery.of(context).size.width * 0.02,
+                        MediaQuery.of(context).size.width * 0.03,
+                        0,
+                        0),
                     child: ElevatedButton(
                       onPressed: () {
-                        RegistrationRepository registration = RegistrationRepository();
-                        registration.registerUser(FirstName.text, LastName.text, Email.text, Password.text, _selectedGender);
-                        setState(() {
-                          
-                        });
+                        authService.registerUser(firstName.text, lastName.text,
+                            email.text, password.text, _selectedGender);
+                        setState(() {});
                       },
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
@@ -260,16 +270,23 @@ class _registeration_formState extends State<registeration_form> {
                       )),
                     ),
                   ),
-                   Padding(
-                    padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.02,
-                          MediaQuery.of(context).size.width * 0.03, 0, 0),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(
+                        MediaQuery.of(context).size.width * 0.02,
+                        MediaQuery.of(context).size.width * 0.03,
+                        0,
+                        0),
                     child: ElevatedButton(
                       onPressed: () {
-                         Navigator.push(context, MaterialPageRoute(builder: (context) => const Login_form(),));
-                           
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const LoginForm(),
+                            ));
                       },
                       style: ElevatedButton.styleFrom(
-                        side: const BorderSide(color: Color.fromRGBO(67, 45, 45, 1)),
+                        side: const BorderSide(
+                            color: Color.fromRGBO(67, 45, 45, 1)),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(13),
                         ),
@@ -284,7 +301,7 @@ class _registeration_formState extends State<registeration_form> {
                             fontSize: 23,
                             fontWeight: FontWeight.bold,
                             letterSpacing: 0,
-                            color:Color.fromRGBO(77, 43, 43, 1),
+                            color: Color.fromRGBO(77, 43, 43, 1),
                             height: 1),
                       )),
                     ),

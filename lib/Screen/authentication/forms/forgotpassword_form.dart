@@ -13,18 +13,19 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-
-        backgroundColor: const Color.fromRGBO(255, 225, 255, 1),
-        
-       leading:IconButton(onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => const Login_form(),));
-                         
-         }, icon: const Icon(Icons.arrow_back))
-      
-
-      ),
+          backgroundColor: const Color.fromRGBO(255, 225, 255, 1),
+          leading: IconButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const LoginForm(),
+                    ));
+              },
+              icon: const Icon(Icons.arrow_back))),
       body: SingleChildScrollView(
-        child: Container( decoration: const BoxDecoration(
+        child: Container(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
                 begin: Alignment(6.123234262925839e-17, 2),
                 end: Alignment(-2, 6.123234262925839e-17),
@@ -35,14 +36,15 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                   Color.fromRGBO(255, 225, 255, 1),
                 ]),
           ),
-          padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.04,
-                vertical: MediaQuery.of(context).size.height * 0.05),
+          padding: EdgeInsets.symmetric(
+              horizontal: MediaQuery.of(context).size.width * 0.04,
+              vertical: MediaQuery.of(context).size.height * 0.05),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Container(
                 width: MediaQuery.of(context).size.width * 0.6,
-                  height: MediaQuery.of(context).size.height * 0.3, 
+                height: MediaQuery.of(context).size.height * 0.3,
                 decoration: const BoxDecoration(
                   image: DecorationImage(
                       image: AssetImage(
@@ -50,16 +52,19 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       fit: BoxFit.fitWidth),
                 ),
               ),
-               const SizedBox(
+              const SizedBox(
                 height: 25,
               ),
               Material(
                 color: Colors.transparent,
                 child: Column(
                   children: [
-                     Padding(
-                      padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.02,
-                            MediaQuery.of(context).size.width * 0.03, 0, 0),
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(
+                          MediaQuery.of(context).size.width * 0.02,
+                          MediaQuery.of(context).size.width * 0.03,
+                          0,
+                          0),
                       child: const TextField(
                         decoration: InputDecoration(
                             border: OutlineInputBorder(
@@ -82,9 +87,12 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                             )),
                       ),
                     ),
-                     Padding(
-                      padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.02,
-                            MediaQuery.of(context).size.width * 0.05, 0, 0),
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(
+                          MediaQuery.of(context).size.width * 0.02,
+                          MediaQuery.of(context).size.width * 0.05,
+                          0,
+                          0),
                       child: ElevatedButton(
                         onPressed: () {},
                         style: ElevatedButton.styleFrom(
@@ -112,7 +120,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
               )
             ],
           ),
-          ),
+        ),
       ),
     );
   }

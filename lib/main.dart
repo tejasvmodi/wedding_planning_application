@@ -6,7 +6,7 @@ import 'package:wedding_planning_application/Screen/Screen_Navigation.dart';
 import 'package:wedding_planning_application/Screen/authentication/forms/login_form.dart';
 
 void main() {
-   WidgetsFlutterBinding.ensureInitialized(); 
+  WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
@@ -22,8 +22,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-   bool _isLoggedIn = false;
-     @override
+  bool _isLoggedIn = false;
+  @override
   void initState() {
     super.initState();
     _checkLoggedIn();
@@ -55,7 +55,7 @@ class _MyAppState extends State<MyApp> {
         // ),),
         useMaterial3: true,
       ),
-      home: _isLoggedIn ? Screen_Navigation() : const Login_form(),
+      home: _isLoggedIn ? ScreenNavigation() : const LoginForm(),
     );
   }
 }

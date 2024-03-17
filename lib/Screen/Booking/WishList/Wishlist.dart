@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wedding_planning_application/Screen/Booking/WishList/WishList%20component/wishlistdesign.dart';
+import 'package:wedding_planning_application/screen/booking/wishlist/components/wishlist_design.dart';
 
 class WishListW extends StatefulWidget {
   const WishListW({super.key});
@@ -9,31 +9,27 @@ class WishListW extends StatefulWidget {
 }
 
 class _WishListWState extends State<WishListW> {
-   final List<Map<String, dynamic>> wdesign= [
+  final List<Map<String, dynamic>> wdesign = [
     {
       'newimage': 'Vendors_Venue_1.jpg',
       'texttitle': 'Radisson',
       'content': 'Lucknow in Banquet Hall',
-      
     },
-      {
+    {
       'newimage': 'Vendors_Venue_1.jpg',
       'texttitle': 'Radisson',
       'content': 'Lucknow in Banquet Hall',
-      
     },
     {
       'newimage': 'Bookings_Bride_Makeup.jpg',
       'texttitle': 'Palak Sharma',
       'content': 'Bridal Makeup',
-      
     },
-   
   ];
   @override
   Widget build(BuildContext context) {
-      
-    return Scaffold( appBar: AppBar(
+    return Scaffold(
+      appBar: AppBar(
         backgroundColor: const Color.fromRGBO(255, 217, 249, 1),
         leading: IconButton(
           onPressed: () {
@@ -45,7 +41,9 @@ class _WishListWState extends State<WishListW> {
           ),
         ),
         title: Padding(
-          padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.19 ,),
+          padding: EdgeInsets.only(
+            left: MediaQuery.of(context).size.width * 0.19,
+          ),
           child: const Text(
             'WishList',
             textAlign: TextAlign.left,
@@ -62,7 +60,7 @@ class _WishListWState extends State<WishListW> {
       ),
       body: Container(
         height: double.maxFinite,
-         decoration: BoxDecoration(
+        decoration: BoxDecoration(
           border: Border.all(color: Colors.black),
           gradient: const LinearGradient(
             begin: Alignment(6.123234262925839e-17, 1),
@@ -74,7 +72,7 @@ class _WishListWState extends State<WishListW> {
             ],
           ),
         ),
-        child:  SingleChildScrollView(
+        child: SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: Column(
             children: [
@@ -89,7 +87,6 @@ class _WishListWState extends State<WishListW> {
                         vendor['newimage']!,
                         vendor['texttitle']!,
                         vendor['content']!,
-                        
                         context,
                       ),
                     )
@@ -99,7 +96,7 @@ class _WishListWState extends State<WishListW> {
             ],
           ),
         ),
-        ),
-      );
+      ),
+    );
   }
 }

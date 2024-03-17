@@ -1,22 +1,22 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
-class service_Category {
+class ServiceCategory {
   int serviceCategoryId;
   String serviceCategoryName;
   String icon;
-  service_Category({
+  ServiceCategory({
     required this.serviceCategoryId,
     required this.serviceCategoryName,
     required this.icon,
   });
 
-  service_Category copyWith({
+  ServiceCategory copyWith({
     int? serviceCategoryId,
     String? serviceCategoryName,
     String? icon,
   }) {
-    return service_Category(
+    return ServiceCategory(
       serviceCategoryId: serviceCategoryId ?? this.serviceCategoryId,
       serviceCategoryName: serviceCategoryName ?? this.serviceCategoryName,
       icon: icon ?? this.icon,
@@ -31,8 +31,8 @@ class service_Category {
     };
   }
 
-  factory service_Category.fromMap(Map<String, dynamic> map) {
-    return service_Category(
+  factory ServiceCategory.fromMap(Map<String, dynamic> map) {
+    return ServiceCategory(
       serviceCategoryId: map['serviceCategoryId'] as int,
       serviceCategoryName: map['serviceCategoryName'] as String,
       icon: map['icon'] as String,
@@ -41,8 +41,8 @@ class service_Category {
 
   String toJson() => json.encode(toMap());
 
-  factory service_Category.fromJson(Map<String, dynamic> json) {
-    return service_Category(
+  factory ServiceCategory.fromJson(Map<String, dynamic> json) {
+    return ServiceCategory(
       serviceCategoryId: json['serviceCategoryId'] as int,
       serviceCategoryName: json['serviceCategoryName'] as String,
       icon: json['icon'] as String,
@@ -54,7 +54,7 @@ class service_Category {
       'service_Category(serviceCategoryId: $serviceCategoryId, serviceCategoryName: $serviceCategoryName, icon: $icon)';
 
   @override
-  bool operator ==(covariant service_Category other) {
+  bool operator ==(covariant ServiceCategory other) {
     if (identical(this, other)) return true;
 
     return other.serviceCategoryId == serviceCategoryId &&

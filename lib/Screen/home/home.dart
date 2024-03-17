@@ -1,49 +1,40 @@
 import 'package:flutter/material.dart';
-import 'package:wedding_planning_application/Models/content.dart';
-import 'package:wedding_planning_application/Models/service_category.dart';
-import 'package:wedding_planning_application/Repository/Vendor/service_category.dart';
-import 'package:wedding_planning_application/Screen/Emergency%20contancts/Emergencycontlist.dart';
+import 'package:get/get.dart';
+import 'package:wedding_planning_application/models/service_category.dart';
 import 'package:wedding_planning_application/Screen/Screen_Navigation.dart';
-import 'package:wedding_planning_application/Screen/components/drawer.dart';
-import 'package:wedding_planning_application/Screen/home/HomeScreen%20Component/CarouselSlideHome.dart';
-import 'package:wedding_planning_application/Screen/home/HomeScreen%20Component/appbarHome.dart';
-import 'package:wedding_planning_application/Screen/home/HomeScreen%20Component/categorywrapper.dart';
-import 'package:wedding_planning_application/Screen/home/HomeScreen%20Component/feature.dart';
-import 'package:wedding_planning_application/Screen/otherscreens/Budget.dart';
+import 'package:wedding_planning_application/Screen/home/components/appbar_home.dart';
+import 'package:wedding_planning_application/Services/core/service_category_service.dart';
+import 'package:wedding_planning_application/screen/common_components/drawer.dart';
+import 'package:wedding_planning_application/screen/emergency_contacts/emergency_contact_list.dart';
+import 'package:wedding_planning_application/screen/home/components/carousel_slide_home.dart';
+import 'package:wedding_planning_application/screen/home/components/category_wrapper.dart';
+import 'package:wedding_planning_application/screen/home/components/feature.dart';
+import 'package:wedding_planning_application/screen/other_screens/budget.dart';
 
-class home extends StatefulWidget {
-  home({super.key});
+class Home extends StatefulWidget {
+  const Home({super.key});
 
   @override
-  State<home> createState() => _homeState();
+  State<Home> createState() => _HomeState();
 }
 
-class _homeState extends State<home> {
+class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
 
     setState(() {
-      fetchData();
+      getServiceCategories();
     });
   }
 
-  // List<Widget> widgetList = [];
-  List<service_Category> items = [];
+  List<ServiceCategory> items = [];
 
-  Future<void> fetchData() async {
-    final repository = ContentRepository<service_Category>();
-
-    try {
-      final Content<List<service_Category>> content =
-          await repository.fetchData();
-      items.addAll(content.items);
-      setState(() {
-        
-      });
-    } catch (e) {
-      print('$e');
-    }
+  Future<void> getServiceCategories() async {
+    final ServicecategoryService categoryService = Get.find();
+    await categoryService
+        .getServicecategories()
+        .then((value) => items = value.items);
   }
 
   @override
@@ -104,7 +95,7 @@ class _homeState extends State<home> {
                       items[i].icon,
                       items[i].serviceCategoryName,
                       context,
-                      Screen_Navigation(
+                      ScreenNavigation(
                         currentIndex: 2,
                       ),
                     ),
@@ -130,7 +121,7 @@ class _homeState extends State<home> {
                               'CheckList',
                               26,
                               context,
-                              Screen_Navigation(
+                              ScreenNavigation(
                                 currentIndex: 1,
                               )),
                           feature('assets/images/Budget.jpg', 'Budget', 26,
@@ -151,7 +142,7 @@ class _homeState extends State<home> {
                               'Vendor',
                               26,
                               context,
-                              Screen_Navigation(
+                              ScreenNavigation(
                                 currentIndex: 2,
                               )),
                           feature(
@@ -170,7 +161,7 @@ class _homeState extends State<home> {
                           'Ceremony',
                           26,
                           context,
-                          Screen_Navigation(
+                          ScreenNavigation(
                             currentIndex: 2,
                           ),
                         )),

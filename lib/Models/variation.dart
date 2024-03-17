@@ -1,18 +1,18 @@
 import 'dart:convert';
 
-class variation {
+class Variation {
   int variationId;
   String variationName;
-  variation({
+  Variation({
     required this.variationId,
     required this.variationName,
   });
 
-  variation copyWith({
+  Variation copyWith({
     int? variationId,
     String? variationName,
   }) {
-    return variation(
+    return Variation(
       variationId: variationId ?? this.variationId,
       variationName: variationName ?? this.variationName,
     );
@@ -25,33 +25,32 @@ class variation {
     };
   }
 
-  factory variation.fromMap(Map<String, dynamic> map) {
-    return variation(
+  factory Variation.fromMap(Map<String, dynamic> map) {
+    return Variation(
       variationId: map['variationId'] as int,
       variationName: map['variationName'] as String,
     );
   }
 
-  factory variation.fromJson(Map<String, dynamic> json) {
-  return variation(
-    variationId: json['variationId'] as int,
-    variationName: json['variationName'] as String,
-  );
-}
-
+  factory Variation.fromJson(Map<String, dynamic> json) {
+    return Variation(
+      variationId: json['variationId'] as int,
+      variationName: json['variationName'] as String,
+    );
+  }
 
   String toJson() => json.encode(toMap());
 
   @override
-  String toString() => 'variation(variationId: $variationId, variationName: $variationName)';
+  String toString() =>
+      'variation(variationId: $variationId, variationName: $variationName)';
 
   @override
-  bool operator ==(covariant variation other) {
+  bool operator ==(covariant Variation other) {
     if (identical(this, other)) return true;
-  
-    return 
-      other.variationId == variationId &&
-      other.variationName == variationName;
+
+    return other.variationId == variationId &&
+        other.variationName == variationName;
   }
 
   @override

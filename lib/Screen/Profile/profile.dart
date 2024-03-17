@@ -1,27 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:wedding_planning_application/Repository/Login/login_form.dart';
-import 'package:wedding_planning_application/Screen/Booking/My%20Booking/showBooking.dart';
-import 'package:wedding_planning_application/Screen/Chat%20Screen/chatinbox.dart';
-import 'package:wedding_planning_application/Screen/Profile/Profile%20Component/accountitems.dart';
-import 'package:wedding_planning_application/Screen/Profile/Profile%20Component/profilephoto.dart';
-import 'package:wedding_planning_application/Screen/Profile/Recommendation%20screen/location.dart';
-import 'package:wedding_planning_application/Screen/Profile/Recommendation%20screen/recommendation.dart';
-import 'package:wedding_planning_application/Screen/Profile/manageprofileFemale.dart/manageFprofile.dart';
 import 'package:wedding_planning_application/Screen/authentication/forms/login_form.dart';
-import 'package:wedding_planning_application/Screen/components/drawer.dart';
-import 'package:wedding_planning_application/Screen/otherscreens/review.dart';
-import 'package:wedding_planning_application/Screen/otherscreens/support.dart';
+import 'package:wedding_planning_application/screen/booking/my_bookings/show_bookings.dart';
+import 'package:wedding_planning_application/screen/chats/chat_inbox.dart';
+import 'package:wedding_planning_application/screen/common_components/drawer.dart';
+import 'package:wedding_planning_application/screen/other_screens/review.dart';
+import 'package:wedding_planning_application/screen/other_screens/support.dart';
+import 'package:wedding_planning_application/screen/profile/components/account_items.dart';
+import 'package:wedding_planning_application/screen/profile/components/profile_photo.dart';
+import 'package:wedding_planning_application/screen/profile/recommandation/location.dart';
+import 'package:wedding_planning_application/screen/profile/recommandation/recommendation.dart';
+import 'package:wedding_planning_application/screen/profile/screens/manage_profile_bride.dart';
+import 'package:wedding_planning_application/services/authentication/auth_service.dart';
 
-class ProfileW extends StatefulWidget {
-  const ProfileW({super.key});
+class Profile extends StatefulWidget {
+  const Profile({super.key});
 
   @override
-  State<ProfileW> createState() => _ProfileWState();
+  State<Profile> createState() => _ProfileState();
 }
 
-class _ProfileWState extends State<ProfileW> {
+class _ProfileState extends State<Profile> {
+  final AuthenticationService authService = Get.find();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -135,10 +137,8 @@ class _ProfileWState extends State<ProfileW> {
                             fontWeight: FontWeight.w600,
                             height: 1)),
                     onTap: () {
-                      AuthenticationRepo auth = new AuthenticationRepo()
-                      ;
-                      auth.logOut();
-                      Get.to(() => const Login_form());
+                      authService.logOut();
+                      Get.to(() => const LoginForm());
                     },
                   ),
                 ],
