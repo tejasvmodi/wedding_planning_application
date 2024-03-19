@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:wedding_planning_application/screen/vendor/vendor_single_list.dart';
 
 categoryWrapper(
-    String assetpath, String text, BuildContext context, Widget tej) {
+    String assetpath, String text, BuildContext context,int categoryid) {
   return Align(
     alignment: Alignment.topLeft,
     child: SizedBox(
@@ -30,16 +32,12 @@ categoryWrapper(
                 opacity: const AlwaysStoppedAnimation(1),
               ),
               onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => tej,
-                    ));
+                Get.to(()=>VendorSingleList(categoryid),);
               },
             ),
           ),
           const SizedBox(
-            height: 2,
+            height: 10,
           ),
           Text(
             text,

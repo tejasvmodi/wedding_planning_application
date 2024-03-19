@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:get/get.dart';
-import 'package:wedding_planning_application/Screen/authentication/forms/login_form.dart';
+import 'package:wedding_planning_application/screen/authentication/forms/login_form.dart';
 import 'package:wedding_planning_application/screen/common_components/dots_indicator.dart';
 
 class OnboardingScreen extends StatefulWidget {

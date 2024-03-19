@@ -24,6 +24,7 @@ class ServiceCategory {
   }
 
   Map<String, dynamic> toMap() {
+    
     return <String, dynamic>{
       'serviceCategoryId': serviceCategoryId,
       'serviceCategoryName': serviceCategoryName,

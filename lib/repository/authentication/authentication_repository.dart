@@ -8,13 +8,12 @@ import 'package:wedding_planning_application/exception/auth_exception.dart';
 import 'package:wedding_planning_application/Models/data/login_data.dart';
 import 'package:wedding_planning_application/Models/data/registration_data.dart';
 import 'package:wedding_planning_application/Models/token_manager.dart';
-import 'package:wedding_planning_application/Screen/Screen_Navigation.dart';
-import 'package:wedding_planning_application/Screen/authentication/forms/login_form.dart';
-import 'package:wedding_planning_application/Util/constant.dart';
+import 'package:wedding_planning_application/screen/Screen_Navigation.dart';
+import 'package:wedding_planning_application/screen/authentication/forms/login_form.dart';
+import 'package:wedding_planning_application/util/constant.dart';
 import 'package:wedding_planning_application/util/utils.dart';
 
 class AuthenticationRepository extends GetxController {
-  static AuthenticationRepository get instance => Get.find();
 
   late SharedPreferences prefs;
 

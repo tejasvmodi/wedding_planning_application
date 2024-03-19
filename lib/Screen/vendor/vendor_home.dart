@@ -4,7 +4,6 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:wedding_planning_application/models/data/vendor_data.dart';
 import 'package:wedding_planning_application/screen/booking/wishlist/wishlist.dart';
 import 'package:wedding_planning_application/screen/common_components/drawer.dart';
-import 'package:wedding_planning_application/screen/vendor/vendor_single_list.dart';
 import 'package:wedding_planning_application/services/vendor_service.dart';
 
 import 'components/vendor_box.dart';
@@ -18,7 +17,7 @@ class VendorHome extends StatefulWidget {
 
 class _VendorHomeState extends State<VendorHome> {
   final VendorService vendorService = Get.find();
-  late final List<VendorData> items;
+  List<VendorData> items = [];
 
   @override
   void initState() {
@@ -28,6 +27,9 @@ class _VendorHomeState extends State<VendorHome> {
 
   Future<void> getVendorData() async {
     items = await vendorService.getVendorData();
+    setState(() {
+      items;
+    });
   }
 
   @override
@@ -126,32 +128,25 @@ class _VendorHomeState extends State<VendorHome> {
               ),
             ),
           ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height,
-            child: Flexible(
-              flex: 1,
-              child: SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                child: Column(
-                  children: [
-                    ListView.builder(
-                      itemCount: items.length,
-                      itemBuilder: (context, index) {
-                        final element = items[index];
-                        return vendorBox(
-                          element.category,
-                          element.variationOptions,
-                          const VendorSingleList(),
-                          context,
-                        );
-                      },
-                    ),
-                    const SizedBox(height: 25),
-                  ],
-                ),
-              ),
-            ),
-          )
+          const SizedBox(height: 25),
+        Expanded(
+          
+  child: SingleChildScrollView(
+    scrollDirection: Axis.vertical,
+    child: 
+          Wrap( spacing: 8, children: [
+                    ...items.map((vendor) => vendorBox(
+                        vendor.category,
+                        vendor.variationOptions,
+
+                        context)),
+                  ]),
+
+                
+    ),
+  ),
+
+
         ]),
       ),
     );

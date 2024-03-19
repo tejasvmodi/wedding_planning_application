@@ -20,7 +20,7 @@ Widget vendorList(
             width: MediaQuery.of(context).size.width * 0.44,
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage(imagedata),
+                image: NetworkImage(imagedata),
                 fit: BoxFit.cover,
               ),
               border: Border.all(color: Colors.black38, width: 2),
@@ -59,35 +59,43 @@ Widget vendorList(
                     // constraints:  BoxConstraints(
                     //   maxWidth: MediaQuery.of(context).size.width * 0.37,
                     // ),
-                    child: RichText(
-                      text: TextSpan(
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'EBGaramond',
-                          fontSize: 18,
-                          letterSpacing: 0,
-                          fontWeight: FontWeight.normal,
-                          height: 1,
+                    child: Column(
+                     mainAxisAlignment: MainAxisAlignment.start,
+                     crossAxisAlignment: CrossAxisAlignment.start,            
+                      children: [
+                        Text(
+                           texttitle,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontFamily: 'EBGaramond',
+                            fontSize: 15,
+                            letterSpacing: 0,
+                            fontWeight: FontWeight.bold,
+                            overflow: TextOverflow.ellipsis
+                          
+                          ),
                         ),
-                        children: [
-                          TextSpan(
-                            text: '$texttitle\n',
-                          ),
-                          WidgetSpan(
-                            child: SizedBox(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.02),
-                          ),
-                          const TextSpan(
-                            text: 'Lukhnow in Banquet Hall',
-                            style: TextStyle(
+                      
+                        SizedBox(
+                        
+                          child: Text(
+                            textdata,
+                             textAlign: TextAlign.justify,
+
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'EBGaramond',
+                             fontStyle: FontStyle.normal,
+                               
                               fontSize: 10,
+                              letterSpacing: 0,
                               fontWeight: FontWeight.normal,
+                              height: 1,
+                              overflow:  TextOverflow.ellipsis
                             ),
                           ),
-                        ],
-                      ),
-                      overflow: TextOverflow.ellipsis,
+                        ),
+                      ],
                     ),
                   ),
                 ),

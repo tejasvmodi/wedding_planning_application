@@ -1,14 +1,12 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'package:get/get.dart';
 import 'package:wedding_planning_application/models/content.dart';
 import 'package:http/http.dart' as http;
 import 'package:wedding_planning_application/models/token_manager.dart';
 import 'package:wedding_planning_application/models/variation_option.dart';
-import 'package:wedding_planning_application/Util/constant.dart';
+import 'package:wedding_planning_application/util/constant.dart';
 
 class VariationoptionOptionRepository {
-  static VariationoptionOptionRepository get instance => Get.find();
 
   Future<Content<List<VariationOption>>> getVariationOptions(
       int variation) async {

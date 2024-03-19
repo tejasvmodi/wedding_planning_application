@@ -1,14 +1,11 @@
 import 'dart:convert';
-import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:wedding_planning_application/models/content.dart';
 import 'package:wedding_planning_application/models/service_category.dart';
 import 'package:wedding_planning_application/models/token_manager.dart';
-import 'package:wedding_planning_application/Util/constant.dart';
+import 'package:wedding_planning_application/util/constant.dart';
 
 class ServiceCategoryRepository {
-  static ServiceCategoryRepository get instance => Get.find();
-
   Future<Content<List<ServiceCategory>>> getcategories() async {
     final response = await http.get(Uri.parse('$apiUrl/service-category'),
         headers: createAuthorizationHeaders(await TokenManager.getToken()));

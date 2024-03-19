@@ -4,7 +4,6 @@ import 'package:wedding_planning_application/repository/authentication/authentic
 
 class AuthenticationService {
   final AuthenticationRepository authRepo = Get.find();
-  static AuthenticationService get instance => Get.find();
 
   Future<void> loginWithUsernameAndPassword(
       String email, String password) async {

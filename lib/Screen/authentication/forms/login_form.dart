@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:wedding_planning_application/Screen/authentication/forms/forgotpassword_form.dart';
-import 'package:wedding_planning_application/Screen/authentication/forms/registration_forms.dart';
+import 'package:wedding_planning_application/screen/authentication/forms/forgotpassword_form.dart';
+import 'package:wedding_planning_application/screen/authentication/forms/registration_forms.dart';
 import 'package:wedding_planning_application/services/authentication/auth_service.dart';
 
 class LoginForm extends StatefulWidget {

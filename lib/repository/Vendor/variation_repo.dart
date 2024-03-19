@@ -1,15 +1,13 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:wedding_planning_application/Models/content.dart';
-import 'package:wedding_planning_application/Models/variation.dart';
-import 'package:wedding_planning_application/Models/token_manager.dart';
-import 'package:wedding_planning_application/Util/constant.dart';
+import 'package:wedding_planning_application/models/content.dart';
+import 'package:wedding_planning_application/models/variation.dart';
+import 'package:wedding_planning_application/models/token_manager.dart';
+import 'package:wedding_planning_application/util/constant.dart';
 
 class VariationRepository {
-  static VariationRepository get instance => Get.find();
-
+  
   Future<Content<List<Variation>>> getvariations(int category) async {
     final response = await http.get(
       Uri.parse('$apiUrl/variation/category?category=$category'),

@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:get/get.dart';
 import 'package:wedding_planning_application/Models/token_manager.dart';
-import 'package:wedding_planning_application/Screen/Screen_Navigation.dart';
-import 'package:wedding_planning_application/Screen/authentication/forms/login_form.dart';
+import 'package:wedding_planning_application/screen/Screen_Navigation.dart';
+import 'package:wedding_planning_application/screen/authentication/forms/login_form.dart';
+import 'package:wedding_planning_application/repository/repository_initializer.dart';
+import 'package:wedding_planning_application/services/services_initializer.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  Get.put(RepositoryInitializer());
+  Get.put(ServiceInitializer());
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,

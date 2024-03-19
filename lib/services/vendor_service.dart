@@ -1,20 +1,26 @@
+import 'dart:developer';
+
 import 'package:get/get.dart';
 import 'package:wedding_planning_application/models/data/vendor_data.dart';
+import 'package:wedding_planning_application/models/servicemodel.dart';
 import 'package:wedding_planning_application/models/service_category.dart';
+import 'package:wedding_planning_application/models/variation_option.dart';
+import 'package:wedding_planning_application/services/core/service.dart';
 import 'package:wedding_planning_application/services/core/service_category_service.dart';
 import 'package:wedding_planning_application/services/core/variation_option_service.dart';
 import 'package:wedding_planning_application/services/core/variation_service.dart';
 
 class VendorService {
-  static VendorService get instance => Get.find();
   final ServicecategoryService categoryService = Get.find();
   final VariationService variationService = Get.find();
   final VariationOptionService variationOptionService = Get.find();
+  final ServiceList servicelist = Get.find();
 
   Future<List<VendorData>> getVendorData() async {
     List<VendorData> vendorData = [];
     await categoryService.getServicecategories().then((data) async {
       for (ServiceCategory category in data.items) {
+        List<VariationOption> options = [];
         await variationService
             .getVariations(category.serviceCategoryId)
             .then((variations) async {
@@ -22,13 +28,36 @@ class VendorService {
             await variationOptionService
                 .getVariationOptions(variation.variationId)
                 .then((optionItems) {
-              vendorData.add(VendorData(
-                  category: category, variationOptions: optionItems.items));
+              options.addAll(optionItems.items);
             });
           }
+          // log(jsonEncode(options));
+          vendorData.add(VendorData(
+              category: category,
+              variationOptions: List<VariationOption>.of(options)));
+          options.clear();
+          //log(jsonEncode(vendorData));
         });
       }
     });
+    //log(jsonEncode(vendorData));
     return vendorData;
   }
+
+Future<List<Service>> getServiceData(int serviceCategoryId) async {
+  List<Service> serviceList = [];
+   log(serviceCategoryId.toString());
+  try {
+  
+    await servicelist.getVariationOptions(serviceCategoryId).then((serviceModels) async{
+      serviceList.addAll(serviceModels.items);
+    });
+  } catch (e) {
+  
+     log('Error fetching service data: $e');
+  }
+      
+  // log(serviceList.toString());
+  return serviceList;
+}
 }

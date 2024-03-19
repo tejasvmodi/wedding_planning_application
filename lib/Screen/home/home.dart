@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wedding_planning_application/models/service_category.dart';
-import 'package:wedding_planning_application/Screen/Screen_Navigation.dart';
-import 'package:wedding_planning_application/Screen/home/components/appbar_home.dart';
-import 'package:wedding_planning_application/Services/core/service_category_service.dart';
+import 'package:wedding_planning_application/screen/Screen_Navigation.dart';
+import 'package:wedding_planning_application/screen/home/components/appbar_home.dart';
+import 'package:wedding_planning_application/services/core/service_category_service.dart';
 import 'package:wedding_planning_application/screen/common_components/drawer.dart';
 import 'package:wedding_planning_application/screen/emergency_contacts/emergency_contact_list.dart';
 import 'package:wedding_planning_application/screen/home/components/carousel_slide_home.dart';
@@ -32,9 +32,11 @@ class _HomeState extends State<Home> {
 
   Future<void> getServiceCategories() async {
     final ServicecategoryService categoryService = Get.find();
-    await categoryService
-        .getServicecategories()
-        .then((value) => items = value.items);
+    await categoryService.getServicecategories().then((value) {
+      setState(() {
+      items = value.items;
+      });
+    });
   }
 
   @override
@@ -95,9 +97,8 @@ class _HomeState extends State<Home> {
                       items[i].icon,
                       items[i].serviceCategoryName,
                       context,
-                      ScreenNavigation(
-                        currentIndex: 2,
-                      ),
+                      items[i].serviceCategoryId,
+                      
                     ),
                 ]),
               ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wedding_planning_application/Screen/authentication/forms/login_form.dart';
+import 'package:wedding_planning_application/screen/authentication/forms/login_form.dart';
 
 class ForgotPassword extends StatefulWidget {
   const ForgotPassword({super.key});

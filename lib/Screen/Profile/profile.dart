@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:wedding_planning_application/Screen/authentication/forms/login_form.dart';
+import 'package:wedding_planning_application/screen/authentication/forms/login_form.dart';
 import 'package:wedding_planning_application/screen/booking/my_bookings/show_bookings.dart';
 import 'package:wedding_planning_application/screen/chats/chat_inbox.dart';
 import 'package:wedding_planning_application/screen/common_components/drawer.dart';

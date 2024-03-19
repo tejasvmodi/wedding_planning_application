@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wedding_planning_application/models/service_category.dart';
 import 'package:wedding_planning_application/models/variation_option.dart';
+import 'package:wedding_planning_application/screen/vendor/vendor_single_list.dart';
+
 
 vendorBox(ServiceCategory category, List<VariationOption> options,
-    Widget redirectp, BuildContext context) {
+   BuildContext context) {
   return InkWell(
     child: SizedBox(
       width: MediaQuery.of(context).size.width * 0.97,
@@ -58,36 +60,51 @@ vendorBox(ServiceCategory category, List<VariationOption> options,
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.05,
                   ),
-                  RichText(
-                    text: TextSpan(
-                      style: const TextStyle(
-                        color: Color.fromRGBO(85, 32, 32, 1),
-                        fontFamily: 'EBGaramond',
-                        fontSize: 20,
-                        letterSpacing: 0,
-                        fontWeight: FontWeight.bold,
-                        height: 1,
-                      ),
+                  Container(
+                    constraints: BoxConstraints(
+                        maxWidth: MediaQuery.of(context).size.width * 0.97,),
+                    child: Column(
+                     mainAxisAlignment: MainAxisAlignment.center,
+                     crossAxisAlignment: CrossAxisAlignment.start,            
                       children: [
-                        TextSpan(
-                          text: '${category.serviceCategoryName}\n',
-                        ),
-                        WidgetSpan(
-                          child: SizedBox(
-                              height:
-                                  MediaQuery.of(context).size.height * 0.035),
-                        ),
-                        TextSpan(
-                          text: options.toString(),
+                        Text(
+                          category.serviceCategoryName,
                           style: const TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.normal,
+                            color: Color.fromRGBO(85, 32, 32, 1),
+                            fontFamily: 'EBGaramond',
+                            fontSize: 20,
+                            letterSpacing: 0,
+                            fontWeight: FontWeight.bold,
+                            height: 1,
+                            // overflow:  TextOverflow.ellipsis
+                          ),
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.01,
+                        ),
+                        
+                        SizedBox(
+                          width: 230,
+                          child: Text(
+                            options.isNotEmpty ? getOptions(options) : "",
+                             textAlign: TextAlign.justify,
+
+                            style: const TextStyle(
+                              color: Color.fromRGBO(85, 32, 32, 1),
+                              fontFamily: 'EBGaramond',
+                             fontStyle: FontStyle.normal,
+                               
+                              fontSize: 12,
+                              letterSpacing: 0,
+                              fontWeight: FontWeight.normal,
+                              height: 1,
+                              // overflow:  TextOverflow.ellipsis
+                            ),
                           ),
                         ),
                       ],
                     ),
-                    overflow: TextOverflow.ellipsis,
-                  )
+                  ),
                 ],
               ),
             ),
@@ -95,8 +112,22 @@ vendorBox(ServiceCategory category, List<VariationOption> options,
         ],
       ),
     ),
-    onTap: () {
-      Get.to(() => redirectp);
+    onTap: () async {
+  Get.to(() =>   VendorSingleList(category.serviceCategoryId),);
+      
+      
     },
   );
+}
+
+String getOptions(List<VariationOption> options) {
+  String optionsString = "";
+  for (int i = 0; i < options.length; i++) {
+    if (i == options.length - 1) {
+      optionsString += options[i].variationOptionName;
+    } else {
+      optionsString += "${options[i].variationOptionName}, ";
+    }
+  }
+  return optionsString;
 }
