@@ -84,19 +84,19 @@ class _bookservicewState extends State<bookservicew> {
             const SizedBox(
               height: 24,
             ),
-            bookitem(
-                'assets/images/Vender_Venue.jpg',
-                'Venue',
-                context,
-                const VendorSingleView(
-                  name: 'ITC Grand',
-                  imagedata: 'assets/images/Vender_Venue.jpg',
-                ),
-                'ITC Grand',
-                'Vendor name',
-                121000,
-                25000,
-                12500),
+            // bookitem(
+            //     'assets/images/Vender_Venue.jpg',
+            //     'Venue',
+            //     context,
+            //     // const VendorSingleView(
+            //     //   name: 'ITC Grand',
+            //     //   imagedata: 'assets/images/Vender_Venue.jpg',
+            //     // ),
+            //     'ITC Grand',
+            //     'Vendor name',
+            //     121000,
+            //     25000,
+            //     12500),
             SizedBox(
               height: 50,
               width: 360,

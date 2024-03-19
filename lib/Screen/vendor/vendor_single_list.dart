@@ -188,6 +188,8 @@ class _VendorSingleListState extends State<VendorSingleList> {
                                   vendor.serviceImage,
                                   vendor.serviceName,
                                   vendor.serviceLocation,
+                                  vendor.serviceDescription,
+                                  vendor.serviceId,
                                   context,
                                 ))
                             .toList(),

@@ -1,23 +1,51 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:wedding_planning_application/Screen/Booking/WishList/Wishlist.dart';
+import 'package:wedding_planning_application/models/service_itemmodel.dart';
 import 'package:wedding_planning_application/screen/booking/book_service/book_service.dart';
 import 'package:wedding_planning_application/screen/other_screens/inquiry.dart';
+import 'package:wedding_planning_application/services/vendor_service.dart';
 
 class VendorSingleView extends StatefulWidget {
-  const VendorSingleView(
-      {super.key, required this.name, required this.imagedata});
-  final String name;
-  final String imagedata;
+  const VendorSingleView({
+    super.key,
+    required this.serviceid,
+    this.description,
+  });
+  final int serviceid;
+  final String? description;
 
   @override
   State<VendorSingleView> createState() => _VendorSingleViewState();
 }
 
 class _VendorSingleViewState extends State<VendorSingleView> {
+  List<ServiceitemModel> itemdata = [];
+  VendorService vendor = VendorService();
+
+  @override
+  void initState() {
+    super.initState();
+    getserviceitemdata();
+  }
+
+  Future<void> getserviceitemdata() async {
+    try {
+      itemdata = await vendor.getserviceitem(widget.serviceid);
+      setState(() {
+        itemdata;
+      });
+    } catch (e) {
+      log('Error fetching service data: $e');
+    }
+  }
+
   double? _ratingValue;
+  int j = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -116,108 +144,51 @@ class _VendorSingleViewState extends State<VendorSingleView> {
                     scrollDirection: Axis.vertical,
                     child: Column(
                       children: [
-                        Container(
-                          padding: EdgeInsets.only(
-                              bottom: MediaQuery.of(context).size.height * 0.02,
-                              top: MediaQuery.of(context).size.height * 0.036,
-                              left: MediaQuery.of(context).size.height * 0.02,
-                              right:
-                                  MediaQuery.of(context).size.height * 0.036),
-                          alignment: Alignment.topLeft,
-                          child: Text(
-                            widget.name,
-                            textAlign: TextAlign.left,
-                            style: const TextStyle(
-                                color: Color.fromRGBO(62, 53, 53, 1),
-                                fontFamily: 'EBGaramond',
-                                fontSize: 28,
-                                letterSpacing: 0,
-                                fontWeight: FontWeight.normal,
-                                height: 1),
-                          ),
-                        ),
-                        Container(
-                          height: MediaQuery.of(context).size.height * 0.32,
-                          width: MediaQuery.of(context).size.height * 0.45,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: AssetImage(
-                                  widget.imagedata,
-                                ),
-                                fit: BoxFit.cover,
-                                opacity: 1),
-                          ),
-                        ),
-                        SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Container(
-                            padding: EdgeInsets.only(
-                              top: MediaQuery.of(context).size.height * 0.02,
-                            ),
+                        if (itemdata.isEmpty)
+                          const Center(
+                            heightFactor: 5,
+                            child: CircularProgressIndicator()),
+                        if (itemdata.length > 1)
+                          SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
                             child: Row(
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                    left: MediaQuery.of(context).size.height *
-                                        0.01,
+                              children: List.generate(itemdata.length, (index) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(right: 8.0),
+                                  child: TextButton(
+                                    style: ButtonStyle(
+                                      backgroundColor:
+                                          const MaterialStatePropertyAll(
+                                              Color.fromRGBO(77, 43, 43, 1)),
+                                      shape: MaterialStatePropertyAll(
+                                          RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(15),
+                                      )),
+                                    ),
+                                    onPressed: () {
+                                      j = index;
+                                      setState(() {});
+                                    },
+                                    child: Text(
+                                      itemdata[index].itemName,
+                                      style: const TextStyle(
+                                          color: Colors.white,
+                                          fontFamily: 'EBGaramond',
+                                          fontSize: 20,
+                                          letterSpacing: 0,
+                                          fontWeight: FontWeight.w400,
+                                          height: 1),
+                                    ),
                                   ),
-                                  child: Image(
-                                    image: const AssetImage(
-                                        'assets/images/Vendor_Single_View_2.jpg'),
-                                    width: MediaQuery.of(context).size.height *
-                                        0.15,
-                                    height: MediaQuery.of(context).size.height *
-                                        0.135,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                    left: MediaQuery.of(context).size.height *
-                                        0.01,
-                                  ),
-                                  child: Image(
-                                    image: const AssetImage(
-                                        'assets/images/Vendor_Single_View_3.jpg'),
-                                    width: MediaQuery.of(context).size.height *
-                                        0.15,
-                                    height: MediaQuery.of(context).size.height *
-                                        0.135,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                    left: MediaQuery.of(context).size.height *
-                                        0.01,
-                                  ),
-                                  child: Image(
-                                    image: const AssetImage(
-                                        'assets/images/Vendor_Single_View_4.jpg'),
-                                    width: MediaQuery.of(context).size.height *
-                                        0.15,
-                                    height: MediaQuery.of(context).size.height *
-                                        0.135,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.only(left: 5, right: 13),
-                                  child: Image(
-                                    image: const AssetImage(
-                                        'assets/images/Vendor_Single_View_4_.jpg'),
-                                    width: MediaQuery.of(context).size.height *
-                                        0.15,
-                                    height: MediaQuery.of(context).size.height *
-                                        0.135,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ],
+                                );
+                              }),
                             ),
                           ),
-                        ),
+                        if (itemdata.isNotEmpty)
+                          FirstItemDetails(
+                            itemName: itemdata[j].itemName,
+                            images: itemdata[j].images,
+                          ),
                         SizedBox(
                           height: MediaQuery.of(context).size.height * 0.01,
                         ),
@@ -296,19 +267,32 @@ class _VendorSingleViewState extends State<VendorSingleView> {
                         ),
                         Container(
                           padding: const EdgeInsets.all(13),
-                          child: const Text(
-                            'Nestled in serene south Goa, amidst lush 45 acres of landscaped gardens, swaying coconut palms and shimmering lagoons - the ITC Grand Goa, with direct access to the pristine Arossim beach, provides all the ingredients for an invigorating or intimate relaxed getaway.',
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 7,
-                            textAlign: TextAlign.justify,
-                            style: TextStyle(
-                                color: Color.fromRGBO(0, 0, 0, 1),
-                                fontFamily: 'EBGaramond',
-                                fontSize: 15,
-                                letterSpacing: 0,
-                                fontWeight: FontWeight.normal,
-                                height: 1),
-                          ),
+                          child: widget.description != null
+                              ? Text(
+                                  widget.description!,
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 7,
+                                  textAlign: TextAlign.justify,
+                                  style: const TextStyle(
+                                    color: Color.fromRGBO(0, 0, 0, 1),
+                                    fontFamily: 'EBGaramond',
+                                    fontSize: 15,
+                                    letterSpacing: 0,
+                                    fontWeight: FontWeight.normal,
+                                    height: 1,
+                                  ),
+                                )
+                              : const Text(
+                                  'No description available',
+                                  style: TextStyle(
+                                    color: Color.fromRGBO(0, 0, 0, 1),
+                                    fontFamily: 'EBGaramond',
+                                    fontSize: 15,
+                                    letterSpacing: 0,
+                                    fontWeight: FontWeight.normal,
+                                    height: 1,
+                                  ),
+                                ),
                         ),
                         Container(
                           alignment: Alignment.bottomLeft,
@@ -615,6 +599,87 @@ class _VendorSingleViewState extends State<VendorSingleView> {
               ),
             ],
           )),
+    );
+  }
+}
+
+class FirstItemDetails extends StatefulWidget {
+  final String itemName;
+  final List<String> images;
+
+  const FirstItemDetails({
+    Key? key,
+    required this.itemName,
+    required this.images,
+  }) : super(key: key);
+
+  @override
+  _FirstItemDetailsState createState() => _FirstItemDetailsState();
+}
+
+class _FirstItemDetailsState extends State<FirstItemDetails> {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Container(
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).size.height * 0.02,
+            top: MediaQuery.of(context).size.height * 0.036,
+            left: MediaQuery.of(context).size.height * 0.02,
+            right: MediaQuery.of(context).size.height * 0.036,
+          ),
+          alignment: Alignment.topLeft,
+          child: Text(
+            widget.itemName,
+            textAlign: TextAlign.left,
+            style: const TextStyle(
+              color: Color.fromRGBO(62, 53, 53, 1),
+              fontFamily: 'EBGaramond',
+              fontSize: 28,
+              letterSpacing: 0,
+              fontWeight: FontWeight.normal,
+              height: 1,
+            ),
+          ),
+        ),
+        Container(
+          height: MediaQuery.of(context).size.height * 0.32,
+          width: MediaQuery.of(context).size.height * 0.45,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: NetworkImage(
+                  widget.images.isNotEmpty ? widget.images[0] : ''),
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Container(
+            padding: EdgeInsets.only(
+              top: MediaQuery.of(context).size.height * 0.02,
+            ),
+            child: Row(
+              children: List.generate(
+                  widget.images.length > 1 ? widget.images.length - 1 : 0,
+                  (index) {
+                return Padding(
+                  padding: EdgeInsets.only(
+                    left: MediaQuery.of(context).size.height * 0.01,
+                  ),
+                  child: Image(
+                    image: NetworkImage(widget.images[index + 1]),
+                    width: MediaQuery.of(context).size.height * 0.15,
+                    height: MediaQuery.of(context).size.height * 0.135,
+                    fit: BoxFit.cover,
+                  ),
+                );
+              }),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

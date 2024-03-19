@@ -120,8 +120,8 @@ WishListdesign(
                   width: MediaQuery.of(context).size.width * 0.21,
                   child: TextButton(
                     onPressed: () {
-                      Get.to(() => VendorSingleView(
-                          name: textdata, imagedata: newimage));
+                      // Get.to(() => VendorSingleView(
+                      //     ));
                     },
                     style: ButtonStyle(
                       backgroundColor: const MaterialStatePropertyAll(

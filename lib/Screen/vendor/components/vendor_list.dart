@@ -5,7 +5,7 @@ import 'package:wedding_planning_application/Screen/Booking/WishList/Wishlist.da
 import 'package:wedding_planning_application/screen/vendor/vendor_single_view.dart';
 
 Widget vendorList(
-    String imagedata, String texttitle, String textdata, BuildContext context) {
+    String imagedata, String texttitle, String textdata, String description, int serviceid,BuildContext context) {
   return SizedBox(
     width: MediaQuery.of(context).size.width / 2 -
         12.0, // Divide by the number of photos per row
@@ -55,48 +55,43 @@ Widget vendorList(
                   ),
                 ),
                 Expanded(
-                  child: Container(
-                    // constraints:  BoxConstraints(
-                    //   maxWidth: MediaQuery.of(context).size.width * 0.37,
-                    // ),
-                    child: Column(
-                     mainAxisAlignment: MainAxisAlignment.start,
-                     crossAxisAlignment: CrossAxisAlignment.start,            
-                      children: [
-                        Text(
-                           texttitle,
+                  child: Column(
+                   mainAxisAlignment: MainAxisAlignment.start,
+                   crossAxisAlignment: CrossAxisAlignment.start,            
+                    children: [
+                      Text(
+                         texttitle,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'EBGaramond',
+                          fontSize: 15,
+                          letterSpacing: 0,
+                          fontWeight: FontWeight.bold,
+                          overflow: TextOverflow.ellipsis
+                        
+                        ),
+                      ),
+                    
+                      SizedBox(
+                      
+                        child: Text(
+                          textdata,
+                           textAlign: TextAlign.justify,
+                  
                           style: const TextStyle(
                             color: Colors.white,
                             fontFamily: 'EBGaramond',
-                            fontSize: 15,
+                           fontStyle: FontStyle.normal,
+                             
+                            fontSize: 10,
                             letterSpacing: 0,
-                            fontWeight: FontWeight.bold,
-                            overflow: TextOverflow.ellipsis
-                          
+                            fontWeight: FontWeight.normal,
+                            height: 1,
+                            overflow:  TextOverflow.ellipsis
                           ),
                         ),
-                      
-                        SizedBox(
-                        
-                          child: Text(
-                            textdata,
-                             textAlign: TextAlign.justify,
-
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontFamily: 'EBGaramond',
-                             fontStyle: FontStyle.normal,
-                               
-                              fontSize: 10,
-                              letterSpacing: 0,
-                              fontWeight: FontWeight.normal,
-                              height: 1,
-                              overflow:  TextOverflow.ellipsis
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
                 IconButton(
@@ -127,9 +122,10 @@ Widget vendorList(
             height: MediaQuery.of(context).size.height * 0.06,
             child: TextButton(
               onPressed: () {
+                
                 Get.to(() => VendorSingleView(
-                      imagedata: imagedata,
-                      name: texttitle,
+                   serviceid: serviceid,
+                    description: description,
                     ));
               },
               style: ButtonStyle(

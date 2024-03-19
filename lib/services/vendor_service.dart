@@ -1,12 +1,13 @@
 import 'dart:developer';
-
 import 'package:get/get.dart';
 import 'package:wedding_planning_application/models/data/vendor_data.dart';
+import 'package:wedding_planning_application/models/service_itemmodel.dart';
 import 'package:wedding_planning_application/models/servicemodel.dart';
 import 'package:wedding_planning_application/models/service_category.dart';
 import 'package:wedding_planning_application/models/variation_option.dart';
 import 'package:wedding_planning_application/services/core/service.dart';
 import 'package:wedding_planning_application/services/core/service_category_service.dart';
+import 'package:wedding_planning_application/services/core/service_item.dart';
 import 'package:wedding_planning_application/services/core/variation_option_service.dart';
 import 'package:wedding_planning_application/services/core/variation_service.dart';
 
@@ -15,6 +16,7 @@ class VendorService {
   final VariationService variationService = Get.find();
   final VariationOptionService variationOptionService = Get.find();
   final ServiceList servicelist = Get.find();
+  final Serviceitem serviceitem = Get.find(); 
 
   Future<List<VendorData>> getVendorData() async {
     List<VendorData> vendorData = [];
@@ -60,4 +62,18 @@ Future<List<Service>> getServiceData(int serviceCategoryId) async {
   // log(serviceList.toString());
   return serviceList;
 }
+
+Future<List<ServiceitemModel>> getserviceitem(int serviceid) async {
+    List<ServiceitemModel> servicelist = [];
+    try{
+        await serviceitem.getserviceitem(serviceid).then((value) async{
+          servicelist.addAll(value.items);
+        });
+    }catch(e){
+      log(e.toString());
+    }
+    log(servicelist.toString());
+    return servicelist;
+}
+
 }
