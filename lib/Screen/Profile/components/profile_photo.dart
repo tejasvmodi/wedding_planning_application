@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 profilephoto(String name, String image) {
   return SizedBox(
     width: 400,
@@ -47,7 +46,7 @@ profilephoto(String name, String image) {
             image: DecorationImage(
                 opacity: 1,
                 scale: 12,
-                image: AssetImage(image),
+                image: NetworkImage(image),
                 fit: BoxFit.fitWidth),
             borderRadius: const BorderRadius.all(Radius.elliptical(195, 195)),
           ),

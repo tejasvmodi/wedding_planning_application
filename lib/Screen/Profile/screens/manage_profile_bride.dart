@@ -1,17 +1,46 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:wedding_planning_application/models/ProfileModels/getprofilemodel.dart';
 import 'package:wedding_planning_application/screen/profile/components/profile_details.dart';
 import 'package:wedding_planning_application/screen/profile/components/profile_photo.dart';
 import 'package:wedding_planning_application/screen/profile/screens/manage_profile_groom.dart';
+import 'package:wedding_planning_application/services/profile.dart';
 
 class ManageFprofile extends StatefulWidget {
-  const ManageFprofile({super.key});
+
+  const ManageFprofile({
+    super.key,
+   
+  });
 
   @override
   State<ManageFprofile> createState() => _ManageFprofileState();
 }
 
 class _ManageFprofileState extends State<ManageFprofile> {
+   final ProfileService profile = Get.find();
+  List<GetprofileModel> getuser =[];
+
+   void initState() {
+    super.initState();
+    getserviceitemdata();
+  }
+
+  Future<void> getserviceitemdata() async {
+    try {
+      getuser = await profile.getprofile();
+      setState(() {
+        getuser;
+        log(getuser.toString());
+      });
+    } catch (e) {
+      log('Error fetching service data: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,11 +93,23 @@ class _ManageFprofileState extends State<ManageFprofile> {
           )
         ],
       ),
-      body: SingleChildScrollView(
+      body: 
+        
+      SingleChildScrollView(
         scrollDirection: Axis.vertical,
-        child: Column(
+        child:
+         Column(
           children: [
-            profilephoto('Anjali', 'assets/images/Account Icon.jpg'),
+           if (getuser.isEmpty)
+        const Center(
+          heightFactor:  25,
+          child: CircularProgressIndicator(),
+        ),
+              if (getuser.isNotEmpty) 
+            Column(
+          children: [
+          
+             profilephoto(getuser[0].firstName, getuser[0].avatar),
             SizedBox(
               width: 370,
               height: 60,
@@ -115,17 +156,17 @@ class _ManageFprofileState extends State<ManageFprofile> {
                               height: 1,
                             ),
                           ),
-                          const Expanded(
+                           Expanded(
                             flex: 1,
                             child: SizedBox(
                               width: 4,
                               child: Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 4),
+                                padding: const EdgeInsets.symmetric(horizontal: 4),
                                 child: TextField(
                                   decoration: InputDecoration(
-                                    border: OutlineInputBorder(
+                                    border: const OutlineInputBorder(
                                         borderSide: BorderSide.none),
-                                    hintText: "Anjali",
+                                   hintText: getuser.isNotEmpty ? getuser[0].firstName : '',
                                   ),
                                 ),
                               ),
@@ -155,17 +196,17 @@ class _ManageFprofileState extends State<ManageFprofile> {
                               height: 1,
                             ),
                           ),
-                          const Expanded(
+                          Expanded(
                             flex: 1,
                             child: SizedBox(
                               width: 4,
                               child: Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 4),
+                                padding: const EdgeInsets.symmetric(horizontal: 4),
                                 child: TextField(
                                   decoration: InputDecoration(
-                                    border: OutlineInputBorder(
+                                    border: const OutlineInputBorder(
                                         borderSide: BorderSide.none),
-                                    hintText: 'Joshi',
+                                    hintText: getuser.isNotEmpty ? getuser[0].lastName : '',
                                   ),
                                 ),
                               ),
@@ -186,24 +227,24 @@ class _ManageFprofileState extends State<ManageFprofile> {
             const SizedBox(
               height: 25,
             ),
-            profiledetails('Email', 'anjali123@gmail.com'),
+            profiledetails('Email',getuser[0].email),
             const SizedBox(
               height: 25,
             ),
-            profiledetails('Phone', '+91 81000 92000'),
+            profiledetails('Phone', getuser[0].phone.toString()),
             const SizedBox(
               height: 25,
             ),
             profiledetails(
-                'Address', '102, Anand Bag Socity , near bob tower '),
+                'Address', getuser[0].addressInfo.toString()),
             const SizedBox(
               height: 25,
             ),
-            profiledetails('City', 'Ahmadabad'),
+            profiledetails('City', getuser[0].addressInfo.toString()),
             const SizedBox(
               height: 25,
             ),
-            profiledetails('Area', 'Navrangpura , 38006'),
+            profiledetails('Area',getuser[0].addressInfo.toString()),
             const SizedBox(
               height: 25,
             ),
@@ -284,6 +325,7 @@ class _ManageFprofileState extends State<ManageFprofile> {
             ),
           ],
         ),
+          ]),
       ),
     );
   }

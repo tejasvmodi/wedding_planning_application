@@ -1,10 +1,7 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:flutter/material.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/get_navigation.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:wedding_planning_application/screen/vendor/vendor_single_view.dart';
 
 WishListdesign(
     String newimage, String textdata, String content, BuildContext context) {

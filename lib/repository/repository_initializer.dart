@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:wedding_planning_application/repository/Profile/getprofilerepo.dart';
 import 'package:wedding_planning_application/repository/vendor/serviceItemrepo.dart';
 import 'package:wedding_planning_application/repository/vendor/serviceRepo.dart';
 import 'package:wedding_planning_application/repository/vendor/service_category_repo.dart';
@@ -14,5 +15,6 @@ class RepositoryInitializer {
     Get.lazyPut(() => VariationoptionOptionRepository());
     Get.lazyPut(() => ServiceRepo());
     Get.lazyPut(() => ServiceItemRepo());
+    Get.lazyPut(() => GetProfileRepo());
   }
 }

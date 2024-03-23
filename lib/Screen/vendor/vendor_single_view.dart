@@ -1,11 +1,14 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+
 import 'package:wedding_planning_application/Screen/Booking/WishList/Wishlist.dart';
 import 'package:wedding_planning_application/models/service_itemmodel.dart';
+import 'package:wedding_planning_application/repository/Profile/getprofilerepo.dart';
 import 'package:wedding_planning_application/screen/booking/book_service/book_service.dart';
 import 'package:wedding_planning_application/screen/other_screens/inquiry.dart';
 import 'package:wedding_planning_application/services/vendor_service.dart';
@@ -146,8 +149,8 @@ class _VendorSingleViewState extends State<VendorSingleView> {
                       children: [
                         if (itemdata.isEmpty)
                           const Center(
-                            heightFactor: 5,
-                            child: CircularProgressIndicator()),
+                              heightFactor: 5,
+                              child: CircularProgressIndicator()),
                         if (itemdata.length > 1)
                           SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
@@ -608,10 +611,10 @@ class FirstItemDetails extends StatefulWidget {
   final List<String> images;
 
   const FirstItemDetails({
-    Key? key,
+    super.key,
     required this.itemName,
     required this.images,
-  }) : super(key: key);
+  });
 
   @override
   _FirstItemDetailsState createState() => _FirstItemDetailsState();

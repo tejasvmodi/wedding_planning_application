@@ -2,11 +2,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:wedding_planning_application/screen/booking/book_service/components/bookitem.dart';
 import 'package:wedding_planning_application/screen/chats/chat_inbox.dart';
 import 'package:wedding_planning_application/screen/other_screens/budget.dart';
-import 'package:wedding_planning_application/screen/vendor/vendor_single_view.dart';
-
 // ignore: camel_case_types
 class bookservicew extends StatefulWidget {
   const bookservicew({super.key});

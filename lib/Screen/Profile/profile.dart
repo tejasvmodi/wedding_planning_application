@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:wedding_planning_application/models/ProfileModels/getprofilemodel.dart';
 import 'package:wedding_planning_application/screen/authentication/forms/login_form.dart';
 import 'package:wedding_planning_application/screen/booking/my_bookings/show_bookings.dart';
 import 'package:wedding_planning_application/screen/chats/chat_inbox.dart';
@@ -13,6 +16,7 @@ import 'package:wedding_planning_application/screen/profile/recommandation/locat
 import 'package:wedding_planning_application/screen/profile/recommandation/recommendation.dart';
 import 'package:wedding_planning_application/screen/profile/screens/manage_profile_bride.dart';
 import 'package:wedding_planning_application/services/authentication/auth_service.dart';
+import 'package:wedding_planning_application/services/profile.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -23,7 +27,28 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   final AuthenticationService authService = Get.find();
+  final ProfileService profile = Get.find();
+  List<GetprofileModel> profil =[];
 
+@override
+  void initState() {
+    super.initState();
+    getserviceitemdata();
+  }
+
+  Future<void> getserviceitemdata() async {
+    try {
+      profil = await profile.getprofile();
+      setState(() {
+        profil;
+        log(profil.toString());
+      });
+    } catch (e) {
+      log('Error fetching service data: $e');
+    }
+  }
+
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,7 +86,14 @@ class _ProfileState extends State<Profile> {
           scrollDirection: Axis.vertical,
           child: Column(
             children: [
-              profilephoto('Anjali', 'assets/images/Account Icon.jpg'),
+              if (profil.isEmpty)
+                const Center(
+                  heightFactor: 10,
+                  child: CircularProgressIndicator(),
+                ),
+            
+              if(profil.isNotEmpty)
+              profilephoto(profil[0].firstName, profil[0].avatar),
               accountitem('My Booking', MdiIcons.listBoxOutline, context,
                   const ShowBooking()),
               const Divider(
@@ -70,7 +102,7 @@ class _ProfileState extends State<Profile> {
                 color: Color.fromRGBO(68, 45, 45, 1),
               ),
               accountitem('Manage Profile', MdiIcons.listBoxOutline, context,
-                  const ManageFprofile()),
+                 ManageFprofile()),
               const Divider(
                 indent: 25,
                 endIndent: 25,
