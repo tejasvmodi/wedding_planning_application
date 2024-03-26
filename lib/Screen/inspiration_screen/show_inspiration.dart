@@ -11,6 +11,11 @@ class ShowinspirationPhoto extends StatefulWidget {
 }
 
 class _ShowinspirationPhotoState extends State<ShowinspirationPhoto> {
+
+    
+  @override
+ 
+
   final List<String> images = [
     'assets/images/inspiration_feed_dress_1.jpg',
     'assets/images/inspiration_feed_dress_2.jpg',
@@ -156,6 +161,7 @@ class _ShowinspirationPhotoState extends State<ShowinspirationPhoto> {
           ],
         ),
       ),
+  
     );
   }
 }

@@ -7,7 +7,7 @@ import 'package:wedding_planning_application/models/ProfileModels/getprofilemode
 import 'package:wedding_planning_application/screen/authentication/forms/login_form.dart';
 import 'package:wedding_planning_application/screen/booking/my_bookings/show_bookings.dart';
 import 'package:wedding_planning_application/screen/chats/chat_inbox.dart';
-import 'package:wedding_planning_application/screen/common_components/drawer.dart';
+import 'package:wedding_planning_application/screen/common_components/drawer.dart'; 
 import 'package:wedding_planning_application/screen/other_screens/review.dart';
 import 'package:wedding_planning_application/screen/other_screens/support.dart';
 import 'package:wedding_planning_application/screen/profile/components/account_items.dart';
@@ -28,6 +28,7 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   final AuthenticationService authService = Get.find();
   final ProfileService profile = Get.find();
+  
   List<GetprofileModel> profil =[];
 
 @override
@@ -41,7 +42,7 @@ class _ProfileState extends State<Profile> {
       profil = await profile.getprofile();
       setState(() {
         profil;
-        log(profil.toString());
+        // log(profil.toString());
       });
     } catch (e) {
       log('Error fetching service data: $e');
@@ -102,7 +103,7 @@ class _ProfileState extends State<Profile> {
                 color: Color.fromRGBO(68, 45, 45, 1),
               ),
               accountitem('Manage Profile', MdiIcons.listBoxOutline, context,
-                 ManageFprofile()),
+                 const ManageFprofile()),
               const Divider(
                 indent: 25,
                 endIndent: 25,

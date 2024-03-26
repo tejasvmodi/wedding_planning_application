@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:wedding_planning_application/services/Inspiration/insapiration_service.dart';
 import 'package:wedding_planning_application/services/authentication/auth_service.dart';
 import 'package:wedding_planning_application/services/core/getuser.dart';
 import 'package:wedding_planning_application/services/core/service.dart';
@@ -20,5 +21,6 @@ class ServiceInitializer {
     Get.lazyPut(() => Serviceitem());
     Get.lazyPut(() => GetUser());
     Get.lazyPut(() => ProfileService());
+    Get.lazyPut(() => InspirationSefrvice());
   }
 }

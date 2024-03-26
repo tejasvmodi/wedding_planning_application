@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+// ignore_for_file: public_member_api_docs, sort_constructors_first, library_private_types_in_public_api
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
@@ -8,7 +8,6 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 
 import 'package:wedding_planning_application/Screen/Booking/WishList/Wishlist.dart';
 import 'package:wedding_planning_application/models/service_itemmodel.dart';
-import 'package:wedding_planning_application/repository/Profile/getprofilerepo.dart';
 import 'package:wedding_planning_application/screen/booking/book_service/book_service.dart';
 import 'package:wedding_planning_application/screen/other_screens/inquiry.dart';
 import 'package:wedding_planning_application/services/vendor_service.dart';
