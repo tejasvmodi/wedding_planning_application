@@ -6,8 +6,8 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wedding_planning_application/exception/auth_exception.dart';
 import 'package:wedding_planning_application/Models/data/login_data.dart';
-import 'package:wedding_planning_application/Models/data/registration_data.dart';
 import 'package:wedding_planning_application/Models/token_manager.dart';
+import 'package:wedding_planning_application/models/data/registration_data.dart';
 import 'package:wedding_planning_application/screen/Screen_Navigation.dart';
 import 'package:wedding_planning_application/screen/authentication/forms/login_form.dart';
 import 'package:wedding_planning_application/util/constant.dart';
@@ -56,7 +56,7 @@ class AuthenticationRepository extends GetxController {
     }
   }
 
-  Future<void> registerUser(RegistrationData user) async {
+  Future<void> registerUser(Registrationdata user) async {
     prefs = await SharedPreferences.getInstance();
 
     try {

@@ -91,6 +91,12 @@ class _InspirationWState extends State<InspirationW> {
           const SizedBox(
             height: 10,
           ),
+          if(getinspiration.isEmpty)
+          const Center(
+            heightFactor: 15,
+            child: CircularProgressIndicator(),
+          ),
+          if(getinspiration.isNotEmpty)
           Expanded(
             child: CustomScrollView(
               slivers: [

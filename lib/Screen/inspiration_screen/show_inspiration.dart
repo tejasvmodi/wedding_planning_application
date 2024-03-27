@@ -103,7 +103,7 @@ class _ShowinspirationPhotoState extends State<ShowinspirationPhoto> {
                           border: Border.all(color: Colors.black),
                           image: DecorationImage(
                               image: NetworkImage(widget.image),
-                              fit: BoxFit.cover),
+                              fit: BoxFit.fill),
                         ),
                       ),
                     ),
