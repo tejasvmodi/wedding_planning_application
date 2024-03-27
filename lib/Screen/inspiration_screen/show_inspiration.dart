@@ -3,8 +3,12 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:wedding_planning_application/screen/inspiration_screen/components/category_bar.dart';
 
 class ShowinspirationPhoto extends StatefulWidget {
-  const ShowinspirationPhoto({super.key, required this.index});
+   ShowinspirationPhoto({super.key, required this.index, required this.description, required this.name, required this.image});
   final int index;
+  final String description;
+  final String name;
+  final String image;
+
 
   @override
   State<ShowinspirationPhoto> createState() => _ShowinspirationPhotoState();
@@ -16,20 +20,7 @@ class _ShowinspirationPhotoState extends State<ShowinspirationPhoto> {
   @override
  
 
-  final List<String> images = [
-    'assets/images/inspiration_feed_dress_1.jpg',
-    'assets/images/inspiration_feed_dress_2.jpg',
-    'assets/images/inspiration_feed_dress_3.jpg',
-    'assets/images/inspiration_feed_dress_4.jpg',
-    'assets/images/inspiration_feed_dress_5.jpg',
-    'assets/images/inspiration_feed_dress_6.jpg',
-    'assets/images/inspiration_feed_dress_7.jpg',
-    'assets/images/inspiration_feed_dress_8.jpg',
-    'assets/images/inspiration_feed_dress_9.jpg',
-    'assets/images/inspiration_feed_dress_10.jpg',
-    'assets/images/inspiration_feed_dress_11.jpg',
-  ];
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -111,18 +102,18 @@ class _ShowinspirationPhotoState extends State<ShowinspirationPhoto> {
                         decoration: BoxDecoration(
                           border: Border.all(color: Colors.black),
                           image: DecorationImage(
-                              image: AssetImage(images[widget.index]),
+                              image: NetworkImage(widget.image),
                               fit: BoxFit.cover),
                         ),
                       ),
                     ),
-                    const Padding(
-                      padding: EdgeInsets.only(left: 22, top: 10),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 22, top: 10),
                       child: SizedBox(
                         child: Text(
-                          'Hinal Prajapati',
+                        widget.name,
                           textAlign: TextAlign.left,
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Color.fromRGBO(96, 68, 68, 1),
                             fontFamily: 'EBGaramond',
                             fontSize: 25,
@@ -133,13 +124,13 @@ class _ShowinspirationPhotoState extends State<ShowinspirationPhoto> {
                         ),
                       ),
                     ),
-                    const Padding(
-                      padding: EdgeInsets.only(left: 22, top: 25, right: 10),
+                   Padding(
+                      padding: const EdgeInsets.only(left: 22, top: 25, right: 10),
                       child: SizedBox(
                         child: Text(
-                          'About To let my soul breathe,I simply am.I need nothing more.',
+                       widget.description ,
                           textAlign: TextAlign.left,
-                          style: TextStyle(
+                          style: const TextStyle(
                             textBaseline: TextBaseline.alphabetic,
                             color: Color.fromRGBO(96, 68, 68, 1),
                             fontFamily: 'EBGaramond',

@@ -1,11 +1,15 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:wedding_planning_application/repository/Inspiration/getinsprationrepo.dart';
+import 'package:wedding_planning_application/models/Inspiration/inspirationmodel.dart';
 import 'package:wedding_planning_application/screen/common_components/drawer.dart';
 import 'package:wedding_planning_application/screen/inspiration_screen/addinspiration.dart';
 import 'package:wedding_planning_application/screen/inspiration_screen/components/category_bar.dart';
-
+import 'package:wedding_planning_application/screen/inspiration_screen/show_inspiration.dart';
+import 'package:wedding_planning_application/services/Inspiration/insapiration_service.dart';
 
 class InspirationW extends StatefulWidget {
   const InspirationW({super.key});
@@ -15,25 +19,27 @@ class InspirationW extends StatefulWidget {
 }
 
 class _InspirationWState extends State<InspirationW> {
-   void initState() {
-  Getnspirationrepo repo=Getnspirationrepo();
-  repo.getInspation();
-  
+  List<inspirationModel> getinspiration = [];
+  @override
+  void initState() {
+    fetchInspiration();
     super.initState();
   }
-  // final List<String> images = [
-  //   'assets/images/inspiration_feed_dress_1.jpg',
-  //   'assets/images/inspiration_feed_dress_2.jpg',
-  //   'assets/images/inspiration_feed_dress_3.jpg',
-  //   'assets/images/inspiration_feed_dress_4.jpg',
-  //   'assets/images/inspiration_feed_dress_5.jpg',
-  //   'assets/images/inspiration_feed_dress_6.jpg',
-  //   'assets/images/inspiration_feed_dress_7.jpg',
-  //   'assets/images/inspiration_feed_dress_8.jpg',
-  //   'assets/images/inspiration_feed_dress_9.jpg',
-  //   'assets/images/inspiration_feed_dress_10.jpg',
-  //   'assets/images/inspiration_feed_dress_11.jpg',
-  // ];
+
+  Future<void> fetchInspiration() async {
+    try {
+      InspirationSefrvice inspService = InspirationSefrvice();
+      // Wait for the Future<List<inspirationModel>> to complete
+      List<inspirationModel> inspirationList =
+          await inspService.getallinspiration();
+      setState(() {
+        getinspiration = inspirationList;
+        log(getinspiration.toString());
+      });
+    } catch (e) {
+      log('Error fetching inspiration: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,9 +77,9 @@ class _InspirationWState extends State<InspirationW> {
         ],
       ),
       drawer: const Drawer123(),
-      body: const Column(
+      body: Column(
         children: [
-          SizedBox(
+          const SizedBox(
             height: 50,
             child: CategoryBar(categories: [
               'Dress',
@@ -82,42 +88,64 @@ class _InspirationWState extends State<InspirationW> {
               'Decoration',
             ]),
           ),
-          // Expanded(
-          //   child: CustomScrollView(
-          //     slivers: [
-          //       SliverStaggeredGrid.countBuilder(
-          //         crossAxisCount: 4,
-          //         itemCount: images.length,
-          //         itemBuilder: (BuildContext context, int index) => Card(
-          //           child: InkWell(
-          //             child: Image.asset(
-          //               images[index],
-          //               fit: BoxFit.cover,
-          //               // Adjust this based on your requirement
-          //             ),
-          //             onTap: () {
-          //               Get.to(() => ShowinspirationPhoto(
-          //                     index: index,
-          //                   ));
-          //             },
-          //           ),
-          //         ),
-          //         staggeredTileBuilder: (int index) =>
-          //             const StaggeredTile.fit(2),
-          //         mainAxisSpacing: 3.0,
-          //         crossAxisSpacing: 3.0,
-          //       ),
-          //     ],
-          //   ),
-          // ),
+          const SizedBox(
+            height: 10,
+          ),
+          Expanded(
+            child: CustomScrollView(
+              slivers: [
+                SliverStaggeredGrid.countBuilder(
+                  crossAxisCount: 4,
+                  itemCount: getinspiration.length,
+                  itemBuilder: (BuildContext context, int index) => Card(
+                    child: Container(
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Colors.black),
+                          boxShadow: const [
+                            BoxShadow(
+                                blurRadius: 2,
+                                spreadRadius: 2,
+                                color: Colors.grey)
+                          ]),
+                      child: InkWell(
+                        child: Image.network(
+                          getinspiration[index].image,
+                          fit: BoxFit.cover,
+                        ),
+                        onTap: () {
+                          Get.to(() => ShowinspirationPhoto(
+                                index: getinspiration[index].inspiration,
+                                description: getinspiration[index].description,
+                                name: getinspiration[index].user,
+                                image: getinspiration[index].image,
+                              ));
+                        },
+                      ),
+                    ),
+                  ),
+                  staggeredTileBuilder: (int index) =>
+                      const StaggeredTile.fit(2),
+                  mainAxisSpacing: 3.0,
+                  crossAxisSpacing: 3.0,
+                ),
+              ],
+            ),
+          ),
         ],
       ),
-          floatingActionButton:  FloatingActionButton(
-            backgroundColor: const Color.fromRGBO(85, 32, 32, 1),
-            shape: const OutlineInputBorder(borderRadius: BorderRadius.all(Radius.elliptical(4, 4))),
-            onPressed: () {
-            Get.to(()=> const AddinspirationW());
-          }, child: const Icon(Icons.add,color: Colors.white,size: 50,), ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: const Color.fromRGBO(85, 32, 32, 1),
+        shape: const OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.elliptical(4, 4))),
+        onPressed: () {
+          Get.to(() => const AddinspirationW());
+        },
+        child: const Icon(
+          Icons.add,
+          color: Colors.white,
+          size: 50,
+        ),
+      ),
     );
   }
 }

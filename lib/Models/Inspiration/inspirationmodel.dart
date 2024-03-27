@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 
 class inspirationModel {
-  String inspiration;
+  int inspiration;
   String user;
   String image;
   String description;
@@ -16,9 +16,10 @@ class inspirationModel {
     required this.description,
     required this.tags,
   });
+ 
 
   inspirationModel copyWith({
-    String? inspiration,
+    int? inspiration,
     String? user,
     String? image,
     String? description,
@@ -45,7 +46,7 @@ class inspirationModel {
 
   factory inspirationModel.fromMap(Map<String, dynamic> map) {
     return inspirationModel(
-      inspiration: map['inspiration'] as String,
+      inspiration: map['inspiration'] as int,
       user: map['user'] as String,
       image: map['image'] as String,
       description: map['description'] as String,
@@ -54,9 +55,15 @@ class inspirationModel {
   }
 
   String toJson() => json.encode(toMap());
-
-  factory inspirationModel.fromJson(String source) => inspirationModel.fromMap(json.decode(source) as Map<String, dynamic>);
-
+factory inspirationModel.fromJson(Map<String, dynamic> map){
+    return inspirationModel(
+      inspiration: map['inspiration'] as int,
+      user: map['user'] as String,
+      image: map['image'] as String,
+      description: map['description'] as String,
+      tags: (map['tags'] as List<dynamic>).map((tag) => tag.toString()).toList(),
+    );
+}
   @override
   String toString() {
     return 'inspirationModel(inspiration: $inspiration, user: $user, image: $image, description: $description, tags: $tags)';

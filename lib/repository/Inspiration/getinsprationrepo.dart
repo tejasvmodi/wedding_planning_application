@@ -14,16 +14,18 @@ class Getnspirationrepo{
       headers: createAuthorizationHeaders(await TokenManager.getToken()),
     );
 
-    if (response.statusCode == 200) {
+     if (response.statusCode == 200) {
       try {
-        log(response.body);
         final Map<String, dynamic> jsonResponse = json.decode(response.body);
-        List<inspirationModel> getinspiration= [];
+        List<inspirationModel> getInspiration = [];
 
-       getinspiration.addAll(jsonResponse.toString() as Iterable<inspirationModel>);
-
+        getInspiration = (jsonResponse['items'] as List<dynamic>).map((value) {
+          return inspirationModel.fromJson(value);
+        }).toList();
+      
+        // log(getInspiration.toString());
         return Content<List<inspirationModel>>(
-          items: getinspiration,
+          items: getInspiration,
           total: jsonResponse['total'],
           page: jsonResponse['page'],
           perPage: jsonResponse['perPage'],

@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:wedding_planning_application/repository/Inspiration/addinspirationrepo.dart';
+import 'package:wedding_planning_application/repository/Inspiration/getinsprationrepo.dart';
 import 'package:wedding_planning_application/repository/Profile/getprofilerepo.dart';
 import 'package:wedding_planning_application/repository/vendor/serviceItemrepo.dart';
 import 'package:wedding_planning_application/repository/vendor/serviceRepo.dart';
@@ -19,5 +20,6 @@ class RepositoryInitializer {
     Get.lazyPut(() => ServiceItemRepo());
     Get.lazyPut(() => GetProfileRepo());
     Get.lazyPut(() => AddInspirationrepo());
+    Get.lazyPut(() => Getnspirationrepo());
   }
 }

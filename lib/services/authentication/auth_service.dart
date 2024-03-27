@@ -10,15 +10,9 @@ class AuthenticationService {
     await authRepo.loginUserWithNameEmailAndPassword(email, password);
   }
 
-  Future<void> registerUser(String firstName, String lastName, String email,
+  Future<void> registerUser(String firstName, String lastname, String email,
       String password, String couple) async {
-    await authRepo.registerUser(RegistrationData(
-        firstName: firstName,
-        lastname: lastName,
-        email: email,
-        password: password,
-        couple: couple));
-  }
+     }
 
   Future<void> logOut() async {
     await authRepo.logOut();
