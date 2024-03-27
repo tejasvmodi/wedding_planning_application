@@ -1,13 +1,13 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
-class RegistrationData {
+class Registrationdata {
   String firstName;
   String lastName;
   String email;
   String password;
   String couple;
-  RegistrationData({
+  Registrationdata({
     required this.firstName,
     required this.lastName,
     required this.email,
@@ -16,14 +16,14 @@ class RegistrationData {
   });
  
 
-  RegistrationData copyWith({
+  Registrationdata copyWith({
     String? firstName,
     String? lastName,
     String? email,
     String? password,
     String? couple,
   }) {
-    return RegistrationData(
+    return Registrationdata(
       firstName: firstName ?? this.firstName,
       lastName: lastName ?? this.lastName,
       email: email ?? this.email,
@@ -42,8 +42,8 @@ class RegistrationData {
     };
   }
 
-  factory RegistrationData.fromMap(Map<String, dynamic> map) {
-    return RegistrationData(
+  factory Registrationdata.fromMap(Map<String, dynamic> map) {
+    return Registrationdata(
       firstName: map['firstName'] as String,
       lastName: map['lastName'] as String,
       email: map['email'] as String,
@@ -54,15 +54,15 @@ class RegistrationData {
 
   String toJson() => json.encode(toMap());
 
-  factory RegistrationData.fromJson(String source) => RegistrationData.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory Registrationdata.fromJson(String source) => Registrationdata.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {
-    return 'RegistrationData(firstName: $firstName, lastName: $lastName, email: $email, password: $password, couple: $couple)';
+    return 'Registrationdata(firstName: $firstName, lastName: $lastName, email: $email, password: $password, couple: $couple)';
   }
 
   @override
-  bool operator ==(covariant RegistrationData other) {
+  bool operator ==(covariant Registrationdata other) {
     if (identical(this, other)) return true;
   
     return 
