@@ -2,14 +2,16 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:get/get.dart';
 import 'package:wedding_planning_application/models/Inspiration/addinspirationmodel.dart';
 import 'package:wedding_planning_application/models/Inspiration/inspirationmodel.dart';
 import 'package:wedding_planning_application/repository/Inspiration/addinspirationrepo.dart';
-import 'package:wedding_planning_application/repository/Inspiration/getinsprationrepo.dart';
+import 'package:wedding_planning_application/services/core/getinspiration.dart';
 
 class InspirationSefrvice{
   AddInspirationrepo addinspiration = AddInspirationrepo();
-  Getnspirationrepo getinspiration = Getnspirationrepo();
+  final Getinspiration getinspiration = Get.find();
+ 
     Future<void> addinspiratinserv(File file,
      String description,
     List<String> tags, ) async {
@@ -22,7 +24,7 @@ Future<List<inspirationModel>> getallinspiration() async {
    
   try {
   
-    await getinspiration.getInspation().then((inspirationm) async{
+    await getinspiration.getInspiration().then((inspirationm) async{
       getinspi.addAll(inspirationm.items);
     });
   } catch (e) {

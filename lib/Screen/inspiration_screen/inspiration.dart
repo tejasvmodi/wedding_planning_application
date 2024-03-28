@@ -1,3 +1,4 @@
+
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
@@ -5,11 +6,13 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:wedding_planning_application/models/Inspiration/inspirationmodel.dart';
+import 'package:wedding_planning_application/models/ProfileModels/getprofilemodel.dart';
 import 'package:wedding_planning_application/screen/common_components/drawer.dart';
 import 'package:wedding_planning_application/screen/inspiration_screen/addinspiration.dart';
 import 'package:wedding_planning_application/screen/inspiration_screen/components/category_bar.dart';
 import 'package:wedding_planning_application/screen/inspiration_screen/show_inspiration.dart';
 import 'package:wedding_planning_application/services/Inspiration/insapiration_service.dart';
+import 'package:wedding_planning_application/services/profile.dart';
 
 class InspirationW extends StatefulWidget {
   const InspirationW({super.key});
@@ -19,26 +22,34 @@ class InspirationW extends StatefulWidget {
 }
 
 class _InspirationWState extends State<InspirationW> {
+  InspirationSefrvice ins = InspirationSefrvice();
+  final ProfileService userinfo = Get.find();
   List<inspirationModel> getinspiration = [];
+  List<GetprofileModel> profil = [];
   @override
   void initState() {
-    fetchInspiration();
     super.initState();
+    fetchInspiration();
+    getserviceitemdata(); 
+  }
+ Future<void> getserviceitemdata() async {
+    try {
+      profil = await userinfo.getprofile();
+      setState(() {
+        profil;
+        // log(profil.toString());
+      });
+    } catch (e) {
+      log('Error fetching service data: $e');
+    }
   }
 
   Future<void> fetchInspiration() async {
-    try {
-      InspirationSefrvice inspService = InspirationSefrvice();
-      // Wait for the Future<List<inspirationModel>> to complete
-      List<inspirationModel> inspirationList =
-          await inspService.getallinspiration();
-      setState(() {
-        getinspiration = inspirationList;
-        log(getinspiration.toString());
-      });
-    } catch (e) {
-      log('Error fetching inspiration: $e');
-    }
+    getinspiration = await ins.getallinspiration();
+    setState(() {
+      getinspiration;
+      log(getinspiration.toString());
+    });
   }
 
   @override
@@ -119,11 +130,14 @@ class _InspirationWState extends State<InspirationW> {
                           fit: BoxFit.cover,
                         ),
                         onTap: () {
+                          log(profil.toString());
                           Get.to(() => ShowinspirationPhoto(
                                 index: getinspiration[index].inspiration,
                                 description: getinspiration[index].description,
                                 name: getinspiration[index].user,
                                 image: getinspiration[index].image,
+                                tags: getinspiration[index].tags.join(','), 
+                                userId: profil[0].userId,
                               ));
                         },
                       ),
