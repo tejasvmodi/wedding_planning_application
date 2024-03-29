@@ -1,8 +1,8 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:wedding_planning_application/models/Inspiration/inspirationmodel.dart';
 import 'package:wedding_planning_application/models/ProfileModels/getprofilemodel.dart';
 import 'package:wedding_planning_application/screen/authentication/forms/login_form.dart';
 import 'package:wedding_planning_application/screen/booking/my_bookings/show_bookings.dart';
@@ -14,7 +14,9 @@ import 'package:wedding_planning_application/screen/profile/components/account_i
 import 'package:wedding_planning_application/screen/profile/components/profile_photo.dart';
 import 'package:wedding_planning_application/screen/profile/recommandation/location.dart';
 import 'package:wedding_planning_application/screen/profile/recommandation/recommendation.dart';
+import 'package:wedding_planning_application/screen/profile/screens/editpost.dart';
 import 'package:wedding_planning_application/screen/profile/screens/manage_profile_bride.dart';
+import 'package:wedding_planning_application/services/Inspiration/insapiration_service.dart';
 import 'package:wedding_planning_application/services/authentication/auth_service.dart';
 import 'package:wedding_planning_application/services/profile.dart';
 
@@ -28,18 +30,36 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   final AuthenticationService authService = Get.find();
   final ProfileService profile = Get.find();
-  
+  InspirationSefrvice ins = InspirationSefrvice();
+ 
+  List<inspirationModel> getinspiration = [];
+  // List<inspirationModel> inspiration = [];
   List<GetprofileModel> profil =[];
 
 @override
   void initState() {
     super.initState();
-    getserviceitemdata();
+    fetchProfileData();
   }
+
+     Future<void> fetchProfileData() async {
+    await getserviceitemdata();
+    await fetchInspiration();
+  }
+  
+ Future<void> fetchInspiration() async {
+  getinspiration = await ins.getallinspiration();
+  setState(() {
+    getinspiration = getinspiration.where((inspiration) => inspiration.user == profil[0].userId.toString()).toList();
+    log(getinspiration.toString());
+  });
+}
+
 
   Future<void> getserviceitemdata() async {
     try {
-      profil = await profile.getprofile();
+      profil = await profile.getprofile(); 
+    
       setState(() {
         profil;
         // log(profil.toString());
@@ -102,8 +122,17 @@ class _ProfileState extends State<Profile> {
                 endIndent: 25,
                 color: Color.fromRGBO(68, 45, 45, 1),
               ),
-              accountitem('Manage Profile', MdiIcons.listBoxOutline, context,
+              accountitem('Manage Profile', MdiIcons.account, context,
                  const ManageFprofile()),
+              const Divider(
+                indent: 25,
+                endIndent: 25,
+                color: Color.fromRGBO(68, 45, 45, 1),
+              ),
+              if(getinspiration.isNotEmpty && profil.isNotEmpty)
+               accountitem('Edit your inspiration', MdiIcons.lightbulbOutline, context,
+                 Editpost(getinspiration: getinspiration, username:"${profil[0].firstName}  ${profil[0].lastName}",)),
+                  if(getinspiration.isNotEmpty && profil.isNotEmpty)
               const Divider(
                 indent: 25,
                 endIndent: 25,
@@ -186,3 +215,4 @@ class _ProfileState extends State<Profile> {
         ));
   }
 }
+

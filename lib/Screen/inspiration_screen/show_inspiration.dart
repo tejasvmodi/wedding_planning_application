@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:wedding_planning_application/models/getUsername.dart';
 import 'package:wedding_planning_application/screen/inspiration_screen/components/category_bar.dart';
-import 'package:wedding_planning_application/screen/inspiration_screen/updateinspiration.dart';
 import 'package:wedding_planning_application/services/profile.dart';
 
 class ShowinspirationPhoto extends StatefulWidget {
@@ -15,7 +14,8 @@ class ShowinspirationPhoto extends StatefulWidget {
       required this.description,
       required this.name,
       required this.image,
-      required this.tags, required this.userId});
+      required this.tags,
+      required this.userId});
   final int index;
   final String description;
   final String name;
@@ -28,23 +28,17 @@ class ShowinspirationPhoto extends StatefulWidget {
 }
 
 class _ShowinspirationPhotoState extends State<ShowinspirationPhoto> {
- final ProfileService userinfo = Get.find();
+  final ProfileService userinfo = Get.find();
   List<getUserName> getuser = [];
-
 
   @override
   void initState() {
     super.initState();
     fetchInspiration();
-    //  log(getuser[1].userId.toString());
-                    log(widget.userId.toString());
-    setState(() {
-      
-    });
-
+    log(widget.userId.toString());
+    setState(() {});
   }
 
- 
   Future<void> fetchInspiration() async {
     getuser = await userinfo.getuserinformation(int.parse(widget.name));
     setState(() {
@@ -143,14 +137,14 @@ class _ShowinspirationPhotoState extends State<ShowinspirationPhoto> {
                         child: CircularProgressIndicator(),
                       ),
                     if (getuser.isNotEmpty)
-                      Padding(
-                        padding: const EdgeInsets.only(left: 22, top: 10),
+                      const Padding(
+                        padding: EdgeInsets.only(left: 22, top: 10),
                         child: SizedBox(
                           child: Text(
                             "",
                             // "${getuser[0].firstName}  ${getuser[0].lastName}",
                             textAlign: TextAlign.left,
-                            style: const TextStyle(
+                            style: TextStyle(
                               color: Color.fromRGBO(96, 68, 68, 1),
                               fontFamily: 'EBGaramond',
                               fontSize: 25,
@@ -182,67 +176,6 @@ class _ShowinspirationPhotoState extends State<ShowinspirationPhoto> {
                     ),
                     const SizedBox(
                       height: 20,
-                    ),
-                    // if( widget.userId.isNaN && getuser.isNotEmpty)
-                    // if( widget.userId == getuser[1].userId.toInt())
-                   
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        TextButton(
-                          onPressed: () {
-                            Get.to(()=> Updateinspiration(index: widget.index, description: widget.description, image: widget.image, tag: widget.tags, userid:widget.userId,));
-                          },
-                          style: ButtonStyle(
-                            backgroundColor: const MaterialStatePropertyAll(
-                              Color.fromRGBO(77, 43, 43, 1),
-                            ),
-                            shape: MaterialStatePropertyAll(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(7),
-                              ),
-                            ),
-                          ),
-                          child: const Text(
-                            'Edit Post',
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: 'EBGaramond',
-                              fontSize: 25,
-                              letterSpacing: 0,
-                              fontWeight: FontWeight.w400,
-                              height: 1,
-                            ),
-                          ),
-                        ),
-                        TextButton(
-                          onPressed: () {},
-                          style: ButtonStyle(
-                            backgroundColor: const MaterialStatePropertyAll(
-                              Color.fromRGBO(77, 43, 43, 1),
-                            ),
-                            shape: MaterialStatePropertyAll(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(7),
-                              ),
-                            ),
-                          ),
-                          child: const Text(
-                            'Delete Post',
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: 'EBGaramond',
-                              fontSize: 25,
-                              letterSpacing: 0,
-                              fontWeight: FontWeight.w400,
-                              height: 1,
-                            ),
-                          ),
-                        ),
-                      ],
                     ),
                     const SizedBox(
                       height: 20,

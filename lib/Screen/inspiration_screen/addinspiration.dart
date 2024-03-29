@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:wedding_planning_application/screen/Screen_Navigation.dart';
 import 'package:wedding_planning_application/screen/inspiration_screen/inspiration.dart';
 import 'package:wedding_planning_application/services/Inspiration/insapiration_service.dart';
 
@@ -186,7 +187,7 @@ class _AddinspirationWState extends State<AddinspirationW> {
                           .where((tag) => tag.isNotEmpty)
                           .toList();
                            insadd.addinspiratinserv(_image!, description.text.toString(), cleanedTags);
-                          Get.to(()=>const InspirationW());
+                          Get.to(()=> ScreenNavigation(currentIndex: 3,));
                        setState(() {
                          
                        });                      

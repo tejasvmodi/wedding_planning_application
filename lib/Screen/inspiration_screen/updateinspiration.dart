@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:wedding_planning_application/Screen/inspiration_screen/inspiration.dart';
+import 'package:wedding_planning_application/screen/Screen_Navigation.dart';
 import 'package:wedding_planning_application/services/core/updateinspiration.dart';
 
 class Updateinspiration extends StatefulWidget {
@@ -18,16 +20,24 @@ class Updateinspiration extends StatefulWidget {
   final String image;
   final String tag;
   final int userid;
+  
   @override
   State<Updateinspiration> createState() => _UpdateinspirationState();
 }
 
 class _UpdateinspirationState extends State<Updateinspiration> {
+ UpdateinspirationService update = UpdateinspirationService();
   TextEditingController tag = TextEditingController();
   TextEditingController description = TextEditingController();
   List<String> tags = [];
-
   File? _image;
+
+  @override
+  void initState() {
+    super.initState();
+    tag.text = widget.tag; // Initialize tag controller with the value from the widget
+    description.text = widget.description; // Initialize description controller with the value from the widget
+  }
 
   void _pickImage() async {
     final picker = ImagePicker();
@@ -104,7 +114,7 @@ class _UpdateinspirationState extends State<Updateinspiration> {
                 ),
                 ElevatedButton(
                   onPressed: _pickImage,
-                  child: const Text('Add image'),
+                  child: const Text('pick image'),
                 ),
                 const SizedBox(
                   height: 20,
@@ -165,41 +175,60 @@ class _UpdateinspirationState extends State<Updateinspiration> {
                   height: 10,
                 ),
                 TextButton(
-                    style: ButtonStyle(
-                      backgroundColor: const MaterialStatePropertyAll(
-                        Color.fromRGBO(77, 43, 43, 1),
-                      ),
-                      shape: MaterialStatePropertyAll(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(7),
-                        ),
+                  style: ButtonStyle(
+                    backgroundColor: const MaterialStatePropertyAll(
+                      Color.fromRGBO(77, 43, 43, 1),
+                    ),
+                    shape: MaterialStatePropertyAll(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(7),
                       ),
                     ),
-                    onPressed: () async {
-                      List<String> enteredTags = tag.text.split('#');
+                  ),
+                  onPressed: () async {
+                    List<String> enteredTags = tag.text.split('#');
 
-                      List<String> cleanedTags = enteredTags
-                          .map((tag) => tag.trim())
-                          .where((tag) => tag.isNotEmpty)
-                          .toList();
+                    List<String> cleanedTags = enteredTags
+                        .map((tag) => tag.trim())
+                        .where((tag) => tag.isNotEmpty)
+                        .toList();
 
-                      UpdateinspirationService update = Get.find();
-                      update.updateinspiration(widget.index, widget.description,
-                          _image!, cleanedTags);
+                    update.updateinspiration(
+                        widget.index, widget.description, _image!, cleanedTags);
 
-                      setState(() {});
-                    },
-                    child: const Text(
-                      "Edit Post",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontFamily: 'EBGaramond',
-                        fontSize: 30,
-                        letterSpacing: 0,
-                        fontWeight: FontWeight.normal,
-                        height: 1,
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: const Text('Success'),
+                        content: const Text('Inspiration Updated successfully.'),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              
+                              Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                  builder: (context) => ScreenNavigation(currentIndex: 3),
+                                ),
+                              );
+                            },
+                            child: const Text('Done'),
+                          ),
+                        ],
                       ),
-                    ))
+                    );
+                  },
+                  child: const Text(
+                    "Edit Post",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontFamily: 'EBGaramond',
+                      fontSize: 30,
+                      letterSpacing: 0,
+                      fontWeight: FontWeight.normal,
+                      height: 1,
+                    ),
+                  ),
+                ),
               ],
             ),
           ),

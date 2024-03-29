@@ -91,8 +91,8 @@ class _ScreenNavigationState extends State<ScreenNavigation> {
             icon: widget.currentIndex == 4
                 ? Icon(MdiIcons.account, size: 35)
                 : Icon(MdiIcons.accountOutline, size: 35),
-            label: 'Profile',
-            tooltip: 'Profile',
+            label: 'Account',
+            tooltip: 'Account',
           ),
         ],
         currentIndex: widget.currentIndex,

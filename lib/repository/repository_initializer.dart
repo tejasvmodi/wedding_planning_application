@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:wedding_planning_application/repository/Inspiration/addinspirationrepo.dart';
+import 'package:wedding_planning_application/repository/Inspiration/deleteinspration.dart';
 import 'package:wedding_planning_application/repository/Inspiration/getinsprationrepo.dart';
 import 'package:wedding_planning_application/repository/Inspiration/updateinspiration.dart';
 import 'package:wedding_planning_application/repository/Profile/getprofilerepo.dart';
@@ -10,6 +11,7 @@ import 'package:wedding_planning_application/repository/vendor/service_category_
 import 'package:wedding_planning_application/repository/vendor/variation_option_repo.dart';
 import 'package:wedding_planning_application/repository/vendor/variation_repo.dart';
 import 'package:wedding_planning_application/repository/authentication/authentication_repository.dart';
+
 
 class RepositoryInitializer {
   RepositoryInitializer() {
@@ -24,6 +26,7 @@ class RepositoryInitializer {
     Get.lazyPut(() => Getnspirationrepo());
     Get.lazyPut(() => UpdateInspirationrepo());
     Get.lazyPut(() => getUserinfo());
+    Get.lazyPut(() =>  Deleteinspirationrepo());
     
   }
 }

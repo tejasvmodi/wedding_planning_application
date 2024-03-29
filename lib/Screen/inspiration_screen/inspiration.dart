@@ -1,6 +1,4 @@
-
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
@@ -29,10 +27,15 @@ class _InspirationWState extends State<InspirationW> {
   @override
   void initState() {
     super.initState();
-    fetchInspiration();
-    getserviceitemdata(); 
+    fetchProfileData();
   }
- Future<void> getserviceitemdata() async {
+
+  Future<void> fetchProfileData() async {
+    await getserviceitemdata();
+    await fetchInspiration();
+  }
+
+  Future<void> getserviceitemdata() async {
     try {
       profil = await userinfo.getprofile();
       setState(() {
@@ -102,69 +105,94 @@ class _InspirationWState extends State<InspirationW> {
           const SizedBox(
             height: 10,
           ),
-          if(getinspiration.isEmpty)
-          const Center(
-            heightFactor: 15,
-            child: CircularProgressIndicator(),
-          ),
-          if(getinspiration.isNotEmpty)
-          Expanded(
-            child: CustomScrollView(
-              slivers: [
-                SliverStaggeredGrid.countBuilder(
-                  crossAxisCount: 4,
-                  itemCount: getinspiration.length,
-                  itemBuilder: (BuildContext context, int index) => Card(
-                    child: Container(
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black),
-                          boxShadow: const [
-                            BoxShadow(
-                                blurRadius: 2,
-                                spreadRadius: 2,
-                                color: Colors.grey)
-                          ]),
-                      child: InkWell(
-                        child: Image.network(
-                          getinspiration[index].image,
-                          fit: BoxFit.cover,
+          if (getinspiration.isEmpty)
+            const Center(
+              heightFactor: 15,
+              child: CircularProgressIndicator(),
+            ),
+          if (getinspiration.isNotEmpty)
+          
+               Expanded(
+                child: CustomScrollView(
+                  slivers: [
+                    SliverStaggeredGrid.countBuilder(
+                      crossAxisCount: 4,
+                      itemCount: getinspiration.length,
+                      itemBuilder: (BuildContext context, int index) => Card(
+                        child: Container(
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.black),
+                              boxShadow: const [
+                                BoxShadow(
+                                    blurRadius: 2,
+                                    spreadRadius: 2,
+                                    color: Colors.grey)
+                              ]),
+                          child: InkWell(
+                            child: Image.network(
+                              getinspiration[index].image,
+                              fit: BoxFit.cover,
+                            ),
+                            onTap: () {
+                              log(profil.toString());
+                              Get.to(() => ShowinspirationPhoto(
+                                    index: getinspiration[index].inspiration,
+                                    description:
+                                        getinspiration[index].description,
+                                    name: getinspiration[index].user,
+                                    image: getinspiration[index].image,
+                                    tags: getinspiration[index].tags.join(','),
+                                    userId: profil[0].userId,
+                                  ));
+                            },
+                          ),
                         ),
-                        onTap: () {
-                          log(profil.toString());
-                          Get.to(() => ShowinspirationPhoto(
-                                index: getinspiration[index].inspiration,
-                                description: getinspiration[index].description,
-                                name: getinspiration[index].user,
-                                image: getinspiration[index].image,
-                                tags: getinspiration[index].tags.join(','), 
-                                userId: profil[0].userId,
-                              ));
-                        },
                       ),
+                      staggeredTileBuilder: (int index) =>
+                          const StaggeredTile.fit(2),
+                      mainAxisSpacing: 3.0,
+                      crossAxisSpacing: 3.0,
                     ),
-                  ),
-                  staggeredTileBuilder: (int index) =>
-                      const StaggeredTile.fit(2),
-                  mainAxisSpacing: 3.0,
-                  crossAxisSpacing: 3.0,
+                  ],
                 ),
-              ],
+              ),
+            
+      
+        ],
+      ),
+      floatingActionButton: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+              IconButton(
+                color:  Colors.white,
+            hoverColor: Colors.black,
+            style: const ButtonStyle(
+              backgroundColor: MaterialStatePropertyAll(Color.fromRGBO(85, 32, 32, 1),),
+                visualDensity: VisualDensity(horizontal: 1, vertical: 1)),
+            onPressed: () {
+              fetchProfileData(); // Call fetchProfileData when IconButton is pressed
+            },
+            icon: const Icon(
+              Icons.refresh,
+              size: 40,
+            ), // Use refresh icon
+          ),
+          const SizedBox(height: 10,),
+          FloatingActionButton(
+            backgroundColor: const Color.fromRGBO(85, 32, 32, 1),
+            shape: const OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.elliptical(4, 4))),
+            onPressed: () {
+              Get.to(() => const AddinspirationW());
+            },
+            child: const Icon(
+              Icons.add,
+              color: Colors.white,
+              size: 50,
             ),
           ),
         ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: const Color.fromRGBO(85, 32, 32, 1),
-        shape: const OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.elliptical(4, 4))),
-        onPressed: () {
-          Get.to(() => const AddinspirationW());
-        },
-        child: const Icon(
-          Icons.add,
-          color: Colors.white,
-          size: 50,
-        ),
       ),
     );
   }

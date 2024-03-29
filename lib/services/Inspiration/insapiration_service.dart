@@ -6,11 +6,13 @@ import 'package:get/get.dart';
 import 'package:wedding_planning_application/models/Inspiration/addinspirationmodel.dart';
 import 'package:wedding_planning_application/models/Inspiration/inspirationmodel.dart';
 import 'package:wedding_planning_application/repository/Inspiration/addinspirationrepo.dart';
+import 'package:wedding_planning_application/services/core/deleteinspiration.dart';
 import 'package:wedding_planning_application/services/core/getinspiration.dart';
 
 class InspirationSefrvice{
   AddInspirationrepo addinspiration = AddInspirationrepo();
   final Getinspiration getinspiration = Get.find();
+  final Deleteinspiration deleteins = Get.find();
  
     Future<void> addinspiratinserv(File file,
      String description,
@@ -36,5 +38,16 @@ Future<List<inspirationModel>> getallinspiration() async {
   return getinspi;
 }
 
+Future<void> updateinspiration() async {
+  
+}
+
+Future<void> deleteinspirationservice(int id) async {
+   try{
+          deleteins.deleteinspiration(id);
+   }catch (e) {
+    log(e.toString());
+   }
+}
 
 }
