@@ -1,9 +1,8 @@
 import 'dart:io';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:wedding_planning_application/Screen/inspiration_screen/inspiration.dart';
 import 'package:wedding_planning_application/screen/Screen_Navigation.dart';
 import 'package:wedding_planning_application/services/core/updateinspiration.dart';
 
@@ -20,13 +19,13 @@ class Updateinspiration extends StatefulWidget {
   final String image;
   final String tag;
   final int userid;
-  
+
   @override
   State<Updateinspiration> createState() => _UpdateinspirationState();
 }
 
 class _UpdateinspirationState extends State<Updateinspiration> {
- UpdateinspirationService update = UpdateinspirationService();
+  UpdateinspirationService update = UpdateinspirationService();
   TextEditingController tag = TextEditingController();
   TextEditingController description = TextEditingController();
   List<String> tags = [];
@@ -35,8 +34,10 @@ class _UpdateinspirationState extends State<Updateinspiration> {
   @override
   void initState() {
     super.initState();
-    tag.text = widget.tag; // Initialize tag controller with the value from the widget
-    description.text = widget.description; // Initialize description controller with the value from the widget
+    tag.text =
+        widget.tag; 
+    description.text = widget
+        .description; 
   }
 
   void _pickImage() async {
@@ -192,22 +193,38 @@ class _UpdateinspirationState extends State<Updateinspiration> {
                         .map((tag) => tag.trim())
                         .where((tag) => tag.isNotEmpty)
                         .toList();
-
-                    update.updateinspiration(
-                        widget.index, widget.description, _image!, cleanedTags);
+                   
+                    File imageFile = File(widget.image);
+                    log(imageFile.toString());
+                    if (_image != null) {           
+                      update.updateinspiration(
+                        widget.index,
+                        widget.description,
+                        _image!,
+                        cleanedTags,
+                      );
+                    } else {
+                      update.updateinspiration(
+                        widget.index,
+                        widget.description,
+                        imageFile, 
+                        cleanedTags,
+                      );
+                    }
 
                     showDialog(
                       context: context,
                       builder: (context) => AlertDialog(
                         title: const Text('Success'),
-                        content: const Text('Inspiration Updated successfully.'),
+                        content:
+                            const Text('Inspiration Updated successfully.'),
                         actions: [
                           TextButton(
                             onPressed: () {
-                              
                               Navigator.of(context).pushReplacement(
                                 MaterialPageRoute(
-                                  builder: (context) => ScreenNavigation(currentIndex: 3),
+                                  builder: (context) =>
+                                      ScreenNavigation(currentIndex: 3),
                                 ),
                               );
                             },

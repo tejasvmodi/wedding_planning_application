@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:wedding_planning_application/repository/Checklist/addChecklist.dart';
+import 'package:wedding_planning_application/repository/Checklist/getChecklist.dart';
 import 'package:wedding_planning_application/repository/Inspiration/addinspirationrepo.dart';
 import 'package:wedding_planning_application/repository/Inspiration/deleteinspration.dart';
 import 'package:wedding_planning_application/repository/Inspiration/getinsprationrepo.dart';
@@ -27,6 +29,10 @@ class RepositoryInitializer {
     Get.lazyPut(() => UpdateInspirationrepo());
     Get.lazyPut(() => getUserinfo());
     Get.lazyPut(() =>  Deleteinspirationrepo());
+    Get.lazyPut(() => AddInspirationrepo());
+    Get.lazyPut(() => AddCheckListrepo());
+    Get.lazyPut(() => GetCheckListrepo());
+    Get.lazyPut(() => Deleteinspirationrepo());
     
   }
 }

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:wedding_planning_application/screen/Screen_Navigation.dart';
 
 import 'package:wedding_planning_application/screen/inspiration_screen/updateinspiration.dart';
-import 'package:wedding_planning_application/screen/profile/profile.dart';
 import 'package:wedding_planning_application/services/core/deleteinspiration.dart';
 
 class Editscreenview extends StatefulWidget {
@@ -268,7 +268,7 @@ void conformation(BuildContext context,int id) {
             onPressed: () {
                 final Deleteinspiration del = Get.find(); 
                   del.deleteinspiration(id);
-            Get.to(()=>const Profile());
+            Get.to(()=>ScreenNavigation(currentIndex: 4,));
             },
             child: const Text('Ok'),
           ),

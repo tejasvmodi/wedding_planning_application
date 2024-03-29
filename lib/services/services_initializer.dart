@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:wedding_planning_application/services/CheckList/Checklist.dart';
 import 'package:wedding_planning_application/services/Inspiration/insapiration_service.dart';
 import 'package:wedding_planning_application/services/authentication/auth_service.dart';
 import 'package:wedding_planning_application/services/core/deleteinspiration.dart';
@@ -30,5 +31,6 @@ class ServiceInitializer {
     Get.lazyPut(() => Getuserinfo());
     Get.lazyPut(() => UpdateinspirationService());
     Get.lazyPut(() => Deleteinspiration());
+    Get.lazyPut(() => CheckListService());
   }
 }

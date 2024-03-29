@@ -1,6 +1,12 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:wedding_planning_application/Screen/screen_navigation.dart';
+import 'package:wedding_planning_application/models/Checklist/getChecklist.dart';
 import 'package:wedding_planning_application/screen/common_components/drawer.dart';
+import 'package:wedding_planning_application/services/CheckList/Checklist.dart';
 
 class CheckListW extends StatefulWidget {
   const CheckListW({super.key});
@@ -10,8 +16,26 @@ class CheckListW extends StatefulWidget {
 }
 
 class _CheckListWState extends State<CheckListW> {
+  CheckListService checklist = Get.find();
+  TextEditingController addchecklist = TextEditingController();
   bool allSelected = false;
   Icon icon = Icon(MdiIcons.refresh, size: 50);
+  List<Getchecklist> getcheck = [];
+
+  @override
+  void initState() {
+    super.initState();
+    getchecklist();
+    setState(() {});
+  }
+
+  Future<void> getchecklist() async {
+    getcheck = await checklist.getCheckList();
+    setState(() {
+      getcheck;
+      log(getcheck.toString());
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +73,7 @@ class _CheckListWState extends State<CheckListW> {
       ),
       drawer: const Drawer123(),
       body: Container(
+          height: double.maxFinite,
           decoration: const BoxDecoration(
             border:
                 Border.symmetric(horizontal: BorderSide(color: Colors.black26)),
@@ -97,52 +122,62 @@ class _CheckListWState extends State<CheckListW> {
                   indent: 15,
                   color: Colors.black26,
                 ),
-                checklistitem('Set a Date'),
-                const Divider(
-                  indent: 15,
-                  color: Colors.black26,
-                ),
-                checklistitem('Set a Date'),
-                const Divider(
-                  indent: 15,
-                  color: Colors.black26,
-                ),
-                checklistitem('Decide Wedding Budget'),
-                const Divider(
-                  indent: 15,
-                  color: Colors.black26,
-                ),
-                checklistitem('Browse and Book Venue'),
-                const Divider(
-                  indent: 15,
-                  color: Colors.black26,
-                ),
-                checklistitem('Think of the guestlist'),
-                const Divider(
-                  indent: 15,
-                  color: Colors.black26,
-                ),
-                checklistitem('Outline the wedding budget'),
-                const Divider(
-                  indent: 15,
-                  color: Colors.black26,
-                ),
-                checklistitem('Book wedding photographer and videographer'),
-                const Divider(
-                  indent: 15,
-                  color: Colors.black26,
-                ),
-                checklistitem('Browse and check for the catering  nearby '),
-                const Divider(
-                  indent: 15,
-                  color: Colors.black26,
-                ),
-                checklistitem(
-                    'Book the weddingregistration/religious minister'),
-                const Divider(
-                  indent: 15,
-                  color: Colors.black26,
-                ),
+                for (int i = 0; i < getcheck.length; i++)
+                  Container(
+                    padding: const EdgeInsets.only(
+                      top: 5,
+                      left: 10,
+                    ),
+                    child: Column(
+                      children: [
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            TextButton(
+                                onPressed: () {
+                                  setState(() {});
+                                },
+                                style: const ButtonStyle(
+                                    backgroundColor: MaterialStatePropertyAll(
+                                  Color.fromRGBO(255, 217, 249, 1),
+                                )),
+                                child: icon),
+                            SizedBox(
+                              width: 250,
+                              child: SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Text(getcheck[i].listItem.toString(),
+                                    textAlign: TextAlign.left,
+                                    style: const TextStyle(
+                                        color: Color.fromRGBO(62, 53, 53, 1),
+                                        fontFamily: 'EBGaramond',
+                                        fontSize: 18,
+                                        letterSpacing: 0,
+                                        fontWeight: FontWeight.bold,
+                                        height: 1,
+                                        // decoration: TextDecoration.lineThrough,
+                                        overflow: TextOverflow.ellipsis)),
+                              ),
+                            ),
+                            IconButton(
+                                onPressed: () async {
+                                  checklist
+                                      .deleteCheckList(getcheck[i].checklistId);
+
+                                  setState(() {});
+                                  await getchecklist();
+                                },
+                                icon: const Icon(Icons.delete))
+                          ],
+                        ),
+                        const Divider(
+                          indent: 15,
+                          endIndent: 10,
+                          color: Colors.black26,
+                        ),
+                      ],
+                    ),
+                  ),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
@@ -174,52 +209,52 @@ class _CheckListWState extends State<CheckListW> {
                   indent: 15,
                   color: Colors.black26,
                 ),
-                checklistitem('Set a Date'),
-                const Divider(
-                  indent: 15,
-                  color: Colors.black26,
-                ),
-                checklistitem('Set a Date'),
-                const Divider(
-                  indent: 15,
-                  color: Colors.black26,
-                ),
-                checklistitem('Decide Wedding Budget'),
-                const Divider(
-                  indent: 15,
-                  color: Colors.black26,
-                ),
-                checklistitem('Browse and Book Venue'),
-                const Divider(
-                  indent: 15,
-                  color: Colors.black26,
-                ),
-                checklistitem('Think of the guestlist'),
-                const Divider(
-                  indent: 15,
-                  color: Colors.black26,
-                ),
-                checklistitem('Outline the wedding budget'),
-                const Divider(
-                  indent: 15,
-                  color: Colors.black26,
-                ),
-                checklistitem('Book wedding photographer and videographer'),
-                const Divider(
-                  indent: 15,
-                  color: Colors.black26,
-                ),
-                checklistitem('Browse and check for the catering  nearby '),
-                const Divider(
-                  indent: 15,
-                  color: Colors.black26,
-                ),
-                checklistitem(
-                    'Book the weddingregistration/religious minister'),
-                const Divider(
-                  indent: 15,
-                  color: Colors.black26,
-                ),
+                // checklistitem('Set a Date'),
+                // const Divider(
+                //   indent: 15,
+                //   color: Colors.black26,
+                // ),
+                // checklistitem('Set a Date'),
+                // const Divider(
+                //   indent: 15,
+                //   color: Colors.black26,
+                // ),
+                // checklistitem('Decide Wedding Budget'),
+                // const Divider(
+                //   indent: 15,
+                //   color: Colors.black26,
+                // ),
+                // checklistitem('Browse and Book Venue'),
+                // const Divider(
+                //   indent: 15,
+                //   color: Colors.black26,
+                // ),
+                // checklistitem('Think of the guestlist'),
+                // const Divider(
+                //   indent: 15,
+                //   color: Colors.black26,
+                // ),
+                // checklistitem('Outline the wedding budget'),
+                // const Divider(
+                //   indent: 15,
+                //   color: Colors.black26,
+                // ),
+                // checklistitem('Book wedding photographer and videographer'),
+                // const Divider(
+                //   indent: 15,
+                //   color: Colors.black26,
+                // ),
+                // checklistitem('Browse and check for the catering  nearby '),
+                // const Divider(
+                //   indent: 15,
+                //   color: Colors.black26,
+                // ),
+                // checklistitem(
+                //     'Book the weddingregistration/religious minister'),
+                // const Divider(
+                //   indent: 15,
+                //   color: Colors.black26,
+                // ),
               ],
             ),
           )),
@@ -306,10 +341,11 @@ class _CheckListWState extends State<CheckListW> {
                               ),
                               width: MediaQuery.of(context).size.width * 0.7,
                               margin: const EdgeInsets.all(10),
-                              child: const TextField(
+                              child: TextField(
+                                controller: addchecklist,
                                 maxLines: 4,
                                 minLines: 4,
-                                decoration: InputDecoration(
+                                decoration: const InputDecoration(
                                   enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
                                         color: Colors
@@ -330,7 +366,7 @@ class _CheckListWState extends State<CheckListW> {
                                     height: 1,
                                   ),
                                 ),
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: Color.fromRGBO(96, 67, 67, 1),
                                   fontFamily: 'EBGaramond',
                                   fontSize: 18,
@@ -341,6 +377,8 @@ class _CheckListWState extends State<CheckListW> {
                               )),
                           TextButton(
                               onPressed: () {
+                                checklist.addcheckList(
+                                    addchecklist.text, 'NOT_STARTED');
                                 _showMyDialog(context);
                               },
                               style: ButtonStyle(
@@ -382,114 +420,76 @@ class _CheckListWState extends State<CheckListW> {
     );
   }
 
-  Container checklistitem(String itemdetail, {bool check = false}) {
-    return Container(
-      padding: const EdgeInsets.only(
-        top: 5,
-        left: 10,
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          TextButton(
-              onPressed: () {
-                setState(() {
-                  icon = Icon(
-                    MdiIcons.check,
-                    size: 50,
-                  );
-                });
-              },
-              style: const ButtonStyle(
-                  backgroundColor: MaterialStatePropertyAll(
-                Color.fromRGBO(255, 217, 249, 1),
-              )),
-              child: icon),
-          SizedBox(
-            width: 250,
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Text(itemdetail.toString(),
-                  textAlign: TextAlign.left,
+//   Container checklistitem(String itemdetail, {bool check = false}) {
+//     return
+//   }
+// }
+
+  Future<void> _showMyDialog(BuildContext context) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shadowColor: Colors.black38,
+          title: Center(
+            child: Icon(
+              MdiIcons.check,
+              size: 50,
+            ),
+          ),
+          content: const SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text(
+                  'Your Checklist has been saved successfully',
                   style: TextStyle(
-                      color: const Color.fromRGBO(62, 53, 53, 1),
+                    color: Color.fromRGBO(62, 53, 53, 1),
+                    fontFamily: 'EBGaramond',
+                    fontSize: 20,
+                    letterSpacing: 0,
+                    fontWeight: FontWeight.bold,
+                    height: 1,
+                  ),
+                )
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            Center(
+              child: TextButton(
+                  onPressed: () {
+                    Get.to(() => ScreenNavigation(
+                          currentIndex: 1,
+                        ));
+                  },
+                  style: ButtonStyle(
+                    minimumSize: MaterialStatePropertyAll(Size(
+                        MediaQuery.of(context).size.width * 0.50,
+                        MediaQuery.of(context).size.height * 0.07)),
+                    backgroundColor: const MaterialStatePropertyAll(
+                        Color.fromRGBO(54, 29, 29, 1)),
+                    shape: const MaterialStatePropertyAll(
+                      RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.all(Radius.elliptical(8, 8))),
+                    ),
+                  ),
+                  child: const Text(
+                    'Back to the checklist',
+                    style: TextStyle(
+                      color: Colors.white,
                       fontFamily: 'EBGaramond',
                       fontSize: 18,
                       letterSpacing: 0,
                       fontWeight: FontWeight.bold,
                       height: 1,
-                      decoration: check ? TextDecoration.lineThrough : null,
-                      overflow: TextOverflow.ellipsis)),
+                    ),
+                  )),
             ),
-          )
-        ],
-      ),
+          ],
+        );
+      },
     );
   }
-}
-
-Future<void> _showMyDialog(BuildContext context) async {
-  return showDialog<void>(
-    context: context,
-    barrierDismissible: true,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        shadowColor: Colors.black38,
-        title: Center(
-          child: Icon(
-            MdiIcons.check,
-            size: 50,
-          ),
-        ),
-        content: const SingleChildScrollView(
-          child: ListBody(
-            children: <Widget>[
-              Text(
-                'Your Checklist has been saved successfully',
-                style: TextStyle(
-                  color: Color.fromRGBO(62, 53, 53, 1),
-                  fontFamily: 'EBGaramond',
-                  fontSize: 20,
-                  letterSpacing: 0,
-                  fontWeight: FontWeight.bold,
-                  height: 1,
-                ),
-              )
-            ],
-          ),
-        ),
-        actions: <Widget>[
-          Center(
-            child: TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                style: ButtonStyle(
-                  minimumSize: MaterialStatePropertyAll(Size(
-                      MediaQuery.of(context).size.width * 0.50,
-                      MediaQuery.of(context).size.height * 0.07)),
-                  backgroundColor: const MaterialStatePropertyAll(
-                      Color.fromRGBO(54, 29, 29, 1)),
-                  shape: const MaterialStatePropertyAll(
-                    RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.all(Radius.elliptical(8, 8))),
-                  ),
-                ),
-                child: const Text(
-                  'Back to the checklist',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontFamily: 'EBGaramond',
-                    fontSize: 18,
-                    letterSpacing: 0,
-                    fontWeight: FontWeight.bold,
-                    height: 1,
-                  ),
-                )),
-          ),
-        ],
-      );
-    },
-  );
 }
