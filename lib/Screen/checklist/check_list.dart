@@ -19,7 +19,7 @@ class _CheckListWState extends State<CheckListW> {
   CheckListService checklist = Get.find();
   TextEditingController addchecklist = TextEditingController();
   bool allSelected = false;
-  Icon icon = Icon(MdiIcons.refresh, size: 50);
+
   List<Getchecklist> getcheck = [];
 
   @override
@@ -133,39 +133,86 @@ class _CheckListWState extends State<CheckListW> {
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            TextButton(
-                                onPressed: () {
-                                  setState(() {});
-                                },
-                                style: const ButtonStyle(
-                                    backgroundColor: MaterialStatePropertyAll(
-                                  Color.fromRGBO(255, 217, 249, 1),
-                                )),
-                                child: icon),
-                            SizedBox(
-                              width: 250,
-                              child: SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                child: Text(getcheck[i].listItem.toString(),
+                            if (getcheck[i].status == 'NOT_STARTED')
+                              const Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Icon(
+                                  Icons.play_arrow,
+                                  size: 30,
+                                ),
+                              ),
+                            if (getcheck[i].status == 'STARTED')
+                              const Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Icon(
+                                  Icons.hourglass_empty,
+                                  size: 30,
+                                ),
+                              ),
+                            if (getcheck[i].status == 'IN_PROGRESS')
+                              const Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Icon(
+                                  Icons.hourglass_full,
+                                  size: 30,
+                                ),
+                              ),
+                            if (getcheck[i].status == 'COMPLETED')
+                              const Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Icon(
+                                  Icons.check_circle,
+                                  size: 30,
+                                ),
+                              ),
+                            InkWell(
+                              onTap: () {
+                                updatechecklist(
+                                        context, getcheck[i].checklistId)
+                                    .then((value) {
+                                  Future.delayed(const Duration(seconds: 1),
+                                      () {
+                                    setState(() {
+                                      getchecklist();
+                                    });
+                                  });
+                                });
+
+                                log(getcheck[i].checklistId.toString());
+                              },
+                              child: SizedBox(
+                                width: 250,
+                                child: SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: Text(
+                                    getcheck[i].listItem.toString(),
                                     textAlign: TextAlign.left,
                                     style: const TextStyle(
-                                        color: Color.fromRGBO(62, 53, 53, 1),
-                                        fontFamily: 'EBGaramond',
-                                        fontSize: 18,
-                                        letterSpacing: 0,
-                                        fontWeight: FontWeight.bold,
-                                        height: 1,
-                                        // decoration: TextDecoration.lineThrough,
-                                        overflow: TextOverflow.ellipsis)),
+                                      color: Color.fromRGBO(62, 53, 53, 1),
+                                      fontFamily: 'EBGaramond',
+                                      fontSize: 18,
+                                      letterSpacing: 0,
+                                      fontWeight: FontWeight.bold,
+                                      height: 1,
+                                      // decoration: TextDecoration.lineThrough,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
                             IconButton(
                                 onPressed: () async {
                                   checklist
-                                      .deleteCheckList(getcheck[i].checklistId);
-
-                                  setState(() {});
-                                  await getchecklist();
+                                      .deleteCheckList(getcheck[i].checklistId)
+                                      .then((value) {
+                                    Future.delayed(const Duration(seconds: 1),
+                                        () {
+                                      setState(() {
+                                        getchecklist();
+                                      });
+                                    });
+                                  });
                                 },
                                 icon: const Icon(Icons.delete))
                           ],
@@ -209,52 +256,6 @@ class _CheckListWState extends State<CheckListW> {
                   indent: 15,
                   color: Colors.black26,
                 ),
-                // checklistitem('Set a Date'),
-                // const Divider(
-                //   indent: 15,
-                //   color: Colors.black26,
-                // ),
-                // checklistitem('Set a Date'),
-                // const Divider(
-                //   indent: 15,
-                //   color: Colors.black26,
-                // ),
-                // checklistitem('Decide Wedding Budget'),
-                // const Divider(
-                //   indent: 15,
-                //   color: Colors.black26,
-                // ),
-                // checklistitem('Browse and Book Venue'),
-                // const Divider(
-                //   indent: 15,
-                //   color: Colors.black26,
-                // ),
-                // checklistitem('Think of the guestlist'),
-                // const Divider(
-                //   indent: 15,
-                //   color: Colors.black26,
-                // ),
-                // checklistitem('Outline the wedding budget'),
-                // const Divider(
-                //   indent: 15,
-                //   color: Colors.black26,
-                // ),
-                // checklistitem('Book wedding photographer and videographer'),
-                // const Divider(
-                //   indent: 15,
-                //   color: Colors.black26,
-                // ),
-                // checklistitem('Browse and check for the catering  nearby '),
-                // const Divider(
-                //   indent: 15,
-                //   color: Colors.black26,
-                // ),
-                // checklistitem(
-                //     'Book the weddingregistration/religious minister'),
-                // const Divider(
-                //   indent: 15,
-                //   color: Colors.black26,
-                // ),
               ],
             ),
           )),
@@ -459,9 +460,9 @@ class _CheckListWState extends State<CheckListW> {
             Center(
               child: TextButton(
                   onPressed: () {
-                    Get.to(() => ScreenNavigation(
-                          currentIndex: 1,
-                        ));
+                   Navigator.push(context, MaterialPageRoute(builder: (context) {
+                     return ScreenNavigation(currentIndex: 1,);
+                   },));
                   },
                   style: ButtonStyle(
                     minimumSize: MaterialStatePropertyAll(Size(
@@ -488,6 +489,228 @@ class _CheckListWState extends State<CheckListW> {
                   )),
             ),
           ],
+        );
+      },
+    );
+  }
+
+  Future<void> updatechecklist(BuildContext context, int checklistid) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shadowColor: Colors.black38,
+          title: const Center(child: Text('Update Status')),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                ElevatedButton(
+                    onPressed: () {
+                      checklist.updatechecklist(checklistid, 'NOT_STARTED');
+                      setState(() {});
+                      Navigator.pop(context);
+                    },
+                    style: ButtonStyle(
+                      minimumSize: MaterialStatePropertyAll(Size(
+                          MediaQuery.of(context).size.width * 0.50,
+                          MediaQuery.of(context).size.height * 0.07)),
+                      backgroundColor: const MaterialStatePropertyAll(
+                          Color.fromRGBO(54, 29, 29, 1)),
+                      shape: const MaterialStatePropertyAll(
+                        RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.elliptical(8, 8))),
+                      ),
+                    ),
+                    child: const Row(
+                      children: [
+                        Icon(
+                          Icons.play_arrow,
+                          color: Colors.white,
+                          size: 30,
+                        ),
+                        SizedBox(
+                          width: 4,
+                        ),
+                        Text(
+                          'Not Started',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: 'EBGaramond',
+                            fontSize: 18,
+                            letterSpacing: 0,
+                            fontWeight: FontWeight.bold,
+                            height: 1,
+                          ),
+                        )
+                      ],
+                    )),
+                const SizedBox(
+                  height: 10,
+                ),
+                ElevatedButton(
+                    onPressed: () {
+                      checklist.updatechecklist(checklistid, 'STARTED');
+                      setState(() {});
+                      Navigator.pop(context);
+                    },
+                    style: ButtonStyle(
+                      minimumSize: MaterialStatePropertyAll(Size(
+                          MediaQuery.of(context).size.width * 0.50,
+                          MediaQuery.of(context).size.height * 0.07)),
+                      backgroundColor: const MaterialStatePropertyAll(
+                          Color.fromRGBO(54, 29, 29, 1)),
+                      shape: const MaterialStatePropertyAll(
+                        RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.elliptical(8, 8))),
+                      ),
+                    ),
+                    child: const Row(
+                      children: [
+                        Icon(
+                          Icons.hourglass_empty,
+                          color: Colors.white,
+                          size: 30,
+                        ),
+                        SizedBox(
+                          width: 4,
+                        ),
+                        Text(
+                          'STARTED',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: 'EBGaramond',
+                            fontSize: 18,
+                            letterSpacing: 0,
+                            fontWeight: FontWeight.bold,
+                            height: 1,
+                          ),
+                        )
+                      ],
+                    )),
+                const SizedBox(
+                  height: 10,
+                ),
+                ElevatedButton(
+                    onPressed: () {
+                      checklist.updatechecklist(checklistid, 'IN_PROGRESS');
+                      setState(() {});
+                      Navigator.pop(context);
+                    },
+                    style: ButtonStyle(
+                      minimumSize: MaterialStatePropertyAll(Size(
+                          MediaQuery.of(context).size.width * 0.50,
+                          MediaQuery.of(context).size.height * 0.07)),
+                      backgroundColor: const MaterialStatePropertyAll(
+                          Color.fromRGBO(54, 29, 29, 1)),
+                      shape: const MaterialStatePropertyAll(
+                        RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.elliptical(8, 8))),
+                      ),
+                    ),
+                    child: const Row(
+                      children: [
+                        Icon(
+                          Icons.hourglass_full,
+                          color: Colors.white,
+                          size: 30,
+                        ),
+                        SizedBox(
+                          width: 4,
+                        ),
+                        Text(
+                          'IN_PROGRESS',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: 'EBGaramond',
+                            fontSize: 18,
+                            letterSpacing: 0,
+                            fontWeight: FontWeight.bold,
+                            height: 1,
+                          ),
+                        )
+                      ],
+                    )),
+                const SizedBox(
+                  height: 10,
+                ),
+                ElevatedButton(
+                    onPressed: () {
+                      checklist.updatechecklist(checklistid, 'COMPLETED');
+                      setState(() {});
+                      Navigator.pop(context);
+                    },
+                    style: ButtonStyle(
+                      minimumSize: MaterialStatePropertyAll(Size(
+                          MediaQuery.of(context).size.width * 0.50,
+                          MediaQuery.of(context).size.height * 0.07)),
+                      backgroundColor: const MaterialStatePropertyAll(
+                          Color.fromRGBO(54, 29, 29, 1)),
+                      shape: const MaterialStatePropertyAll(
+                        RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.elliptical(8, 8))),
+                      ),
+                    ),
+                    child: const Row(
+                      children: [
+                        Icon(
+                          Icons.check_circle,
+                          color: Colors.white,
+                          size: 30,
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          'COMPLETED',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: 'EBGaramond',
+                            fontSize: 18,
+                            letterSpacing: 0,
+                            fontWeight: FontWeight.bold,
+                            height: 1,
+                          ),
+                        )
+                      ],
+                    ))
+              ],
+            ),
+          ),
+          // actions: <Widget>[
+          //   Center(
+          //     child: TextButton(
+          //         onPressed: () {
+          //           Navigator.pop(context);
+          //         },
+          // style: ButtonStyle(
+          //   minimumSize: MaterialStatePropertyAll(Size(
+          //       MediaQuery.of(context).size.width * 0.50,
+          //       MediaQuery.of(context).size.height * 0.07)),
+          //   backgroundColor:
+          //       const MaterialStatePropertyAll(Color.fromRGBO(54, 29, 29, 1)),
+          //   shape: const MaterialStatePropertyAll(
+          //     RoundedRectangleBorder(
+          //         borderRadius: BorderRadius.all(Radius.elliptical(8, 8))),
+          //   ),
+          // ),
+          //         child: const Text(
+          //           'Update Status',
+          // style: TextStyle(
+          //   color: Colors.white,
+          //   fontFamily: 'EBGaramond',
+          //   fontSize: 18,
+          //   letterSpacing: 0,
+          //   fontWeight: FontWeight.bold,
+          //   height: 1,
+          // ),
+          // //         )),
+          //   ),
+          // ],
         );
       },
     );
