@@ -1,5 +1,9 @@
-import 'package:flutter/material.dart';
+import 'dart:developer';
 
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:wedding_planning_application/models/Emergency%20Contanct/getrelation.dart';
+import 'package:wedding_planning_application/services/Contact/EmergencyContactservice.dart';
 class AddEmergencyContanct extends StatefulWidget {
   const AddEmergencyContanct({super.key});
 
@@ -8,55 +12,78 @@ class AddEmergencyContanct extends StatefulWidget {
 }
 
 class _AddEmergencyContanctState extends State<AddEmergencyContanct> {
+  String? selectedRelationship;
+  List<String> emergencyContanct = [];
+  TextEditingController name = TextEditingController();
+  TextEditingController phonenumber = TextEditingController();
+  TextEditingController alternativenumber = TextEditingController();
+  EmergencyContactService service =EmergencyContactService();
+  List<Relation> relations =[];
+  @override
+  void initState() {
+    super.initState();
+    getrelationship();
+  }
+
+  Future<void> getrelationship() async{
+    relations = await service.getrelation();
+    setState(() {
+      relations;
+      log(relations.toString());
+    });
+  }
+  
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: const Icon(
-              Icons.arrow_back_ios,
-              color: Color.fromRGBO(62, 53, 53, 1),
-            ),
+      appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(
+            Icons.arrow_back_ios,
+            color: Color.fromRGBO(62, 53, 53, 1),
           ),
-          backgroundColor: const Color.fromRGBO(255, 217, 249, 1),
-          elevation: 0,
-          title: const Padding(
-            padding: EdgeInsets.only(),
-            child: Text(
-              'Add Emergency Contanct',
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                color: Color.fromRGBO(62, 53, 53, 1),
-                fontFamily: 'EBGaramond',
-                fontSize: 25,
-                letterSpacing: 0,
-                fontWeight: FontWeight.bold,
-                height: 1,
-              ),
+        ),
+        backgroundColor: const Color.fromRGBO(255, 217, 249, 1),
+        elevation: 0,
+        title: const Padding(
+          padding: EdgeInsets.only(),
+          child: Text(
+            'Add Emergency Contact',
+            textAlign: TextAlign.left,
+            style: TextStyle(
+              color: Color.fromRGBO(62, 53, 53, 1),
+              fontFamily: 'EBGaramond',
+              fontSize: 25,
+              letterSpacing: 0,
+              fontWeight: FontWeight.bold,
+              height: 1,
             ),
           ),
         ),
-        body: Container(
-          height: double.maxFinite,
-          decoration: const BoxDecoration(
-            border: Border.symmetric(
-                horizontal: BorderSide(
-              color: Color.fromRGBO(111, 80, 80, 1),
-            )),
-            gradient: LinearGradient(
-                begin: Alignment(6.123234262925839e-17, 1),
-                end: Alignment(-1, 6.123234262925839e-17),
-                colors: [
-                  Color.fromRGBO(255, 255, 255, 1),
-                  Color.fromRGBO(255, 231, 255, 1),
-                  Color.fromRGBO(255, 219, 249, 1),
-                ]),
-          ),
-          child: SingleChildScrollView(
-            child: Column(children: [
+      ),
+      body: Container(
+        height: double.maxFinite,
+        decoration: const BoxDecoration(
+          border: Border.symmetric(
+              horizontal: BorderSide(
+            color: Color.fromRGBO(111, 80, 80, 1),
+          )),
+          gradient: LinearGradient(
+              begin: Alignment(6.123234262925839e-17, 1),
+              end: Alignment(-1, 6.123234262925839e-17),
+              colors: [
+                Color.fromRGBO(255, 255, 255, 1),
+                Color.fromRGBO(255, 231, 255, 1),
+                Color.fromRGBO(255, 219, 249, 1),
+              ]),
+        ),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
               const SizedBox(
                 height: 60,
                 width: double.infinity,
@@ -78,8 +105,7 @@ class _AddEmergencyContanctState extends State<AddEmergencyContanct> {
                 width: 340,
                 decoration: BoxDecoration(
                     border: Border.all(color: Colors.black),
-                    borderRadius:
-                        const BorderRadius.all(Radius.elliptical(23, 34)),
+                    borderRadius: const BorderRadius.all(Radius.elliptical(23, 34)),
                     boxShadow: const [
                       BoxShadow(blurRadius: 3, color: Colors.transparent)
                     ]),
@@ -92,8 +118,7 @@ class _AddEmergencyContanctState extends State<AddEmergencyContanct> {
                       width: 300,
                       height: 50,
                       decoration: const BoxDecoration(
-                        borderRadius:
-                            BorderRadius.all(Radius.elliptical(23, 23)),
+                        borderRadius: BorderRadius.all(Radius.elliptical(23, 23)),
                         boxShadow: [
                           BoxShadow(
                             color: Color.fromRGBO(0, 0, 0, 0.25),
@@ -103,12 +128,12 @@ class _AddEmergencyContanctState extends State<AddEmergencyContanct> {
                         ],
                         color: Color.fromRGBO(245, 201, 238, 1),
                       ),
-                      child: const TextField(
+                      child:  TextField(
+                        controller: name,
                         keyboardType: TextInputType.multiline,
                         maxLines: 1,
-                        decoration: InputDecoration(
-                          border:
-                              OutlineInputBorder(borderSide: BorderSide.none),
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(borderSide: BorderSide.none),
                           hintText: 'Name',
                           hintStyle: TextStyle(
                               color: Color.fromRGBO(85, 32, 32, 1),
@@ -119,7 +144,7 @@ class _AddEmergencyContanctState extends State<AddEmergencyContanct> {
                               height: 1),
                         ),
                         // controller: TextEditingController(text:),
-                        style: TextStyle(
+                        style: const TextStyle(
                             color: Color.fromRGBO(85, 32, 32, 1),
                             fontFamily: 'EBGaramond',
                             fontSize: 20,
@@ -135,8 +160,7 @@ class _AddEmergencyContanctState extends State<AddEmergencyContanct> {
                       width: 300,
                       height: 50,
                       decoration: const BoxDecoration(
-                        borderRadius:
-                            BorderRadius.all(Radius.elliptical(23, 23)),
+                        borderRadius: BorderRadius.all(Radius.elliptical(23, 23)),
                         boxShadow: [
                           BoxShadow(
                             color: Color.fromRGBO(0, 0, 0, 0.25),
@@ -146,12 +170,12 @@ class _AddEmergencyContanctState extends State<AddEmergencyContanct> {
                         ],
                         color: Color.fromRGBO(245, 201, 238, 1),
                       ),
-                      child: const TextField(
-                        keyboardType: TextInputType.multiline,
+                      child:  TextField(
+                        keyboardType: TextInputType.number,
+                        controller:  phonenumber,
                         maxLines: 1,
-                        decoration: InputDecoration(
-                          border:
-                              OutlineInputBorder(borderSide: BorderSide.none),
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(borderSide: BorderSide.none),
                           hintText: 'Phone  Number',
                           hintStyle: TextStyle(
                               color: Color.fromRGBO(85, 32, 32, 1),
@@ -162,7 +186,7 @@ class _AddEmergencyContanctState extends State<AddEmergencyContanct> {
                               height: 1),
                         ),
                         // controller: TextEditingController(text:),
-                        style: TextStyle(
+                        style: const TextStyle(
                             color: Color.fromRGBO(85, 32, 32, 1),
                             fontFamily: 'EBGaramond',
                             fontSize: 20,
@@ -178,8 +202,7 @@ class _AddEmergencyContanctState extends State<AddEmergencyContanct> {
                       width: 300,
                       height: 50,
                       decoration: const BoxDecoration(
-                        borderRadius:
-                            BorderRadius.all(Radius.elliptical(23, 23)),
+                        borderRadius: BorderRadius.all(Radius.elliptical(23, 23)),
                         boxShadow: [
                           BoxShadow(
                             color: Color.fromRGBO(0, 0, 0, 0.25),
@@ -189,12 +212,12 @@ class _AddEmergencyContanctState extends State<AddEmergencyContanct> {
                         ],
                         color: Color.fromRGBO(245, 201, 238, 1),
                       ),
-                      child: const TextField(
-                        keyboardType: TextInputType.multiline,
+                      child: TextField(
+                        keyboardType: TextInputType.number,
+                        controller: alternativenumber,
                         maxLines: 1,
-                        decoration: InputDecoration(
-                          border:
-                              OutlineInputBorder(borderSide: BorderSide.none),
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(borderSide: BorderSide.none),
                           hintText: 'Alternative Phone Number',
                           hintStyle: TextStyle(
                               color: Color.fromRGBO(85, 32, 32, 1),
@@ -205,7 +228,7 @@ class _AddEmergencyContanctState extends State<AddEmergencyContanct> {
                               height: 1),
                         ),
                         // controller: TextEditingController(text:),
-                        style: TextStyle(
+                        style: const TextStyle(
                             color: Color.fromRGBO(85, 32, 32, 1),
                             fontFamily: 'EBGaramond',
                             fontSize: 20,
@@ -220,8 +243,7 @@ class _AddEmergencyContanctState extends State<AddEmergencyContanct> {
                     Container(
                       width: 300,
                       decoration: const BoxDecoration(
-                        borderRadius:
-                            BorderRadius.all(Radius.elliptical(23, 23)),
+                        borderRadius: BorderRadius.all(Radius.elliptical(23, 23)),
                         boxShadow: [
                           BoxShadow(
                             color: Color.fromRGBO(0, 0, 0, 0.25),
@@ -231,7 +253,15 @@ class _AddEmergencyContanctState extends State<AddEmergencyContanct> {
                         ],
                         color: Color.fromRGBO(245, 201, 238, 1),
                       ),
-                      child: const DropDownWidget(),
+                      child: DropDownWidget(
+                        onRelationShipSelected: (value) {
+                          setState(() {
+                            selectedRelationship = value;
+                            
+                          });
+                          log(selectedRelationship.toString());
+                        }, relations: relations,
+                      ),
                     ),
                     const SizedBox(
                       height: 25,
@@ -241,20 +271,23 @@ class _AddEmergencyContanctState extends State<AddEmergencyContanct> {
                       width: 300,
                       child: TextButton(
                           onPressed: () {
-                            //  if (Form.of(context)!.validate()) {
-//                   // Form is valid, perform the desired action
-//                   print('Selected Gender: $selectedValue');
-//                 }
+                           emergencyContanct.add(phonenumber.text);
+                           emergencyContanct.add(alternativenumber.text);
+                           EmergencyContactService emergency = EmergencyContactService();
+                           log(name.text);
+                           log(emergencyContanct.toString());
+                           log(selectedRelationship.toString());
+                           emergency.addEmergencyService(name.text, emergencyContanct,selectedRelationship!);
+                           Get.back();  
                           },
                           style: ButtonStyle(
-                              backgroundColor: const MaterialStatePropertyAll(
-                                  Color.fromRGBO(77, 43, 43, 1)),
-                              shape: MaterialStatePropertyAll(
+                              backgroundColor: MaterialStateProperty.all(
+                                  const Color.fromRGBO(77, 43, 43, 1)),
+                              shape: MaterialStateProperty.all(
                                   RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(55),
                               )),
-                              shadowColor:
-                                  const MaterialStatePropertyAll(Colors.grey)),
+                              shadowColor: MaterialStateProperty.all(Colors.grey)),
                           child: const Text(
                             'Submit',
                             textAlign: TextAlign.left,
@@ -270,29 +303,28 @@ class _AddEmergencyContanctState extends State<AddEmergencyContanct> {
                   ],
                 ),
               )
-            ]),
+            ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 }
-
 class DropDownWidget extends StatefulWidget {
-  const DropDownWidget({super.key});
+  final List<Relation> relations;
+  final Function(String)? onRelationShipSelected;
+
+  const DropDownWidget({
+    super.key,
+    required this.relations,
+    this.onRelationShipSelected,
+  });
 
   @override
   State<DropDownWidget> createState() => _DropDownWidgetState();
 }
 
 class _DropDownWidgetState extends State<DropDownWidget> {
-  final List<String> genderItems = [
-    'Father',
-    'Mother',
-    'Uncle',
-    'Aunty',
-    'Friend',
-    'Brother',
-    'Sister'
-  ];
   String? selectedValue;
 
   @override
@@ -304,42 +336,47 @@ class _DropDownWidgetState extends State<DropDownWidget> {
           DropdownButtonFormField<String>(
             isExpanded: true,
             decoration: const InputDecoration(
-                border: OutlineInputBorder(borderSide: BorderSide.none)),
+              border: OutlineInputBorder(borderSide: BorderSide.none),
+            ),
             hint: const Text(
-              'Select Gender',
+              'Select Relationship',
               style: TextStyle(
-                  color: Color.fromRGBO(85, 32, 32, 1),
-                  fontFamily: 'EBGaramond',
-                  fontSize: 20,
-                  letterSpacing: 0,
-                  fontWeight: FontWeight.normal,
-                  height: 1),
+                color: Color.fromRGBO(85, 32, 32, 1),
+                fontFamily: 'EBGaramond',
+                fontSize: 20,
+                letterSpacing: 0,
+                fontWeight: FontWeight.normal,
+                height: 1,
+              ),
             ),
             value: selectedValue,
-            items: genderItems
-                .map((item) => DropdownMenuItem<String>(
-                      enabled: true,
-                      value: item,
-                      child: Text(
-                        item,
-                        style: const TextStyle(
-                            color: Color.fromRGBO(85, 32, 32, 1),
-                            fontFamily: 'EBGaramond',
-                            fontSize: 20,
-                            letterSpacing: 0,
-                            fontWeight: FontWeight.normal,
-                            height: 1),
+            items: widget.relations
+                .map(
+                  (relation) => DropdownMenuItem<String>(
+                    value: relation.relationshipName,
+                    child: Text(
+                      relation.relationshipName,
+                      style: const TextStyle(
+                        color: Color.fromRGBO(85, 32, 32, 1),
+                        fontFamily: 'EBGaramond',
+                        fontSize: 20,
+                        letterSpacing: 0,
+                        fontWeight: FontWeight.normal,
+                        height: 1,
                       ),
-                    ))
+                    ),
+                  ),
+                )
                 .toList(),
             onChanged: (value) {
               setState(() {
                 selectedValue = value;
+                widget.onRelationShipSelected!(value!);
               });
             },
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Please select the RelationShip.';
+                return 'Please select the Relationship.';
               }
               return null;
             },
@@ -349,8 +386,3 @@ class _DropDownWidgetState extends State<DropDownWidget> {
     );
   }
 }
-
-//  if (Form.of(context)!.validate()) {
-//                   // Form is valid, perform the desired action
-//                   print('Selected Gender: $selectedValue');
-//                 }

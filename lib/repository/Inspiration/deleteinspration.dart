@@ -21,7 +21,7 @@ class Deleteinspirationrepo {
         log(response.reasonPhrase.toString());
       }
     } catch (e) {
-      print('Error: $e');
+      log('Error: $e');
     }
   }
 }

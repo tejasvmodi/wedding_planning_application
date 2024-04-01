@@ -3,6 +3,7 @@ import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:wedding_planning_application/repository/Emergency%20Contanct/getEmergencycontact.dart';
 import 'package:wedding_planning_application/screen/emergency_contacts/add_emergency_contact.dart';
 import 'package:wedding_planning_application/screen/emergency_contacts/components/emergency_contact_design.dart';
 
@@ -16,6 +17,14 @@ class EmergencycontlistW extends StatefulWidget {
 class _EmergencycontlistWState extends State<EmergencycontlistW> {
   directcall() async {
     await FlutterPhoneDirectCaller.callNumber('8140800864');
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    GetContactdetailsrepo get = GetContactdetailsrepo();
+            get.getcontactrepo();
+   
   }
 
   @override
@@ -158,6 +167,12 @@ class _EmergencycontlistWState extends State<EmergencycontlistW> {
       floatingActionButton: IconButton(
           onPressed: () {
             Get.to(() => const AddEmergencyContanct());
+            
+            
+            Get.to(() => const AddEmergencyContanct());
+            setState(() {
+              
+            });
           },
           style: const ButtonStyle(
               backgroundColor:

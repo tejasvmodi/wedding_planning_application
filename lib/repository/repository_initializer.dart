@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:wedding_planning_application/repository/Checklist/addChecklist.dart';
 import 'package:wedding_planning_application/repository/Checklist/getChecklist.dart';
+import 'package:wedding_planning_application/repository/Emergency%20Contanct/addemergencycontact.dart';
 import 'package:wedding_planning_application/repository/Inspiration/addinspirationrepo.dart';
 import 'package:wedding_planning_application/repository/Inspiration/deleteinspration.dart';
 import 'package:wedding_planning_application/repository/Inspiration/getinsprationrepo.dart';
@@ -19,7 +20,6 @@ class RepositoryInitializer {
   RepositoryInitializer() {
     Get.lazyPut(() => AuthenticationRepository());
     Get.lazyPut(() => ServiceCategoryRepository());
-    Get.lazyPut(() => VariationRepository());
     Get.lazyPut(() => VariationoptionOptionRepository());
     Get.lazyPut(() => ServiceRepo());
     Get.lazyPut(() => ServiceItemRepo());
@@ -33,6 +33,7 @@ class RepositoryInitializer {
     Get.lazyPut(() => AddCheckListrepo());
     Get.lazyPut(() => GetCheckListrepo());
     Get.lazyPut(() => Deleteinspirationrepo());
-    
+    Get.lazyPut(() => AddEmergergencyContact());
+        Get.lazyPut(() => VariationRepository());
   }
 }

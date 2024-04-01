@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:get/get.dart';
 import 'package:wedding_planning_application/models/ProfileModels/getprofilemodel.dart';
 import 'package:wedding_planning_application/models/getUsername.dart';
@@ -14,7 +16,7 @@ class ProfileService {
       GetprofileModel? userProfile = await user.getUserProfile();
       profile.add(userProfile);
         } catch (e) {
-      print(e);
+log(e.toString());
     }
   
     return profile;
@@ -26,7 +28,7 @@ class ProfileService {
       getUserName? userinfor = await userinfo.getUserInfo(userid);
       getuserinformation.add(userinfor);
     }catch(e){
-      print(e);
+      log(e.toString());
     }
    
     return getuserinformation;

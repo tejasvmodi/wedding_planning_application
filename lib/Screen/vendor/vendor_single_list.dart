@@ -18,7 +18,7 @@ class VendorSingleList extends StatefulWidget {
 }
 
 class _VendorSingleListState extends State<VendorSingleList> {
-  final VendorService vendorService = Get.find();
+  final VendorService vendorService = VendorService();
   List<Service> data = [];
 
   @override

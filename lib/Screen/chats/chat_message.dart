@@ -89,15 +89,6 @@ class _ChatMessageWState extends State<ChatMessageW> {
   }
 
 //Camera
-  Future _pickImageFromCamera() async {
-    final returnImage =
-        await ImagePicker().pickImage(source: ImageSource.camera);
-    if (returnImage == null) return;
-    setState(() {
-      selectedIMage = File(returnImage.path);
-    });
-    Navigator.of(context).pop();
-  }
 
   Future uploadImage() async {}
 

@@ -53,10 +53,10 @@ profiledetails(String textlabel,String hinttext){
                             child: SizedBox(
                               width: 4,
                               child: Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 4),
+                                padding: const EdgeInsets.symmetric(horizontal: 4),
                                 child: TextField(
                                   decoration: InputDecoration(
-                                    border: OutlineInputBorder(
+                                    border: const OutlineInputBorder(
                                         borderSide: BorderSide.none),
                                     hintText: hinttext,
                                   ),

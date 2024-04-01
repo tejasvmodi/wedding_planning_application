@@ -24,7 +24,8 @@ class _ManageFprofileState extends State<ManageFprofile> {
    final ProfileService profile = Get.find();
   List<GetprofileModel> getuser =[];
 
-   void initState() {
+   @override
+     void initState() {
     super.initState();
     getserviceitemdata();
   }

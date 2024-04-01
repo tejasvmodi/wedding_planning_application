@@ -36,16 +36,14 @@ class Recommendation extends StatelessWidget {
        
       ),
       backgroundColor: const Color.fromARGB(255, 238, 190, 221),
-      body: Container(
-       child: const Center(child: Text('Comming Soon......',textAlign: TextAlign.left,
-                style: TextStyle(
-                    color: Color.fromRGBO(68, 45, 45, 1),
-                    fontFamily: 'EBGaramond',
-                    fontSize: 26,
-                    letterSpacing: 0,
-                    fontWeight: FontWeight.w400,
-                    height: 1))), 
-      ),
+      body: const Center(child: Text('Comming Soon......',textAlign: TextAlign.left,
+               style: TextStyle(
+                   color: Color.fromRGBO(68, 45, 45, 1),
+                   fontFamily: 'EBGaramond',
+                   fontSize: 26,
+                   letterSpacing: 0,
+                   fontWeight: FontWeight.w400,
+                   height: 1))),
     );
   }
 }

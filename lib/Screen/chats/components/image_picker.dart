@@ -107,6 +107,7 @@ class _PickImageState extends State<PickImage> {
       selectedIMage = File(returnImage.path);
       _image = File(returnImage.path).readAsBytesSync();
     });
+    // ignore: use_build_context_synchronously
     Navigator.of(context).pop(); //close the model sheet
   }
 
@@ -119,6 +120,7 @@ class _PickImageState extends State<PickImage> {
       selectedIMage = File(returnImage.path);
       _image = File(returnImage.path).readAsBytesSync();
     });
+    // ignore: use_build_context_synchronously
     Navigator.of(context).pop();
   }
 }

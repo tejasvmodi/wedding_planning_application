@@ -1,11 +1,8 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first, library_private_types_in_public_api
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-
 import 'package:wedding_planning_application/Screen/Booking/WishList/Wishlist.dart';
 import 'package:wedding_planning_application/models/service_itemmodel.dart';
 import 'package:wedding_planning_application/screen/booking/book_service/book_service.dart';
@@ -28,6 +25,7 @@ class VendorSingleView extends StatefulWidget {
 class _VendorSingleViewState extends State<VendorSingleView> {
   List<ServiceitemModel> itemdata = [];
   VendorService vendor = VendorService();
+  int flag=0;
 
   @override
   void initState() {
@@ -150,10 +148,24 @@ class _VendorSingleViewState extends State<VendorSingleView> {
                           const Center(
                               heightFactor: 5,
                               child: CircularProgressIndicator()),
-                        if (itemdata.length > 1)
+                   
+                      
+                        if (itemdata.isNotEmpty)
+                          FirstItemDetails(
+                            itemName: itemdata[j].itemName,
+                            images: itemdata[j].images,
+                            approxprice: itemdata[j].approxPrice.toInt(),
+                          ),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.02,
+                          ),
+                         
+                            if (itemdata.length > 1)
                           SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
                             child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: List.generate(itemdata.length, (index) {
                                 return Padding(
                                   padding: const EdgeInsets.only(right: 8.0),
@@ -169,6 +181,7 @@ class _VendorSingleViewState extends State<VendorSingleView> {
                                     ),
                                     onPressed: () {
                                       j = index;
+                                      flag = index ;
                                       setState(() {});
                                     },
                                     child: Text(
@@ -185,11 +198,6 @@ class _VendorSingleViewState extends State<VendorSingleView> {
                                 );
                               }),
                             ),
-                          ),
-                        if (itemdata.isNotEmpty)
-                          FirstItemDetails(
-                            itemName: itemdata[j].itemName,
-                            images: itemdata[j].images,
                           ),
                         SizedBox(
                           height: MediaQuery.of(context).size.height * 0.01,
@@ -573,7 +581,10 @@ class _VendorSingleViewState extends State<VendorSingleView> {
                               height: MediaQuery.of(context).size.height * 0.06,
                               child: TextButton(
                                   onPressed: () {
-                                    Get.to(() => const bookservicew());
+                                    // Get.to(() => const bookservicew());
+                                    log(itemdata[flag].images[0].toString());
+                                    Get.to(()=>bookservicew(servicebookingId: itemdata[flag].serviceItemId, approxprice: itemdata[flag].approxPrice.toInt(), servicename: itemdata[flag].itemName, image: itemdata[flag].images[0].toString(),));
+
                                   },
                                   style: ButtonStyle(
                                     backgroundColor:
@@ -608,14 +619,16 @@ class _VendorSingleViewState extends State<VendorSingleView> {
 class FirstItemDetails extends StatefulWidget {
   final String itemName;
   final List<String> images;
-
+  final int approxprice;
   const FirstItemDetails({
     super.key,
     required this.itemName,
-    required this.images,
+    required this.images, required this.approxprice,
+
   });
 
   @override
+  // ignore: library_private_types_in_public_api
   _FirstItemDetailsState createState() => _FirstItemDetailsState();
 }
 
@@ -681,6 +694,18 @@ class _FirstItemDetailsState extends State<FirstItemDetails> {
             ),
           ),
         ),
+        const SizedBox(height: 10,),
+       Container(
+        margin: const EdgeInsets.only(right: 100),
+         child: Text('Approximately Price :  ${widget.approxprice}',  style: const TextStyle(
+                color: Color.fromRGBO(62, 53, 53, 1),
+                fontFamily: 'EBGaramond',
+                fontSize: 25,
+                letterSpacing: 0,
+                fontWeight: FontWeight.normal,
+                height: 1,
+              ),),
+       ),
       ],
     );
   }

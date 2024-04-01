@@ -5,7 +5,7 @@ import 'package:wedding_planning_application/models/Inspiration/inspirationmodel
 import 'package:wedding_planning_application/screen/common_components/drawer.dart';
 import 'package:wedding_planning_application/screen/profile/screens/editscreenview.dart';
 class Editpost extends StatefulWidget {
-    const Editpost({Key? key, required this.getinspiration, required this.username}) : super(key: key);
+    const Editpost({super.key, required this.getinspiration, required this.username});
 
   final List<inspirationModel> getinspiration;
   final String username;
