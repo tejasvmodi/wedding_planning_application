@@ -1,11 +1,14 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:wedding_planning_application/repository/Emergency%20Contanct/getEmergencycontact.dart';
+import 'package:wedding_planning_application/models/Emergency%20Contanct/getcontact.dart';
 import 'package:wedding_planning_application/screen/emergency_contacts/add_emergency_contact.dart';
 import 'package:wedding_planning_application/screen/emergency_contacts/components/emergency_contact_design.dart';
+import 'package:wedding_planning_application/services/Contact/EmergencyContactservice.dart';
 
 class EmergencycontlistW extends StatefulWidget {
   const EmergencycontlistW({super.key});
@@ -15,16 +18,21 @@ class EmergencycontlistW extends StatefulWidget {
 }
 
 class _EmergencycontlistWState extends State<EmergencycontlistW> {
-  directcall() async {
-    await FlutterPhoneDirectCaller.callNumber('8140800864');
-  }
-
+  
+  List<Getcontact> get = []; 
+EmergencyContactService emergency = EmergencyContactService();
   @override
   void initState() {
     super.initState();
-    GetContactdetailsrepo get = GetContactdetailsrepo();
-            get.getcontactrepo();
-   
+     getcontact();
+  }
+
+  Future<void> getcontact() async {
+    get = await emergency.getcontactservice();
+    setState(() {
+      get;
+      log(get.toString());
+    });
   }
 
   @override
@@ -107,16 +115,14 @@ class _EmergencycontlistWState extends State<EmergencycontlistW> {
                 indent: 20,
                 endIndent: 20,
               ),
+              if(get.isNotEmpty)
+              for(int i = 0;i < get.length;i++)
               emergencyCallDesign(
-                  'Vijay Joshi', 'Brother', '6354492871', '8140800864'),
-              emergencyCallDesign(
-                  'Radhika Joshi', 'Sister', '6354492871', '8140800864'),
-              emergencyCallDesign(
-                  'Chetan Joshi', 'Father', '6354492871', '8140800864'),
-              emergencyCallDesign(
-                  'Jay Joshi', 'Uncle', '6354492871', '8140800864'),
-              emergencyCallDesign(
-                  'Paras Joshi', 'Uncle', '6354492871', '8140800864'),
+                  get[i].contactName, get[i].status, get[i].numbers[0], get[i].numbers[1]),
+              if(get.isEmpty)
+                const Center(
+                  child: CircularProgressIndicator(),
+                ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
@@ -150,16 +156,6 @@ class _EmergencycontlistWState extends State<EmergencycontlistW> {
                 indent: 20,
                 endIndent: 20,
               ),
-              emergencyCallDesign(
-                  'Vijay Joshi', 'Brother', '6354492871', '8140800864'),
-              emergencyCallDesign(
-                  'Radhika Joshi', 'Sister', '6354492871', '8140800864'),
-              emergencyCallDesign(
-                  'Chetan Joshi', 'Father', '6354492871', '8140800864'),
-              emergencyCallDesign(
-                  'Jay Joshi', 'Uncle', '6354492871', '8140800864'),
-              emergencyCallDesign(
-                  'Paras Joshi', 'Uncle', '6354492871', '8140800864'),
             ],
           ),
         ),
@@ -169,7 +165,7 @@ class _EmergencycontlistWState extends State<EmergencycontlistW> {
             Get.to(() => const AddEmergencyContanct());
             
             
-            Get.to(() => const AddEmergencyContanct());
+         
             setState(() {
               
             });

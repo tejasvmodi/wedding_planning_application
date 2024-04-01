@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
-
 class Getcontact {
   int contactId;
   String contactName;
@@ -21,9 +19,7 @@ class Getcontact {
     return Getcontact(
       contactId: map['contactId'] as int,
       contactName: map['contactName'] as String,
-      numbers: List<String>.from(map['numbers'] as List<String>)
-          .map((dynamic number) => number.toString())
-          .toList(),
+      numbers: List<String>.from(map['numbers'] as List<dynamic>),
       status: map['status'] as String,
       user: map['user'] as int,
     );
@@ -33,9 +29,7 @@ class Getcontact {
     return Getcontact(
       contactId: map['contactId'] as int,
       contactName: map['contactName'] as String,
-      numbers: List<String>.from(map['numbers'] as List<String>)
-          .map((dynamic number) => number.toString())
-          .toList(),
+      numbers: List<String>.from(map['numbers'] as List<dynamic>),
       status: map['status'] as String,
       user: map['user'] as int,
     );
@@ -65,7 +59,7 @@ class Getcontact {
     return 
       other.contactId == contactId &&
       other.contactName == contactName &&
-      listEquals(other.numbers, numbers) &&
+      other.numbers == numbers &&
       other.status == status &&
       other.user == user;
   }

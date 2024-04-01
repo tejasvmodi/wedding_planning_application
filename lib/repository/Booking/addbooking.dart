@@ -7,8 +7,11 @@ import 'package:wedding_planning_application/util/constant.dart';
 
 class AddBookingrepo{
    Future<void> addbookingrepo(AddBooking add) async {
-    
+ 
     try {
+         log(add.bookingPrice.toString());
+         log(add.bookedService.toString());
+         log(add.eventDate.toString());
       // Get token
       String? token = await TokenManager.getToken();
       if (token == null) {
@@ -33,21 +36,22 @@ class AddBookingrepo{
 
       // Send the request
       final response = await http.post(
-        Uri.parse('$apiUrl/checklist'),
+        Uri.parse('$apiUrl/booking'),
         headers: headers,
         body: requestBodyJson,
       );
 
       // Check the response status code
       log(response.statusCode.toString());
+      log(response.body.toString());
       if (response.statusCode == 200) {
-        log('CheckList added successfully.');
+        log('Booking  added successfully.');
       } else {
-        throw Exception('Failed to add CheckList: ${response.reasonPhrase}');
+        throw Exception('Failed to add Booking : ${response.reasonPhrase}');
       }
     } catch (e) {
-      log('Error adding CheckList: $e');
-      throw Exception('Failed to add CheckList: $e');
+      log('Error adding Booking : $e');
+      throw Exception('Failed to add Booking : $e');
     }
   }
 }

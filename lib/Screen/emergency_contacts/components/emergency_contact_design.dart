@@ -3,6 +3,10 @@ import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 
 Widget emergencyCallDesign(
     String name, String relation, String alternativenumber, String call) {
+      directcall() async {
+    await FlutterPhoneDirectCaller.callNumber(call);
+  }
+  
   return Container(
     margin: const EdgeInsets.all(8),
     height: 110,

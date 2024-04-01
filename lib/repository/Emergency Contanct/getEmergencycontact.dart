@@ -6,34 +6,28 @@ import 'package:wedding_planning_application/models/Emergency%20Contanct/getcont
 import 'package:wedding_planning_application/models/token_manager.dart';
 import 'package:wedding_planning_application/util/constant.dart';
 
-class GetContactdetailsrepo {
-  Future<List<Getcontact>> getcontactrepo() async {
-    try {
-      final response = await http.get(
-        Uri.parse('$apiUrl/contact'),
-        headers: createAuthorizationHeaders(await TokenManager.getToken()),
-      );
-        log(jsonEncode(response.body));
-      if (response.statusCode == 200) {
-        final List<dynamic> jsonResponse = json.decode(response.body);
-        log(jsonResponse.toString());
+class GetContactdetailsrepo {Future<List<Getcontact>> getcontactrepo() async {
+  try {
+    final response = await http.get(
+      Uri.parse('$apiUrl/contact'),
+      headers: createAuthorizationHeaders(await TokenManager.getToken()),
+    );
 
-        // Check if the jsonResponse is a List<dynamic>
-        // if (jsonResponse is List) {
-          List<Getcontact> getcontact = jsonResponse
-              .map((item) => Getcontact.fromJson(item))
-              .toList();
-          
-          return getcontact;
-        // } else {
-        //   throw Exception('Response is not a List');
-        // }
-      } else {
-        throw Exception('Failed to load data: ${response.statusCode}');
-      }
-    } catch (e) {
-      // log('Error fetching the contact: $e');
-      throw Exception('Failed to fetch the contact: $e');
+    if (response.statusCode == 200) {
+      final List<dynamic> jsonResponse = json.decode(response.body);
+      
+      // Check if the jsonResponse is a List<dynamic>
+      List<Getcontact> getcontact = jsonResponse
+          .map((item) => Getcontact.fromJson(item))
+          .toList();
+      
+      return getcontact;
+        } else {
+      throw Exception('Failed to load data: ${response.statusCode}');
     }
+  } catch (e) {
+    throw Exception('Failed to fetch the contact: $e');
   }
+}
+
 }

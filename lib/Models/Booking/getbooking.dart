@@ -3,7 +3,7 @@ import 'dart:convert';
 
 class GetBookings {
   int bookingId;
-  int bookingPrice;
+  double bookingPrice;
   String eventDate;
   String bookedService;
   String bookedBy;
@@ -14,11 +14,11 @@ class GetBookings {
     required this.bookedService,
     required this.bookedBy,
   });
-  
+ 
 
   GetBookings copyWith({
     int? bookingId,
-    int? bookingPrice,
+    double? bookingPrice,
     String? eventDate,
     String? bookedService,
     String? bookedBy,
@@ -41,20 +41,26 @@ class GetBookings {
       'bookedBy': bookedBy,
     };
   }
-
-  factory GetBookings.fromMap(Map<String, dynamic> map) {
+ factory GetBookings.fromMap(Map<String, dynamic> map) {
     return GetBookings(
       bookingId: map['bookingId'] as int,
-      bookingPrice: map['bookingPrice'] as int,
+      bookingPrice: map['bookingPrice'] as double, // Parse as double
       eventDate: map['eventDate'] as String,
       bookedService: map['bookedService'] as String,
       bookedBy: map['bookedBy'] as String,
     );
   }
-
   String toJson() => json.encode(toMap());
 
-  factory GetBookings.fromJson(String source) => GetBookings.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory GetBookings.fromJson(Map<String, dynamic> map) {
+  return GetBookings(
+    bookingId: map['bookingId'] as int,
+    bookingPrice: map['bookingPrice'] as double,
+    eventDate: map['eventDate'] as String,
+    bookedService: map['bookedService'] as String,
+    bookedBy: map['bookedBy'] as String,
+  );
+}
 
   @override
   String toString() {

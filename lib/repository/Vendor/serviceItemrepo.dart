@@ -12,7 +12,6 @@ class ServiceItemRepo {
       Uri.parse('$apiUrl/service-item/service?service=$serviceId'),
       headers: createAuthorizationHeaders(await TokenManager.getToken()),
     );
-
     if (response.statusCode == 200) {
       // log(response.body);
       try {

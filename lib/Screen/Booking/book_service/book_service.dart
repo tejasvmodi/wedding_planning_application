@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -99,50 +100,52 @@ class _bookservicewState extends State<bookservicew> {
                 height: 100,
                 width: 340,
                 decoration: BoxDecoration(
-                color: const Color.fromRGBO(221, 189, 190, 1),
+                    color: const Color.fromRGBO(221, 189, 190, 1),
                     border: Border.all(color: Colors.black45),
                     borderRadius:
                         const BorderRadius.all(Radius.elliptical(23, 23))),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                     Container(
+                    Container(
                       height: 80,
                       width: 119,
                       decoration: BoxDecoration(
-                        shape: BoxShape.circle, 
-                        border: Border.all(color: Colors.black45),                       
-                        image: DecorationImage(image: NetworkImage(widget.image), )
-                      ),
-                     ),
-                     Expanded(
-                       child: Column(
+                          shape: BoxShape.circle,
+                          border: Border.all(color: Colors.black45),
+                          image: DecorationImage(
+                            image: NetworkImage(widget.image),
+                          )),
+                    ),
+                    Expanded(
+                      child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
                             'Item Name :  ${widget.servicename}',
-                             style: const TextStyle(
-                            color: Color.fromRGBO(77, 43, 43, 1),
-                            fontFamily: 'EBGaramond',
-                            fontSize: 20,
-                            letterSpacing: 0,
-                            
-                            overflow: TextOverflow.ellipsis,
-                            fontWeight: FontWeight.bold,
-                            ),),
+                            style: const TextStyle(
+                              color: Color.fromRGBO(77, 43, 43, 1),
+                              fontFamily: 'EBGaramond',
+                              fontSize: 20,
+                              letterSpacing: 0,
+                              overflow: TextOverflow.ellipsis,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                           Text(
                             'Approx Price: Rs. ${widget.approxprice}',
-                             style: const TextStyle(
-                            color: Color.fromRGBO(77, 43, 43, 1),
-                            fontFamily: 'EBGaramond',
-                            fontSize: 15,
-                            letterSpacing: 0,
-                            fontWeight: FontWeight.w400,
-                            height: 1),),
+                            style: const TextStyle(
+                                color: Color.fromRGBO(77, 43, 43, 1),
+                                fontFamily: 'EBGaramond',
+                                fontSize: 15,
+                                letterSpacing: 0,
+                                fontWeight: FontWeight.w400,
+                                height: 1),
+                          ),
                         ],
-                       ),
-                     )
+                      ),
+                    )
                   ],
                 ),
               ),
@@ -398,17 +401,33 @@ class _bookservicewState extends State<bookservicew> {
                           String date = DateFormat('yyyy-MM-dd')
                               .format(selectedDate.toLocal());
 
-                          String datandtime =
-                              '$date-${selectedTime.hour.toString()}-${selectedTime.minute.toString()}';
-                          
+                          String datandtime = selectedTime.hour > 10
+                              ? selectedDate.minute > 10
+                                  ? '$date-${selectedTime.hour.toString()}-${selectedTime.minute.toString()}'
+                                  : '$date-${selectedTime.hour.toString()}-0${selectedTime.minute.toString()}'
+                              : selectedDate.minute > 10
+                                  ? '$date-0${selectedTime.hour.toString()}-${selectedTime.minute.toString()}'
+                                  : '$date-0${selectedTime.hour.toString()}-0${selectedTime.minute.toString()}';
+
                           BookinigService book = BookinigService();
-                          book.addBooking(widget.servicebookingId, widget.approxprice.toString(), datandtime).then((value) {
-                          setState(() {
-                            Get.to(()=>const ShowBooking());
-                          });
-                          },);
-                          
-                            
+                          log(widget.servicebookingId.toString());
+                          log(widget.approxprice.toString());
+                          log(datandtime);
+                          book
+                              .addBooking(widget.servicebookingId,
+                                  widget.approxprice.toString(), datandtime)
+                              .then(
+                            (value) {
+                              Future.delayed(
+                                const Duration(seconds: 5),
+                                () {
+                                  setState(() {
+                                    Get.to(() => const ShowBooking());
+                                  });
+                                },
+                              );
+                            },
+                          );
                         },
                         style: ButtonStyle(
                             backgroundColor: const MaterialStatePropertyAll(

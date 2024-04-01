@@ -1,5 +1,13 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:wedding_planning_application/models/Booking/getbooking.dart';
+import 'package:wedding_planning_application/models/service_itemmodel.dart';
+import 'package:wedding_planning_application/models/variation_option.dart';
+import 'package:wedding_planning_application/repository/Booking/getbooking.dart';
 import 'package:wedding_planning_application/screen/booking/my_bookings/booking_design.dart';
+import 'package:wedding_planning_application/services/Booking/BookingService.dart';
+import 'package:wedding_planning_application/services/vendor_service.dart';
 
 class ShowBooking extends StatefulWidget {
   const ShowBooking({
@@ -11,6 +19,37 @@ class ShowBooking extends StatefulWidget {
 }
 
 class _ShowBookingState extends State<ShowBooking> {
+List<GetBookings> getbook = [];
+ BookinigService  booking = BookinigService();
+  VendorService vendor = VendorService();
+  List<ServiceitemModel> service = [];
+
+@override
+  void initState() {
+        super.initState();      
+       getbookingser();
+  }
+
+Future<void> getbookingser() async {
+  try {
+    getbook = await booking.getbooking();
+    for (int i = 0; i < getbook.length; i++) {
+      // Wait for the getServiceItem() Future to complete
+      List<ServiceitemModel> items = await vendor.getserviceitem(int.parse(getbook[i].bookedService));
+      service.addAll(items); // Add the items to the service list
+    }
+
+    setState(() {
+      // Update the state with the retrieved data
+        log(getbook.toString());
+      log(service.toString());
+    
+    });
+  } catch (e) {
+    log(e.toString());
+  }
+}
+
   final List<Map<String, dynamic>> bdesign = [
     {
       'newimage': 'Vendors_Venue_1.jpg',
