@@ -17,13 +17,12 @@ class EmergencycontlistW extends StatefulWidget {
 }
 
 class _EmergencycontlistWState extends State<EmergencycontlistW> {
-  
-  List<Getcontact> get = []; 
-EmergencyContactService emergency = EmergencyContactService();
+  List<Getcontact> get = [];
+  EmergencyContactService emergency = EmergencyContactService();
   @override
   void initState() {
     super.initState();
-     getcontact();
+    getcontact();
   }
 
   Future<void> getcontact() async {
@@ -106,7 +105,7 @@ EmergencyContactService emergency = EmergencyContactService();
                       fontWeight: FontWeight.bold,
                       height: 1,
                     ),
-                  )
+                  ),
                 ],
               ),
               const Divider(
@@ -114,11 +113,11 @@ EmergencyContactService emergency = EmergencyContactService();
                 indent: 20,
                 endIndent: 20,
               ),
-              if(get.isNotEmpty)
-              for(int i = 0;i < get.length;i++)
-              emergencyCallDesign(
-                  get[i].contactName, get[i].status, get[i].numbers[0], get[i].numbers[1]),
-              if(get.isEmpty)
+              if (get.isNotEmpty)
+                for (int i = 0; i < get.length; i++)
+                EmergencyCallDesign(id: get[i].contactId, contactName: get[i].contactName, status: get[i].status, number: get[i].numbers[0], alternativenumber:get[i].numbers[1]),
+                
+              if (get.isEmpty)
                 const Center(
                   child: CircularProgressIndicator(),
                 ),
@@ -162,12 +161,8 @@ EmergencyContactService emergency = EmergencyContactService();
       floatingActionButton: IconButton(
           onPressed: () {
             Get.to(() => const AddEmergencyContanct());
-            
-            
-         
-            setState(() {
-              
-            });
+
+            setState(() {});
           },
           style: const ButtonStyle(
               backgroundColor:
