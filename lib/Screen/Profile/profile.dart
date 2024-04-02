@@ -2,6 +2,8 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:wedding_planning_application/models/Address/citymodel.dart';
+import 'package:wedding_planning_application/models/Address/statemdel.dart';
 import 'package:wedding_planning_application/models/Inspiration/inspirationmodel.dart';
 import 'package:wedding_planning_application/models/ProfileModels/getprofilemodel.dart';
 import 'package:wedding_planning_application/screen/authentication/forms/login_form.dart';
@@ -16,6 +18,7 @@ import 'package:wedding_planning_application/screen/profile/recommandation/locat
 import 'package:wedding_planning_application/screen/profile/recommandation/recommendation.dart';
 import 'package:wedding_planning_application/screen/profile/screens/editpost.dart';
 import 'package:wedding_planning_application/screen/profile/screens/manage_profile_bride.dart';
+import 'package:wedding_planning_application/services/Address/addressService.dart';
 import 'package:wedding_planning_application/services/Inspiration/insapiration_service.dart';
 import 'package:wedding_planning_application/services/authentication/auth_service.dart';
 import 'package:wedding_planning_application/services/profile.dart';
@@ -31,22 +34,42 @@ class _ProfileState extends State<Profile> {
   final AuthenticationService authService = Get.find();
   final ProfileService profile = Get.find();
   InspirationSefrvice ins = InspirationSefrvice();
+  AddressService address = AddressService();
  
   List<inspirationModel> getinspiration = [];
   // List<inspirationModel> inspiration = [];
   List<GetprofileModel> profil =[];
-
+  List<StateModel> getstate = [];
+  List<CityModel> city =[];
 @override
   void initState() {
     super.initState();
     fetchProfileData();
+    getstatedata();
+    getcitydata();
   }
 
      Future<void> fetchProfileData() async {
     await getserviceitemdata();
     await fetchInspiration();
   }
-  
+   
+  Future<void> getcitydata() async{
+  city = await address.getcity();
+  setState(() {
+    city;
+    log(city.toString());
+  });
+  }
+
+  Future<void> getstatedata() async {
+  getstate = await address.getstate();
+  setState(() {
+    getstate;
+    log(getstate.toString());
+  });
+
+  }
  Future<void> fetchInspiration() async {
   getinspiration = await ins.getallinspiration();
   setState(() {
@@ -216,3 +239,154 @@ class _ProfileState extends State<Profile> {
   }
 }
 
+
+class DropDownWidget extends StatefulWidget {
+  final List<StateModel> relations;
+  final Function(String)? onRelationShipSelected;
+
+  const DropDownWidget({
+    super.key,
+    required this.relations,
+    this.onRelationShipSelected,
+  });
+
+  @override
+  State<DropDownWidget> createState() => _DropDownWidgetState();
+}
+
+class _DropDownWidgetState extends State<DropDownWidget> {
+  String? selectedValue;
+
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          DropdownButtonFormField<String>(
+            isExpanded: true,
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(borderSide: BorderSide.none),
+            ),
+            hint: const Text(
+              'Select Relationship',
+              style: TextStyle(
+                color: Color.fromRGBO(85, 32, 32, 1),
+                fontFamily: 'EBGaramond',
+                fontSize: 20,
+                letterSpacing: 0,
+                fontWeight: FontWeight.normal,
+                height: 1,
+              ),
+            ),
+            value: selectedValue,
+            items: widget.relations
+                .map(
+                  (relation) => DropdownMenuItem<String>(
+                    value: relation.stateId.toString(),
+                    child: Text(
+                      relation.stateName,
+                      style: const TextStyle(
+                        color: Color.fromRGBO(85, 32, 32, 1),
+                        fontFamily: 'EBGaramond',
+                        fontSize: 20,
+                        letterSpacing: 0,
+                        fontWeight: FontWeight.normal,
+                        height: 1,
+                      ),
+                    ),
+                  ),
+                )
+                .toList(),
+            onChanged: (value) {
+              setState(() {
+                selectedValue = value;
+                widget.onRelationShipSelected!(value!);
+              });
+            },
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please select the Relationship.';
+              }
+              return null;
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+
+
+class Citymodel extends StatefulWidget {
+  const Citymodel({super.key, required this.relations, this.onRelationShipSelected});
+   final List<CityModel> relations;
+  final Function(String)? onRelationShipSelected;
+
+
+  @override
+  State<Citymodel> createState() => _CitymodelState();
+}
+
+class _CitymodelState extends State<Citymodel> {
+  String? selectedValue;
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          DropdownButtonFormField<String>(
+            isExpanded: true,
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(borderSide: BorderSide.none),
+            ),
+            hint: const Text(
+              'Select Relationship',
+              style: TextStyle(
+                color: Color.fromRGBO(85, 32, 32, 1),
+                fontFamily: 'EBGaramond',
+                fontSize: 20,
+                letterSpacing: 0,
+                fontWeight: FontWeight.normal,
+                height: 1,
+              ),
+            ),
+            value: selectedValue,
+            items: widget.relations
+                .map(
+                  (relation) => DropdownMenuItem<String>(
+                    value: relation.cityId.toString(),
+                    child: Text(
+                      relation.cityName,
+                      style: const TextStyle(
+                        color: Color.fromRGBO(85, 32, 32, 1),
+                        fontFamily: 'EBGaramond',
+                        fontSize: 20,
+                        letterSpacing: 0,
+                        fontWeight: FontWeight.normal,
+                        height: 1,
+                      ),
+                    ),
+                  ),
+                )
+                .toList(),
+            onChanged: (value) {
+              setState(() {
+                selectedValue = value;
+                widget.onRelationShipSelected!(value!);
+              });
+            },
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please select the Relationship.';
+              }
+              return null;
+            },
+          ),
+        ],
+      ),
+    );;
+  }
+}

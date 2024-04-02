@@ -4,6 +4,7 @@ import 'package:wedding_planning_application/models/service_itemmodel.dart';
 import 'package:wedding_planning_application/models/servicemodel.dart';
 import 'package:wedding_planning_application/models/service_category.dart';
 import 'package:wedding_planning_application/models/variation_option.dart';
+import 'package:wedding_planning_application/repository/vendor/getservice.dart';
 import 'package:wedding_planning_application/services/core/service.dart';
 import 'package:wedding_planning_application/services/core/service_category_service.dart';
 import 'package:wedding_planning_application/services/core/service_item.dart';
@@ -16,6 +17,7 @@ class VendorService {
   final VariationOptionService variationOptionService = VariationOptionService();
   final ServiceList servicelist = ServiceList();
   final Serviceitem serviceitem = Serviceitem(); 
+  final ServiceItemdefaultRepo defaultservice =ServiceItemdefaultRepo();
 
   Future<List<VendorData>> getVendorData() async {
     List<VendorData> vendorData = [];
@@ -73,6 +75,19 @@ Future<List<ServiceitemModel>> getserviceitem(int serviceid) async {
     }
     log(servicelist.toString());
     return servicelist;
+}
+
+
+Future<List<ServiceitemModel>> getserviceitemdefault() async {
+    List<ServiceitemModel> servicelistdefault = [];
+    try{
+  await defaultservice.getitemServicedefault().then((value) async{
+          servicelistdefault.addAll(value.items);});
+   }catch(e){
+      log(e.toString());
+    }
+    // log(servicelistdefault.toString());
+    return servicelistdefault;
 }
 
 }

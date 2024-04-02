@@ -115,8 +115,12 @@ class _EmergencycontlistWState extends State<EmergencycontlistW> {
               ),
               if (get.isNotEmpty)
                 for (int i = 0; i < get.length; i++)
-                EmergencyCallDesign(id: get[i].contactId, contactName: get[i].contactName, status: get[i].status, number: get[i].numbers[0], alternativenumber:get[i].numbers[1]),
-                
+                  EmergencyCallDesign(
+                      id: get[i].contactId,
+                      contactName: get[i].contactName,
+                      status: get[i].status,
+                      number: get[i].numbers[0],
+                      alternativenumber: get[i].numbers[1]),
               if (get.isEmpty)
                 const Center(
                   child: CircularProgressIndicator(),

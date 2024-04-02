@@ -244,11 +244,7 @@ class _ManageFprofileState extends State<ManageFprofile> {
             profiledetails('City', getuser[0].addressInfo.toString()),
             const SizedBox(
               height: 25,
-            ),
-            profiledetails('Area',getuser[0].addressInfo.toString()),
-            const SizedBox(
-              height: 25,
-            ),
+            ), 
             SizedBox(
               width: 370,
               height: 60,

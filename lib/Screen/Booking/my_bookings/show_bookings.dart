@@ -17,55 +17,64 @@ class ShowBooking extends StatefulWidget {
 }
 
 class _ShowBookingState extends State<ShowBooking> {
-List<GetBookings> getbook = [];
- BookinigService  booking = BookinigService();
+  List<GetBookings> getbook = [];
+  BookinigService booking = BookinigService();
   VendorService vendor = VendorService();
   List<ServiceitemModel> service = [];
 
-@override
+  
+  final List<Map<String, dynamic>> combinedList = [];
+  @override
   void initState() {
-        super.initState();      
-       getbookingser();
+    super.initState();
+    getbooking().then((value) => {
+          Future.delayed(const Duration(seconds: 5), () {
+            // servicedata();
+            setState(() {
+              log(combinedList.toString());
+            });
+          })
+        });
   }
 
-Future<void> getbookingser() async {
-  try {
+  Future<void> getbooking() async {
     getbook = await booking.getbooking();
-    for (int i = 0; i < getbook.length; i++) {
-      // Wait for the getServiceItem() Future to complete
-      List<ServiceitemModel> items = await vendor.getserviceitem(int.parse(getbook[i].bookedService));
-      service.addAll(items); // Add the items to the service list
-    }
+    service = await vendor.getserviceitemdefault();
 
     setState(() {
-      // Update the state with the retrieved data
-        log(getbook.toString());
-      log(service.toString());
-    
-    });
-  } catch (e) {
-    log(e.toString());
-  }
-}
+      getbook;
+      service;
 
-  final List<Map<String, dynamic>> bdesign = [
-    {
-      'newimage': 'Vendors_Venue_1.jpg',
-      'texttitle': 'Radisson',
-      'content': 'Lucknow in Banquet Hall',
-      'money': '120000',
-      'booktime': "2023-11-10 00:00:00", // String format
-      'eventdates': "2023-12-10 00:00:00", // String format
-    },
-    {
-      'newimage': 'Bookings_Bride_Makeup.jpg',
-      'texttitle': 'Palak Sharma',
-      'content': 'Bridal Makeup',
-      'money': '1500',
-      'booktime': "2022-11-25 00:00:00", // String format
-      'eventdates': "2022-12-10 00:00:00", // String format
-    },
-  ];
+      log(service.toString());
+      log(getbook.toString());
+    });
+  }
+
+  // void servicedata() {
+  //   if (getbook.isNotEmpty && service.isNotEmpty) { 
+  //     for (int i = 0; i < getbook.length; i++) {
+  //       for (int j = 0; j < service.length; j++) {
+  //         // log(getbook[i].bookedService.toString());
+  //         // log(service[j].serviceItemId.toString());
+
+  //         if (getbook[i].bookedService == service[j].serviceItemId) {
+  //           combinedList.add({
+  //             "serviceItemId": service[j].serviceItemId,
+  //             "itemName": service[j].itemName,
+  //             "approxPrice": service[j].approxPrice,
+  //             "bookedBy": getbook[i].bookedBy,
+  //             "eventDate": getbook[i].eventDate,
+  //             // "bookedTime": getbook[i].bookedTime,
+  //           });
+
+  //           break;
+  //         }
+  //         log(combinedList.toString());
+  //       }
+  //     }
+  //   }
+  // }
+
   final List<Map<String, dynamic>> bdesigngroom = [
     {
       'newimage': 'Vendor_carting.jpg',
@@ -162,27 +171,27 @@ Future<void> getbookingser() async {
                 ],
               ),
               const Divider(color: Colors.black26, indent: 20, endIndent: 20),
-              Padding(
-                padding: const EdgeInsets.all(8),
-                child: Wrap(
-                  runSpacing: 2,
-                  spacing: 5,
-                  children: [
-                    ...bdesign.map(
-                      (vendor) => bookingdesign(
-                        vendor['newimage']!,
-                        vendor['texttitle']!,
-                        vendor['content']!,
-                        int.parse(vendor['money']!),
-                        DateTime.parse(
-                            vendor['booktime']!), // Parse string to DateTime
-                        DateTime.parse(vendor['eventdates']!),
-                        context,
-                      ),
-                    )
-                  ],
-                ),
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.all(8),
+              //   child: Wrap(
+              //     runSpacing: 2,
+              //     spacing: 5,
+              //     children: [
+              //       ...bdesign.map(
+              //         (vendor) => bookingdesign(
+              //           vendor['newimage']!,
+              //           vendor['texttitle']!,
+              //           vendor['content']!,
+              //           int.parse(vendor['money']!),
+              //           DateTime.parse(
+              //               vendor['booktime']!), // Parse string to DateTime
+              //           DateTime.parse(vendor['eventdates']!),
+              //           context,
+              //         ),
+              //       )
+              //     ],
+              //   ),
+              // ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
