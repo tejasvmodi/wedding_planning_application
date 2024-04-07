@@ -1,91 +1,86 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:convert';
+  // ignore_for_file: public_member_api_docs, sort_constructors_first
+  import 'dart:convert';
 
-class ShowBooking {
-  int bookingID;
-  String image;
-  String bookingPrice;
-  String itemName;
-  String eventDate;
-  String bookedBy;
-  ShowBooking({
-    required this.bookingID,
-    required this.image,
-    required this.bookingPrice,
-    required this.itemName,
-    required this.eventDate,
-    required this.bookedBy,
-  });
+  import 'package:flutter/foundation.dart';
 
-  ShowBooking copyWith({
-    int? bookingID,
-    String? image,
-    String? bookingPrice,
-    String? itemName,
-    String? eventDate,
-    String? bookedBy,
-  }) {
-    return ShowBooking(
-      bookingID: bookingID ?? this.bookingID,
-      image: image ?? this.image,
-      bookingPrice: bookingPrice ?? this.bookingPrice,
-      itemName: itemName ?? this.itemName,
-      eventDate: eventDate ?? this.eventDate,
-      bookedBy: bookedBy ?? this.bookedBy,
-    );
-  }
+  class Showbooking {
+    final int serviceItemId;
+    final String itemName;
+    final double approxPrice;
+    final List<String> images;
+    Showbooking({
+      required this.serviceItemId,
+      required this.itemName,
+      required this.approxPrice,
+      required this.images,
+    });
 
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'bookingID': bookingID,
-      'image': image,
-      'bookingPrice': bookingPrice,
-      'itemName': itemName,
-      'eventDate': eventDate,
-      'bookedBy': bookedBy,
-    };
-  }
+    Showbooking copyWith({
+      int? serviceItemId,
+      String? itemName,
+      double? approxPrice,
+      List<String>? images,
+    }) {
+      return Showbooking(
+        serviceItemId: serviceItemId ?? this.serviceItemId,
+        itemName: itemName ?? this.itemName,
+        approxPrice: approxPrice ?? this.approxPrice,
+        images: images ?? this.images,
+      );
+    }
 
-  factory ShowBooking.fromMap(Map<String, dynamic> map) {
-    return ShowBooking(
-      bookingID: map['bookingID'] as int,
-      image: map['image'] as String,
-      bookingPrice: map['bookingPrice'] as String,
+    Map<String, dynamic> toMap() {
+      return <String, dynamic>{
+        'serviceItemId': serviceItemId,
+        'itemName': itemName,
+        'approxPrice': approxPrice,
+        'images': images,
+      };
+    }
+
+  factory Showbooking.fromMap(Map<String, dynamic> map) {
+    return Showbooking(
+      serviceItemId: map['serviceItemId'] as int,
       itemName: map['itemName'] as String,
-      eventDate: map['eventDate'] as String,
-      bookedBy: map['bookedBy'] as String,
+      approxPrice: map['approxPrice'] as double,
+      images: List<String>.from(map['images'] as List<dynamic>),
     );
   }
 
-  String toJson() => json.encode(toMap());
 
-  factory ShowBooking.fromJson(String source) => ShowBooking.fromMap(json.decode(source) as Map<String, dynamic>);
+    String toJson() => json.encode(toMap());
 
-  @override
-  String toString() {
-    return 'ShowBooking(bookingID: $bookingID, image: $image, bookingPrice: $bookingPrice, itemName: $itemName, eventDate: $eventDate, bookedBy: $bookedBy)';
+    factory Showbooking.fromJson( Map<String, dynamic>  map){
+      return Showbooking(
+      serviceItemId: map['serviceItemId'] as int,
+      itemName: map['itemName'] as String,
+      approxPrice: map['approxPrice'] as double,
+      images: List<String>.from(map['images'] as List<dynamic>),
+    );
+    
+    }
+
+    @override
+    String toString() {
+      return 'Showbooking(serviceItemId: $serviceItemId, itemName: $itemName, approxPrice: $approxPrice, images: $images)';
+    }
+
+    @override
+    bool operator ==(covariant Showbooking other) {
+      if (identical(this, other)) return true;
+    
+      return 
+        other.serviceItemId == serviceItemId &&
+        other.itemName == itemName &&
+        other.approxPrice == approxPrice &&
+        listEquals(other.images, images);
+    }
+
+    @override
+    int get hashCode {
+      return serviceItemId.hashCode ^
+        itemName.hashCode ^
+        approxPrice.hashCode ^
+        images.hashCode;
+    }
   }
-
-  @override
-  bool operator ==(covariant ShowBooking other) {
-    if (identical(this, other)) return true;
-  
-    return 
-      other.bookingID == bookingID &&
-      other.image == image &&
-      other.bookingPrice == bookingPrice &&
-      other.itemName == itemName &&
-      other.eventDate == eventDate &&
-      other.bookedBy == bookedBy;
-  }
-
-  @override
-  int get hashCode {
-    return bookingID.hashCode ^
-      image.hashCode ^
-      bookingPrice.hashCode ^
-      itemName.hashCode ^
-      eventDate.hashCode ^
-      bookedBy.hashCode;
-  }
-}

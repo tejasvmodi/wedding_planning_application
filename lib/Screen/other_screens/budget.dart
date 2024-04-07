@@ -1,6 +1,14 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:wedding_planning_application/models/Budget/getbudget.dart';
+import 'package:wedding_planning_application/models/service_category.dart';
+import 'package:wedding_planning_application/screen/Screen_Navigation.dart';
+import 'package:wedding_planning_application/services/Budget/budgetservice.dart';
+import 'package:wedding_planning_application/services/core/service_category_service.dart';
 
 class Budget extends StatefulWidget {
   const Budget({super.key});
@@ -10,6 +18,50 @@ class Budget extends StatefulWidget {
 }
 
 class _BudgetState extends State<Budget> {
+  double count = 0;
+  TextEditingController price = TextEditingController();
+  String? id;
+  String? title;
+  BudgetService budget = BudgetService();
+  List<Getbudget> getbudget = [];
+  @override
+  void initState() {
+    super.initState();
+
+    setState(() {
+      getServiceCategories();
+      getbudgetdata();
+    });
+  }
+
+  List<ServiceCategory> items = [];
+  Future<void> getbudgetdata() async {
+    try {
+      getbudget = await budget.getbudget();
+      setState(() {
+        getbudget;
+        log(getbudget.toString());
+        if (getbudget.isNotEmpty) {
+          for (var get in getbudget) {
+            count += get.expenceAmount.toDouble();
+          }
+        }
+      });
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
+  Future<void> getServiceCategories() async {
+    final ServicecategoryService categoryService = ServicecategoryService();
+    await categoryService.getServicecategories().then((value) {
+      setState(() {
+        items = value.items;
+        log(items.toString());
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,7 +69,9 @@ class _BudgetState extends State<Budget> {
         backgroundColor: const Color.fromRGBO(255, 217, 249, 1),
         leading: IconButton(
           onPressed: () {
-            Navigator.pop(context);
+            Get.to(ScreenNavigation(
+              currentIndex: 0,
+            ));
           },
           icon: const Icon(
             Icons.arrow_back_ios,
@@ -88,33 +142,6 @@ class _BudgetState extends State<Budget> {
                       const SizedBox(
                         height: 10,
                       ),
-                      budgetBox('assets/images/Vendor_carting.jpg', 'Catering',
-                          10000),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      budgetBox('assets/images/vender_photography.jpg',
-                          'Photography', 120000),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      budgetBox(
-                          'assets/images/Vender_Venue.jpg', 'Venue', 150000),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      budgetBox('assets/images/vendor_Groom_wear.jpg',
-                          'Groom Wear', 20000),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      budgetBox('assets/images/Vendor_invitations.jpg',
-                          'Invitations', 2500),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      budgetBox('assets/images/Vendor_carting.jpg', 'Catering',
-                          15000),
                       const SizedBox(
                         height: 10,
                       ),
@@ -146,7 +173,7 @@ class _BudgetState extends State<Budget> {
                         child: Container(
                           child: expandedtitle(
                             'assets/images/icon_bride.png',
-                            520000,
+                            count,
                             "Your's Budget: ",
                           ),
                         ),
@@ -155,40 +182,15 @@ class _BudgetState extends State<Budget> {
                         const SizedBox(
                           height: 10,
                         ),
-                        budgetBox('assets/images/Vendor_carting.jpg',
-                            'Catering', 10000),
+                        if (getbudget.isNotEmpty)
+                          for (int i = 0; i < getbudget.length; i++)
+                            budgetBox(
+                                getbudget[i].serviceCategory['icon'],
+                                getbudget[i]
+                                    .serviceCategory['serviceCategoryName'],
+                                getbudget[i].expenceAmount),
                         const SizedBox(
                           height: 10,
-                        ),
-                        budgetBox(
-                            'assets/images/Vender_Mackup.jpg', 'Mack-up', 2000),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        budgetBox('assets/images/vender_photography.jpg',
-                            'Photography', 120000),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        budgetBox(
-                            'assets/images/Vender_Venue.jpg', 'Venue', 150000),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        budgetBox('assets/images/Vendor_bridal_wear.jpg',
-                            'Bridal Wear', 50000),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        budgetBox('assets/images/Vendor_invitations.jpg',
-                            'Invitations', 2500),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        budgetBox('assets/images/Vendor_carting.jpg',
-                            'Catering', 15000),
-                        const SizedBox(
-                          height: 70,
                         ),
                       ],
                     ),
@@ -272,6 +274,17 @@ class _BudgetState extends State<Budget> {
                     child: Center(
                       child: Column(
                         children: <Widget>[
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Center(
+                              child: Citymodel(
+                                  relations: items,
+                                  onRelationShipSelected: (value) {
+                                    setState(() {
+                                      id = value;
+                                    });
+                                  })),
                           Container(
                               decoration: BoxDecoration(
                                 boxShadow: [
@@ -282,10 +295,14 @@ class _BudgetState extends State<Budget> {
                               ),
                               width: 250,
                               margin: const EdgeInsets.all(10),
-                              child: const TextField(
-                                maxLines: 4,
-                                minLines: 4,
-                                decoration: InputDecoration(
+                              child: TextField(
+                                keyboardType: TextInputType.number,
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.digitsOnly,
+                                ],
+                                controller: price,
+                                maxLines: 1,
+                                decoration: const InputDecoration(
                                   enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
                                         color: Colors
@@ -296,7 +313,7 @@ class _BudgetState extends State<Budget> {
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.all(
                                           Radius.elliptical(23, 23))),
-                                  hintText: 'Enter the vendor service',
+                                  hintText: 'Enter The Approximate amount',
                                   hintStyle: TextStyle(
                                     color: Color.fromRGBO(96, 67, 67, 1),
                                     fontFamily: 'EBGaramond',
@@ -306,7 +323,7 @@ class _BudgetState extends State<Budget> {
                                     height: 1,
                                   ),
                                 ),
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: Color.fromRGBO(96, 67, 67, 1),
                                   fontFamily: 'EBGaramond',
                                   fontSize: 18,
@@ -316,7 +333,14 @@ class _BudgetState extends State<Budget> {
                                 ),
                               )),
                           TextButton(
-                              onPressed: () {
+                              onPressed: () async {
+                                log(price.text);
+                                List<String> it = [];
+                                it.add(id.toString());
+
+                                budget.addbudget(double.parse(price.text),
+                                    int.parse(id.toString()));
+
                                 _showMyDialog(context);
                               },
                               style: const ButtonStyle(
@@ -420,7 +444,7 @@ Widget budgetBox(String imageLink, String venueName, double venuePrice) {
 
   return SizedBox(
     width: 320,
-    height: 70,
+    height: 80,
     child: Stack(
       children: <Widget>[
         Positioned(
@@ -459,7 +483,7 @@ Widget budgetBox(String imageLink, String venueName, double venuePrice) {
                   width: 55,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage(
+                      image: NetworkImage(
                         imageLink,
                       ),
                       fit: BoxFit.cover,
@@ -527,7 +551,7 @@ Future<void> _showMyDialog(BuildContext context) async {
           child: ListBody(
             children: <Widget>[
               Text(
-                'Your Budget is successfully updated',
+                'Your Budget list is successfully added',
                 style: TextStyle(
                   color: Color.fromRGBO(62, 53, 53, 1),
                   fontFamily: 'EBGaramond',
@@ -544,7 +568,7 @@ Future<void> _showMyDialog(BuildContext context) async {
           Center(
             child: TextButton(
                 onPressed: () {
-                  Navigator.of(context).pop();
+                  Get.offAll(() => const Budget());
                 },
                 style: const ButtonStyle(
                   minimumSize: MaterialStatePropertyAll(Size(210, 60)),
@@ -572,4 +596,83 @@ Future<void> _showMyDialog(BuildContext context) async {
       );
     },
   );
+}
+
+class Citymodel extends StatefulWidget {
+  const Citymodel(
+      {super.key, required this.relations, this.onRelationShipSelected});
+  final List<ServiceCategory> relations;
+  final Function(String)? onRelationShipSelected;
+
+  @override
+  State<Citymodel> createState() => _CitymodelState();
+}
+
+class _CitymodelState extends State<Citymodel> {
+  String? selectedValue;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.black),
+        color: const Color.fromRGBO(217, 184, 184, 1),
+      ),
+      height: 70,
+      width: 250,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          DropdownButtonFormField<String>(
+            isExpanded: true,
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(borderSide: BorderSide.none),
+            ),
+            hint: const Text(
+              'Select Service Category',
+              style: TextStyle(
+                color: Color.fromRGBO(85, 32, 32, 1),
+                fontFamily: 'EBGaramond',
+                fontSize: 20,
+                letterSpacing: 0,
+                fontWeight: FontWeight.normal,
+                height: 1,
+              ),
+            ),
+            value: selectedValue,
+            items: widget.relations
+                .map(
+                  (relation) => DropdownMenuItem<String>(
+                    value: relation.serviceCategoryId.toString(),
+                    child: Text(
+                      relation.serviceCategoryName.toString(),
+                      style: const TextStyle(
+                        color: Color.fromRGBO(85, 32, 32, 1),
+                        fontFamily: 'EBGaramond',
+                        fontSize: 20,
+                        letterSpacing: 0,
+                        fontWeight: FontWeight.normal,
+                        height: 1,
+                      ),
+                    ),
+                  ),
+                )
+                .toList(),
+            onChanged: (value) {
+              setState(() {
+                selectedValue = value;
+
+                widget.onRelationShipSelected!(value!);
+              });
+            },
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please select the Relationship.';
+              }
+              return null;
+            },
+          ),
+        ],
+      ),
+    );
+  }
 }

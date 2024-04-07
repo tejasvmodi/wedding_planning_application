@@ -94,8 +94,8 @@ class _HomeState extends State<Home> {
                 child: Row(children: [
                   for (int i = 0; i < items.length; i++)
                     categoryWrapper(
-                      items[i].icon,
-                      items[i].serviceCategoryName,
+                      items[i].icon.toString(),
+                      items[i].serviceCategoryName.toString(),
                       context,
                       items[i].serviceCategoryId,
                       

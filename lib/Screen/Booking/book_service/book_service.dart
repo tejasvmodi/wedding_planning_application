@@ -402,12 +402,12 @@ class _bookservicewState extends State<bookservicew> {
                               .format(selectedDate.toLocal());
 
                           String datandtime = selectedTime.hour > 10
-                              ? selectedDate.minute > 10
-                                  ? '$date-${selectedTime.hour.toString()}-${selectedTime.minute.toString()}'
+                              ? selectedDate.minute < 10
+                                  ? '$date-${selectedTime.hour.toString()}-0${selectedTime.minute.toString()}'
                                   : '$date-${selectedTime.hour.toString()}-0${selectedTime.minute.toString()}'
                               : selectedDate.minute > 10
                                   ? '$date-0${selectedTime.hour.toString()}-${selectedTime.minute.toString()}'
-                                  : '$date-0${selectedTime.hour.toString()}-0${selectedTime.minute.toString()}';
+                                  : '$date-0${selectedTime.hour.toString()}-${selectedTime.minute.toString()}';
 
                           BookinigService book = BookinigService();
                           log(widget.servicebookingId.toString());

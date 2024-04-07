@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:wedding_planning_application/screen/profile/components/profile_details.dart';
 import 'package:wedding_planning_application/screen/profile/components/profile_photo.dart';
 import 'package:wedding_planning_application/screen/profile/screens/manage_profile_bride.dart';
 
@@ -183,30 +182,30 @@ class _ManageMprofileState extends State<ManageMprofile> {
                 ],
               ),
             ),
-            const SizedBox(
-              height: 25,
-            ),
-            profiledetails('Email', 'akash123@gmail.com'),
-            const SizedBox(
-              height: 25,
-            ),
-            profiledetails('Phone', '+91 83000 68000'),
-            const SizedBox(
-              height: 25,
-            ),
-            profiledetails(
-                'Address', '102, Anand Bag Socity , near bob tower '),
-            const SizedBox(
-              height: 25,
-            ),
-            profiledetails('City', 'Ahmadabad'),
-            const SizedBox(
-              height: 25,
-            ),
-            profiledetails('Area', 'Navrangpura , 38006'),
-            const SizedBox(
-              height: 25,
-            ),
+            // const SizedBox(
+            //   height: 25,
+            // ),
+            // profiledetails('Email', 'akash123@gmail.com'),
+            // const SizedBox(
+            //   height: 25,
+            // ),
+            // profiledetails('Phone', '+91 83000 68000'),
+            // const SizedBox(
+            //   height: 25,
+            // ),
+            // profiledetails(
+            //     'Address', '102, Anand Bag Socity , near bob tower '),
+            // const SizedBox(
+            //   height: 25,
+            // ),
+            // profiledetails('City', 'Ahmadabad'),
+            // const SizedBox(
+            //   height: 25,
+            // ),
+            // profiledetails('Area', 'Navrangpura , 38006'),
+            // const SizedBox(
+            //   height: 25,
+            // ),
             SizedBox(
               width: 370,
               height: 60,

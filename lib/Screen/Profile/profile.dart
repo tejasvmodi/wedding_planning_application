@@ -39,14 +39,12 @@ class _ProfileState extends State<Profile> {
   List<inspirationModel> getinspiration = [];
   // List<inspirationModel> inspiration = [];
   List<GetprofileModel> profil =[];
-  List<StateModel> getstate = [];
-  List<CityModel> city =[];
+ 
 @override
   void initState() {
     super.initState();
     fetchProfileData();
-    getstatedata();
-    getcitydata();
+   
   }
 
      Future<void> fetchProfileData() async {
@@ -54,22 +52,7 @@ class _ProfileState extends State<Profile> {
     await fetchInspiration();
   }
    
-  Future<void> getcitydata() async{
-  city = await address.getcity();
-  setState(() {
-    city;
-    log(city.toString());
-  });
-  }
-
-  Future<void> getstatedata() async {
-  getstate = await address.getstate();
-  setState(() {
-    getstate;
-    log(getstate.toString());
-  });
-
-  }
+  
  Future<void> fetchInspiration() async {
   getinspiration = await ins.getallinspiration();
   setState(() {
@@ -387,6 +370,6 @@ class _CitymodelState extends State<Citymodel> {
           ),
         ],
       ),
-    );;
+    );
   }
 }

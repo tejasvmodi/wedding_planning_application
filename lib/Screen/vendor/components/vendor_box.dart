@@ -49,7 +49,7 @@ vendorBox(ServiceCategory category, List<VariationOption> options,
                     decoration: BoxDecoration(
                       image: DecorationImage(
                           image: NetworkImage(
-                            category.icon,
+                            category.icon.toString(),
                           ),
                           fit: BoxFit.cover,
                           opacity: 1),
@@ -68,7 +68,7 @@ vendorBox(ServiceCategory category, List<VariationOption> options,
                      crossAxisAlignment: CrossAxisAlignment.start,            
                       children: [
                         Text(
-                          category.serviceCategoryName,
+                          category.serviceCategoryName.toString(),
                           style: const TextStyle(
                             color: Color.fromRGBO(85, 32, 32, 1),
                             fontFamily: 'EBGaramond',

@@ -1,14 +1,13 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:convert';
 
 class ServiceCategory {
   int serviceCategoryId;
-  String serviceCategoryName;
-  String icon;
+  String? serviceCategoryName;
+  String? icon;
   ServiceCategory({
     required this.serviceCategoryId,
-    required this.serviceCategoryName,
-    required this.icon,
+     this.serviceCategoryName,
+     this.icon,
   });
 
   ServiceCategory copyWith({
@@ -40,7 +39,13 @@ class ServiceCategory {
     );
   }
 
-  String toJson() => json.encode(toMap());
+  Map<String, dynamic> toJson() {
+    return {
+      'serviceCategoryId': serviceCategoryId,
+      'serviceCategoryName': serviceCategoryName,
+      'icon': icon,
+    };
+  }
 
   factory ServiceCategory.fromJson(Map<String, dynamic> json) {
     return ServiceCategory(
