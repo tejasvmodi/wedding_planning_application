@@ -1,12 +1,12 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:http/http.dart' as http;
-import 'package:wedding_planning_application/models/Budget/addbudget.dart';
+import 'package:wedding_planning_application/models/Budget/updatebudget.dart';
 import 'package:wedding_planning_application/models/token_manager.dart';
 import 'package:wedding_planning_application/util/constant.dart';
 
-class Addbudgetrepo {
-  Future<void> addbudgetrepo(BudgetRequest add) async {
+class UpdatebudgetRepo{
+ Future<void> updatebudgetrepo(Updatebudget add) async {
     try {
     
       String? token = await TokenManager.getToken();
@@ -24,7 +24,7 @@ class Addbudgetrepo {
 
 
       // Send the request
-      final response = await http.post(
+      final response = await http.put(
         Uri.parse('$apiUrl/budget'),
         headers: headers,
         body: jsonEncode(add),
@@ -34,7 +34,7 @@ class Addbudgetrepo {
       log(response.statusCode.toString());
       log(response.body.toString());
       if (response.statusCode == 200) {
-        log('budget  added successfully.');
+        log('budget  Updated successfully.');
       } else {
         throw Exception('Failed to add budget : ${response.reasonPhrase}');
       }

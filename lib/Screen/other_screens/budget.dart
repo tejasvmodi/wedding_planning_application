@@ -20,6 +20,7 @@ class Budget extends StatefulWidget {
 class _BudgetState extends State<Budget> {
   double count = 0;
   TextEditingController price = TextEditingController();
+  TextEditingController changeprice = TextEditingController();
   String? id;
   String? title;
   BudgetService budget = BudgetService();
@@ -27,10 +28,10 @@ class _BudgetState extends State<Budget> {
   @override
   void initState() {
     super.initState();
-
-    setState(() {
-      getServiceCategories();
+     getServiceCategories();
       getbudgetdata();
+    setState(() {
+ 
     });
   }
 
@@ -139,11 +140,27 @@ class _BudgetState extends State<Budget> {
                       ),
                     ),
                     children: [
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      const SizedBox(
-                        height: 10,
+                      SizedBox(
+                        height: 400, // Adjust the height to limit expansion
+                        child: ListView(
+                          shrinkWrap: true, // Allow the ListView to shrink
+                          children: [
+                            const SizedBox(height: 10),
+                            if (getbudget.isNotEmpty)
+                              for (int i = 0; i < getbudget.length; i++)
+                                InkWell(
+                                  child: budgetBox(
+                                    getbudget[i].serviceCategory['icon'],
+                                    getbudget[i]
+                                        .serviceCategory['serviceCategoryName'],
+                                    getbudget[i].expenceAmount,
+                                     getbudget[i].budgetId
+                                  ),
+                                  onTap: () {},
+                                ),
+                            const SizedBox(height: 10),
+                          ],
+                        ),
                       ),
                     ],
                   ),
@@ -179,18 +196,38 @@ class _BudgetState extends State<Budget> {
                         ),
                       ),
                       children: [
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        if (getbudget.isNotEmpty)
-                          for (int i = 0; i < getbudget.length; i++)
-                            budgetBox(
-                                getbudget[i].serviceCategory['icon'],
-                                getbudget[i]
-                                    .serviceCategory['serviceCategoryName'],
-                                getbudget[i].expenceAmount),
-                        const SizedBox(
-                          height: 10,
+                        SizedBox(
+                          height: 400, // Adjust the height to limit expansion
+                          child: ListView(
+                            padding: const EdgeInsets.only(
+                                left: 20), // Allow the ListView to shrink
+                            children: [
+                              const SizedBox(height: 10),
+                              if (getbudget.isNotEmpty)
+                                for (int i = 0; i < getbudget.length; i++)
+                                  InkWell(
+                                    child: budgetBox(
+                                      getbudget[i].serviceCategory['icon'],
+                                      getbudget[i].serviceCategory[
+                                          'serviceCategoryName'],
+                                      getbudget[i].expenceAmount,
+                                      getbudget[i].budgetId
+                                    ),
+                                    onTap: () {
+                                      changeprice.text =
+                                          getbudget[i].expenceAmount.toString();
+                                      updatebudget(
+                                          context,
+                                          items,
+                                          changeprice,
+                                          getbudget[i].budgetId,
+                                          getbudget[i].serviceCategory[
+                                              'serviceCategoryId']);
+                                    },
+                                  ),
+                              const SizedBox(height: 10),
+                            ],
+                          ),
                         ),
                       ],
                     ),
@@ -438,97 +475,110 @@ Widget expandedtitle(String image, double number, String title) {
   );
 }
 
-Widget budgetBox(String imageLink, String venueName, double venuePrice) {
+Widget budgetBox(String imageLink, String venueName, double venuePrice,int id) {
   final formattedPrice =
       NumberFormat.currency(locale: 'en_IN', symbol: '₹').format(venuePrice);
 
-  return SizedBox(
-    width: 320,
-    height: 80,
-    child: Stack(
-      children: <Widget>[
-        Positioned(
-          top: 0,
-          left: 10,
-          child: Container(
-            width: 310,
-            height: 70,
-            decoration: BoxDecoration(
-              borderRadius: const BorderRadius.only(
-                topRight: Radius.circular(10),
-                bottomLeft: Radius.circular(10),
-                bottomRight: Radius.circular(10),
-                topLeft: Radius.circular(10),
-              ),
-              boxShadow: const [
-                BoxShadow(
-                  color: Color.fromRGBO(0, 0, 0, 0.25),
-                  offset: Offset(0, 1),
-                  blurRadius: 4,
-                )
-              ],
-              color: const Color.fromRGBO(221, 189, 190, 1),
-              border: Border.all(
-                color: const Color.fromRGBO(77, 43, 43, 1),
-                width: 0.5,
-              ),
-            ),
-            child: Row(
-              children: [
-                const SizedBox(
-                  width: 10,
-                ),
-                Container(
-                  height: 55,
-                  width: 55,
+  return SingleChildScrollView(
+    scrollDirection: Axis.horizontal,
+    child: Row(
+      children: [
+        SizedBox(
+          width: 320,
+          height: 80,
+          child: Stack(
+            children: <Widget>[
+              Positioned(
+                top: 0,
+                left: 10,
+                child: Container(
+                  width: 310,
+                  height: 70,
                   decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: NetworkImage(
-                        imageLink,
-                      ),
-                      fit: BoxFit.cover,
-                      opacity: 1,
+                    borderRadius: const BorderRadius.only(
+                      topRight: Radius.circular(10),
+                      bottomLeft: Radius.circular(10),
+                      bottomRight: Radius.circular(10),
+                      topLeft: Radius.circular(10),
                     ),
-                    borderRadius:
-                        const BorderRadius.all(Radius.elliptical(65, 65)),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Color.fromRGBO(0, 0, 0, 0.25),
+                        offset: Offset(0, 1),
+                        blurRadius: 4,
+                      )
+                    ],
+                    color: const Color.fromRGBO(221, 189, 190, 1),
+                    border: Border.all(
+                      color: const Color.fromRGBO(77, 43, 43, 1),
+                      width: 0.5,
+                    ),
                   ),
-                ),
-                const SizedBox(
-                  width: 25,
-                ),
-                RichText(
-                  text: TextSpan(
-                    style: const TextStyle(
-                      color: Color.fromRGBO(85, 32, 32, 1),
-                      fontFamily: 'EBGaramond',
-                      fontSize: 20,
-                      letterSpacing: 0,
-                      fontWeight: FontWeight.bold,
-                      height: 1,
-                    ),
+                  child: Row(
                     children: [
-                      TextSpan(
-                        text: '$venueName\n',
+                      const SizedBox(
+                        width: 10,
                       ),
-                      const WidgetSpan(
-                        child: SizedBox(
-                          height: 25,
+                      Container(
+                        height: 55,
+                        width: 55,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: NetworkImage(
+                              imageLink,
+                            ),
+                            fit: BoxFit.cover,
+                            opacity: 1,
+                          ),
+                          borderRadius:
+                              const BorderRadius.all(Radius.elliptical(65, 65)),
                         ),
                       ),
-                      TextSpan(
-                        text: 'Estimated Amount: $formattedPrice',
-                        style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.normal,
-                        ),
+                      const SizedBox(
+                        width: 25,
                       ),
+                      RichText(
+                        text: TextSpan(
+                          style: const TextStyle(
+                            color: Color.fromRGBO(85, 32, 32, 1),
+                            fontFamily: 'EBGaramond',
+                            fontSize: 20,
+                            letterSpacing: 0,
+                            fontWeight: FontWeight.bold,
+                            height: 1,
+                          ),
+                          children: [
+                            TextSpan(
+                              text: '$venueName\n',
+                            ),
+                            const WidgetSpan(
+                              child: SizedBox(
+                                height: 25,
+                              ),
+                            ),
+                            TextSpan(
+                              text: 'Estimated Amount: $formattedPrice',
+                              style: const TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.normal,
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
                     ],
                   ),
-                )
-              ],
-            ),
+                ),
+              )
+            ],
           ),
-        )
+        ),
+        TextButton(onPressed:() {
+          BudgetService service = BudgetService();
+          service.deletbudget(id).then((value) {
+           Get.back();
+          });
+        }, child: Icon(MdiIcons.delete))
       ],
     ),
   );
@@ -675,4 +725,107 @@ class _CitymodelState extends State<Citymodel> {
       ),
     );
   }
+}
+
+//update budget dialog box
+Future<void> updatebudget(
+    BuildContext context,
+    List<ServiceCategory> service,
+    TextEditingController changeprice,
+    int budgetid,
+    int serviceCategoryId) async {
+  showDialog<void>(
+    context: context,
+    barrierDismissible: true,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        shadowColor: Colors.black38,
+        title: const Center(child: Text('Change Budget ')),
+        content: SingleChildScrollView(
+            child: Column(
+          children: [
+            Citymodel(relations: service),
+            const SizedBox(
+              height: 10,
+            ),
+            TextField(
+              keyboardType: TextInputType.number,
+              inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly,
+              ],
+              controller: changeprice,
+              maxLines: 1,
+              decoration: const InputDecoration(
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: Colors.black), // Your desired enabled border color
+                ),
+                filled: true,
+                fillColor: Color.fromRGBO(217, 184, 184, 1),
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.elliptical(23, 23))),
+                hintText: 'Enter The Approximate amount',
+                hintStyle: TextStyle(
+                  color: Color.fromRGBO(96, 67, 67, 1),
+                  fontFamily: 'EBGaramond',
+                  fontSize: 18,
+                  letterSpacing: 0,
+                  fontWeight: FontWeight.normal,
+                  height: 1,
+                ),
+              ),
+              style: const TextStyle(
+                color: Color.fromRGBO(96, 67, 67, 1),
+                fontFamily: 'EBGaramond',
+                fontSize: 18,
+                letterSpacing: 0,
+                fontWeight: FontWeight.normal,
+                height: 1,
+              ),
+            ),
+          ],
+        )),
+        actions: <Widget>[
+          Center(
+            child: TextButton(
+                onPressed: () {
+                
+                  BudgetService budget = BudgetService();
+                  budget.updatebudget(double.parse(changeprice.text), budgetid,serviceCategoryId).then((value){
+                
+                    Future.delayed(const Duration( milliseconds: 10),(){
+                      Get.back();
+                    });
+                  },
+                  );
+                 
+                },
+                style: ButtonStyle(
+                  minimumSize: MaterialStatePropertyAll(Size(
+                      MediaQuery.of(context).size.width * 0.50,
+                      MediaQuery.of(context).size.height * 0.07)),
+                  backgroundColor: const MaterialStatePropertyAll(
+                      Color.fromRGBO(54, 29, 29, 1)),
+                  shape: const MaterialStatePropertyAll(
+                    RoundedRectangleBorder(
+                        borderRadius:
+                            BorderRadius.all(Radius.elliptical(8, 8))),
+                  ),
+                ),
+                child: const Text(
+                  'Done',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontFamily: 'EBGaramond',
+                    fontSize: 18,
+                    letterSpacing: 0,
+                    fontWeight: FontWeight.bold,
+                    height: 1,
+                  ),
+                )),
+          ),
+        ],
+      );
+    },
+  );
 }

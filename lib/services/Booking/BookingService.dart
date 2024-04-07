@@ -36,7 +36,7 @@ Future<Showbooking> getserviceitem(int serviceitemid) async {
     return serviceItem;
   } catch (e) {
     log('Error fetching service item: $e');
-    throw e; // Re-throw the exception to propagate it upwards
+    rethrow; // Re-throw the exception to propagate it upwards
   }
 }
 
