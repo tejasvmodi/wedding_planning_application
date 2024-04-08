@@ -4,7 +4,10 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:wedding_planning_application/Screen/Booking/WishList/Wishlist.dart';
+import 'package:wedding_planning_application/models/GetVendor/getvendorbyserviceitem.dart';
+import 'package:wedding_planning_application/models/getvendorbyserviceitem.dart';
 import 'package:wedding_planning_application/models/service_itemmodel.dart';
+import 'package:wedding_planning_application/repository/vendor/getvendorbyserviceitem.dart';
 import 'package:wedding_planning_application/screen/booking/book_service/book_service.dart';
 import 'package:wedding_planning_application/screen/other_screens/inquiry.dart';
 import 'package:wedding_planning_application/services/vendor_service.dart';
@@ -26,12 +29,23 @@ class _VendorSingleViewState extends State<VendorSingleView> {
   List<ServiceitemModel> itemdata = [];
   VendorService vendor = VendorService();
   int flag=0;
+  List<GetVendorServiceitem> service = [];
+  GetVendorbyService vendorser = GetVendorbyService();
 
   @override
   void initState() {
     super.initState();
     getserviceitemdata();
+    getvendordata();
   }
+ 
+ Future<void> getvendordata() async{
+ service = await vendorser.getBookingRepo();
+ setState(() {
+   service;
+   log(service.toString());
+ });
+ }
 
   Future<void> getserviceitemdata() async {
     try {

@@ -1,28 +1,24 @@
-import 'dart:developer';
 import 'dart:convert';
+import 'dart:developer';
 import 'package:http/http.dart' as http;
-import 'package:wedding_planning_application/models/Address/citymodel.dart';
+import 'package:wedding_planning_application/models/getvendorbyserviceitem.dart';
 import 'package:wedding_planning_application/models/token_manager.dart';
 import 'package:wedding_planning_application/util/constant.dart';
-
-class Getcityrepo {
-  Future<List<CityModel>> getcityrepo(int id) async {
+class GetVendorbyService {
+  Future<List<GetVendorServiceitem>> getBookingRepo() async {
     try {
       final response = await http.get(
-        Uri.parse('$apiUrl/cities?state=$id'),
+        Uri.parse('$apiUrl/vendor/service-item/2'),
         headers: createAuthorizationHeaders(await TokenManager.getToken()),
       );
 
       if (response.statusCode == 200) {
+        log(response.body.toString());
         final List<dynamic> jsonResponse = json.decode(response.body);
-        // log('Parsed Response: $jsonResponse');
+        List<GetVendorServiceitem> getVendors = jsonResponse.map((item) =>
+            GetVendorServiceitem.fromMap(item as Map<String, dynamic>)).toList();
 
-        List<CityModel> getcity = jsonResponse
-            .map((item) => CityModel.fromMap(item as Map<String, dynamic>))
-            .toList();
-        // log('Parsed Bookings: $getstate');
-
-        return getcity;
+        return getVendors;
       } else {
         throw Exception('Failed to load data: ${response.statusCode}');
       }

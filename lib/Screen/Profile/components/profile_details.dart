@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 Widget profiledetails(String textlabel, String hinttext, TextEditingController controller1) {
   // Set the initial text value of the controller
-  controller1.text = hinttext;
+  // controller1.text = hinttext;
 
   return SizedBox(
     width: 370,

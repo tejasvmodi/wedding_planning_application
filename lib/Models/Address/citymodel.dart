@@ -3,7 +3,7 @@ import 'dart:convert';
 
 class CityModel {
   int cityId;
-  String cityName;
+  String? cityName;
   CityModel({
     required this.cityId,
     required this.cityName,

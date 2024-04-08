@@ -24,48 +24,47 @@ class ManageFprofile extends StatefulWidget {
 class _ManageFprofileState extends State<ManageFprofile> {
   final ProfileService profile = Get.find();
   List<GetprofileModel> getuser = [];
-   List<StateModel> getstate = [];
-  List<CityModel> city =[];
-AddressService address = AddressService();
+  List<StateModel> getstate = [];
+  List<CityModel> city = [];
+  AddressService address = AddressService();
 
-TextEditingController fname =TextEditingController();
-TextEditingController lname = TextEditingController();
-TextEditingController email = TextEditingController();
-TextEditingController phone = TextEditingController();
-TextEditingController address1 = TextEditingController();
-TextEditingController address2 = TextEditingController();
+  TextEditingController fname = TextEditingController();
+  TextEditingController lname = TextEditingController();
+  TextEditingController email = TextEditingController();
+  TextEditingController phone = TextEditingController();
+  TextEditingController address1 = TextEditingController();
+  TextEditingController address2 = TextEditingController();
   int? selectedRelationship;
+  int? selectedcity;
   String? selectedstate;
+  int? id;
   @override
   void initState() {
     super.initState();
     getserviceitemdata();
     getstatedata();
-    if(getuser.isNotEmpty){
-    email.text = getuser[0].email.toString();
-    fname.text = getuser[0].firstName.toString();
-    lname.text = getuser[0].lastName.toString();
+    if (getuser.isNotEmpty) {
+      email.text = getuser[0].email.toString();
+      fname.text = getuser[0].firstName.toString();
+      lname.text = getuser[0].lastName.toString();
     }
+    setState(() {});
+  }
+
+  Future<void> getcitydata(int id) async {
+    city = await address.getcity(id);
     setState(() {
-      
+      city;
+      log(city.toString());
     });
   }
 
-  Future<void> getcitydata() async{
-  city = await address.getcity();
-  setState(() {
-    city;
-    log(city.toString());
-  });
-  }
-
   Future<void> getstatedata() async {
-  getstate = await address.getstate();
-  setState(() {
-    getstate;
-    log(getstate.toString());
-  });
-
+    getstate = await address.getstate();
+    setState(() {
+      getstate;
+      log(getstate.toString());
+    });
   }
 
   Future<void> getserviceitemdata() async {
@@ -242,6 +241,7 @@ TextEditingController address2 = TextEditingController();
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 4),
                                     child: TextField(
+                                      controller: lname,
                                       decoration: InputDecoration(
                                         border: const OutlineInputBorder(
                                             borderSide: BorderSide.none),
@@ -268,67 +268,121 @@ TextEditingController address2 = TextEditingController();
                 const SizedBox(
                   height: 25,
                 ),
-                profiledetails('Email', getuser[0].email,email),
+
+                profiledetails('Email', getuser[0].email, email),
                 const SizedBox(
                   height: 25,
                 ),
-                profiledetails('Phone', getuser[0].phone.toString(),phone),
+                profiledetails('Phone', getuser[0].phone.toString(), phone),
                 const SizedBox(
                   height: 25,
                 ),
-                     profiledetails('Address line 1', getuser[0].addressInfo.toString(),address1),
+                profiledetails('Address line 1',
+                    getuser[0].addressInfo.toString(), address1),
                 const SizedBox(
                   height: 25,
                 ),
-                     profiledetails('Address line 2', getuser[0].addressInfo.toString(),address2),
+                profiledetails('Address line 2',
+                    getuser[0].addressInfo.toString(), address2),
                 const SizedBox(
                   height: 25,
                 ),
-                if(getstate.isNotEmpty)
-                SizedBox(
-                  width: 370,
-                  height: 70,
-                  child: Stack(
-                    children: <Widget>[
-                      Positioned(
-                        top: 0,
-                        left: 0,
-                        child: Container(
-                          width: 370,
-                          height: 70,
-                          decoration: BoxDecoration(
-                              borderRadius: const BorderRadius.only(
-                                  topRight: Radius.circular(10),
-                                  bottomLeft: Radius.circular(10),
-                                  bottomRight: Radius.circular(10),
-                                  topLeft: Radius.circular(10)),
-                              boxShadow: const [
-                                BoxShadow(
-                                  color: Color.fromRGBO(0, 0, 0, 0.25),
-                                  offset: Offset(0, 1),
-                                  blurRadius: 4,
-                                )
-                              ],
-                              color: const Color.fromRGBO(245, 201, 238, 1),
-                              border: Border.all(
-                                color: const Color.fromRGBO(77, 43, 43, 1),
-                                width: 0.5,
-                              )),
-                          child:  DropDownWidget(
-                             onRelationShipSelected: (value) {
-                          setState(() {
-                            selectedRelationship = int.parse(value);
-                            // selectedstate = 
-                            
-                          });
-                          log(selectedRelationship.toString());},
-                            relations: getstate,
-                          ), 
-                        ),
-                      )
-                    ],
+                if (getstate.isNotEmpty)
+                  SizedBox(
+                    width: 370,
+                    height: 70,
+                    child: Stack(
+                      children: <Widget>[
+                        Positioned(
+                          top: 0,
+                          left: 0,
+                          child: Container(
+                            width: 370,
+                            height: 70,
+                            decoration: BoxDecoration(
+                                borderRadius: const BorderRadius.only(
+                                    topRight: Radius.circular(10),
+                                    bottomLeft: Radius.circular(10),
+                                    bottomRight: Radius.circular(10),
+                                    topLeft: Radius.circular(10)),
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: Color.fromRGBO(0, 0, 0, 0.25),
+                                    offset: Offset(0, 1),
+                                    blurRadius: 4,
+                                  )
+                                ],
+                                color: const Color.fromRGBO(245, 201, 238, 1),
+                                border: Border.all(
+                                  color: const Color.fromRGBO(77, 43, 43, 1),
+                                  width: 0.5,
+                                )),
+                            child: DropDownWidget(
+                              onRelationShipSelected: (value) {
+                                setState(() {
+                                  selectedRelationship = int.parse(value);
+                                });
+                                log(selectedRelationship.toString());
+                                getcitydata(selectedRelationship!);
+                              },
+                              relations: getstate,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
+
+                const SizedBox(
+                  height: 25,
                 ),
+                
+                if (city.isNotEmpty)
+                  SizedBox(
+                    width: 370,
+                    height: 70,
+                    child: Stack(
+                      children: <Widget>[
+                        Positioned(
+                          top: 0,
+                          left: 0,
+                          child: Container(
+                            width: 370,
+                            height: 70,
+                            decoration: BoxDecoration(
+                                borderRadius: const BorderRadius.only(
+                                    topRight: Radius.circular(10),
+                                    bottomLeft: Radius.circular(10),
+                                    bottomRight: Radius.circular(10),
+                                    topLeft: Radius.circular(10)),
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: Color.fromRGBO(0, 0, 0, 0.25),
+                                    offset: Offset(0, 1),
+                                    blurRadius: 4,
+                                  )
+                                ],
+                                color: const Color.fromRGBO(245, 201, 238, 1),
+                                border: Border.all(
+                                  color: const Color.fromRGBO(77, 43, 43, 1),
+                                  width: 0.5,
+                                )),
+                            child: Citydropdown(
+                              onRelationShipSelected: (value) {
+                                setState(() {
+                                  selectedcity = int.parse(value);
+                                });
+                                log(selectedcity.toString());
+                              
+                              },
+                              relations: city,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+
                 const SizedBox(
                   height: 25,
                 ),
@@ -428,10 +482,31 @@ TextEditingController address2 = TextEditingController();
                           ),
                         ),
                         onPressed: () {
-                          log(email.text);
-                          log(phone.text);
-                          log(address1.text);
-                          log(address2.text);
+                          if (email.text.isEmpty) {
+                            email.text = getuser[0].email.toString();
+                          }
+                          if (fname.text.isEmpty) {
+                            fname.text = getuser[0].firstName.toString();
+                          }
+                          if (lname.text.isEmpty) {
+                            lname.text = getuser[0].lastName.toString();
+                          }
+                          if (phone.text.isEmpty) {
+                            phone.text = getuser[0].phone.toString();
+                          }
+
+                       
+                          profile
+                              .updateuser(getuser[0].userId, fname.text,
+                                  lname.text, email.text, phone.text)
+                              .then((value) {
+                            Future.delayed(const Duration(microseconds: 10),
+                                () {
+                              setState(() {
+                                getserviceitemdata();
+                              });
+                            });
+                          });
                         },
                         child: const Text(
                           'Change Information',
@@ -460,9 +535,21 @@ TextEditingController address2 = TextEditingController();
                                     BorderRadius.all(Radius.elliptical(8, 8))),
                           ),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          log(address1.text);
+                          log(address2.text);
+                          log(selectedcity.toString());
+                          address.addadress(address1.text, address2.text, selectedcity!).then((value) {
+                            Future.delayed(const Duration(microseconds: 10),
+                                () {
+                              setState(() {
+                                getserviceitemdata();
+                              });
+                            });
+                          });
+                        },
                         child: const Text(
-                          ' Change Address',
+                          ' Add Address',
                           style: TextStyle(
                             color: Colors.white,
                             fontFamily: 'EBGaramond',
@@ -493,7 +580,8 @@ class DropDownWidget extends StatefulWidget {
   const DropDownWidget({
     super.key,
     required this.relations,
-    this.onRelationShipSelected, this.onRelation,
+    this.onRelationShipSelected,
+    this.onRelation,
   });
 
   @override
@@ -547,14 +635,89 @@ class _DropDownWidgetState extends State<DropDownWidget> {
             onChanged: (value) {
               setState(() {
                 selectedValue = value;
-              
-                widget.onRelationShipSelected!(value!);
 
+                widget.onRelationShipSelected!(value!);
               });
             },
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Please select the Relationship.';
+              }
+              return null;
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
+class Citydropdown extends StatefulWidget {
+  const Citydropdown({
+    Key? key,
+    required this.relations,
+    this.onRelationShipSelected,
+  }) : super(key: key);
+
+  final List<CityModel> relations;
+  final Function(String)? onRelationShipSelected;
+
+  @override
+  State<Citydropdown> createState() => _CitydropdownState();
+}
+
+class _CitydropdownState extends State<Citydropdown> {
+  String? selectedValue;
+
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          DropdownButtonFormField<String>(
+            isExpanded: true,
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(borderSide: BorderSide.none),
+            ),
+            hint: const Text(
+              'Select City',
+              style: TextStyle(
+                color: Color.fromRGBO(85, 32, 32, 1),
+                fontFamily: 'EBGaramond',
+                fontSize: 20,
+                letterSpacing: 0,
+                fontWeight: FontWeight.normal,
+                height: 1,
+              ),
+            ),
+            value: selectedValue,
+            items: widget.relations
+                .map(
+                  (city) => DropdownMenuItem<String>(
+                    value: city.cityId.toString(),
+                    child: Text(
+                      city.cityName.toString(),
+                      style: const TextStyle(
+                        color: Color.fromRGBO(85, 32, 32, 1),
+                        fontFamily: 'EBGaramond',
+                        fontSize: 20,
+                        letterSpacing: 0,
+                        fontWeight: FontWeight.normal,
+                        height: 1,
+                      ),
+                    ),
+                  ),
+                )
+                .toList(),
+            onChanged: (value) {
+              setState(() {
+                selectedValue = value;
+                widget.onRelationShipSelected!(value!);
+              });
+            },
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please select a city.';
               }
               return null;
             },
