@@ -401,13 +401,15 @@ class _bookservicewState extends State<bookservicew> {
                           String date = DateFormat('yyyy-MM-dd')
                               .format(selectedDate.toLocal());
 
-                          String datandtime = selectedTime.hour > 10
-                              ? selectedDate.minute < 10
-                                  ? '$date-${selectedTime.hour.toString()}-0${selectedTime.minute.toString()}'
-                                  : '$date-${selectedTime.hour.toString()}-0${selectedTime.minute.toString()}'
-                              : selectedDate.minute > 10
-                                  ? '$date-0${selectedTime.hour.toString()}-${selectedTime.minute.toString()}'
-                                  : '$date-0${selectedTime.hour.toString()}-${selectedTime.minute.toString()}';
+                          String hourString = selectedTime.hour < 10
+                              ? '0${selectedTime.hour}'
+                              : '${selectedTime.hour}';
+                          String minuteString = selectedTime.minute < 10
+                              ? '0${selectedTime.minute}'
+                              : '${selectedTime.minute}';
+
+                          String datandtime =
+                              '$date-$hourString-$minuteString';
 
                           BookinigService book = BookinigService();
                           log(widget.servicebookingId.toString());

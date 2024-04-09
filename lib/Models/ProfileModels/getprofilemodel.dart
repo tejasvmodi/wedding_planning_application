@@ -1,81 +1,90 @@
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
-
 class GetprofileModel {
   int userId;
   String firstName;
-  String? lastName; // Nullable
+  String lastName;
   String email;
-  String? phone; // Nullable
-  String avatar;
-  List<dynamic>? addressInfo; // Nullable
+  String phone;
+  Avatar avatar;
+  AddressInfo addressInfo;
 
   GetprofileModel({
     required this.userId,
     required this.firstName,
-    this.lastName, // Nullable
+    required this.lastName,
     required this.email,
-    this.phone, // Nullable
+    required this.phone,
     required this.avatar,
-    this.addressInfo, // Nullable
+    required this.addressInfo,
   });
 
-  factory GetprofileModel.fromMap(Map<String, dynamic> map) {
+  factory GetprofileModel.fromJson(Map<String, dynamic> json) {
     return GetprofileModel(
-      userId: map['userId'] as int,
-      firstName: map['firstName'] as String,
-      lastName: map['lastName'] as String?, // Nullable
-      email: map['email'] as String,
-      phone: map['phone'] as String?, // Nullable
-      avatar: (map['avatar'] as Map<String, dynamic>)['url'] as String,
-      addressInfo: map['addressInfo'] != null ? List<dynamic>.from(map['addressInfo']!) : null, // Nullable
+      userId: json['userId'] as int,
+      firstName: json['firstName'] as String,
+      lastName: json['lastName'] as String,
+      email: json['email'] as String,
+      phone: json['phone'] as String,
+      avatar: Avatar.fromJson(json['avatar'] as Map<String, dynamic>),
+      addressInfo: AddressInfo.fromJson(json['addressInfo'] as Map<String, dynamic>),
     );
   }
+}
 
-  factory GetprofileModel.fromJson(String source) => GetprofileModel.fromMap(json.decode(source) as Map<String, dynamic>);
+class Avatar {
+  int imageId;
+  String url;
 
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'userId': userId,
-      'firstName': firstName,
-      'lastName': lastName,
-      'email': email,
-      'phone': phone,
-      'avatar': avatar,
-      'addressInfo': addressInfo,
-    };
+  Avatar({
+    required this.imageId,
+    required this.url,
+  });
+
+  factory Avatar.fromJson(Map<String, dynamic> json) {
+    return Avatar(
+      imageId: json['imageId'] as int,
+      url: json['url'] as String,
+    );
   }
+}
 
-  String toJson() => json.encode(toMap());
+class AddressInfo {
+  int addressId;
+  String addressLine1;
+  String addressLine2;
+  CityInfo cityInfo;
 
-  @override
-  String toString() {
-    return 'GetprofileModel(userId: $userId, firstName: $firstName, lastName: $lastName, email: $email, phone: $phone, avatar: $avatar, addressInfo: $addressInfo)';
+  AddressInfo({
+    required this.addressId,
+    required this.addressLine1,
+    required this.addressLine2,
+    required this.cityInfo,
+  });
+
+  factory AddressInfo.fromJson(Map<String, dynamic> json) {
+    return AddressInfo(
+      addressId: json['addressId'] as int,
+      addressLine1: json['addressLine1'] as String,
+      addressLine2: json['addressLine2'] as String,
+      cityInfo: CityInfo.fromJson(json['cityInfo'] as Map<String, dynamic>),
+    );
   }
+}
 
-  @override
-  bool operator ==(covariant GetprofileModel other) {
-    if (identical(this, other)) return true;
-  
-    return 
-      other.userId == userId &&
-      other.firstName == firstName &&
-      other.lastName == lastName &&
-      other.email == email &&
-      other.phone == phone &&
-      other.avatar == avatar &&
-      listEquals(other.addressInfo, addressInfo);
-  }
+class CityInfo {
+  int cityId;
+  String cityName;
 
-  @override
-  int get hashCode {
-    return userId.hashCode ^
-      firstName.hashCode ^
-      lastName.hashCode ^
-      email.hashCode ^
-      phone.hashCode ^
-      avatar.hashCode ^
-      addressInfo.hashCode;
+  CityInfo({
+    required this.cityId,
+    required this.cityName,
+  });
+
+  factory CityInfo.fromJson(Map<String, dynamic> json) {
+    return CityInfo(
+      cityId: json['cityId'] as int,
+      cityName: json['cityName'] as String,
+    );
   }
 }

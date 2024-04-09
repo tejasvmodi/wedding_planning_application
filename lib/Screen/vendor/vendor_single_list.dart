@@ -11,7 +11,7 @@ import 'package:wedding_planning_application/models/servicemodel.dart';
 class VendorSingleList extends StatefulWidget {
   final int servicecategoryId;
 
-  VendorSingleList(this.servicecategoryId, {Key? key}) : super(key: key);
+  const VendorSingleList(this.servicecategoryId, {super.key});
 
   @override
   State<VendorSingleList> createState() => _VendorSingleListState();

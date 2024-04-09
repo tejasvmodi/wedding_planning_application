@@ -57,28 +57,28 @@ class AuthenticationRepository extends GetxController {
   }
 
   Future<void> registerUser(Registrationdata user) async {
-    prefs = await SharedPreferences.getInstance();
-
-    try {
-      final response = await http.post(
-        Uri.parse('$apiUrl/auth/signup'),
-        body: user.toJson(),
-        headers: {'Content-Type': 'application/json'},
-      );
-
-      if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
-        await prefs.setBool('Registered', true);
-        await TokenManager.saveToken(data['token']);
-        Get.offAll(() => ScreenNavigation());
-      } else {
-        throw Exception('Failed to register user');
-      }
-    } catch (e) {
-      log('Exception during registration: $e');
+  prefs = await SharedPreferences.getInstance();
+  log(jsonEncode(user));
+  try {
+    final response = await http.post(
+      Uri.parse('$apiUrl/auth/signup'),
+      body: jsonEncode(user), // Encode user data directly
+      headers: {'Content-Type': 'application/json'}, // Remove content-type from headers
+    );
+    log(response.statusCode.toString());
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      await prefs.setBool('Registered', true);
+      await TokenManager.saveToken(data['token']);
+      Get.offAll(() => ScreenNavigation());
+    } else {
       throw Exception('Failed to register user');
     }
+  } catch (e) {
+    log('Exception during registration: $e');
+    throw Exception('Failed to register user');
   }
+}
 
   Future<void> logOut() async {
     await prefs.clear();

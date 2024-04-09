@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:wedding_planning_application/models/data/forgotpassword.dart';
+import 'package:wedding_planning_application/repository/authentication/forgetpassword.dart';
 import 'package:wedding_planning_application/screen/authentication/forms/login_form.dart';
 
 class ForgotPassword extends StatefulWidget {
@@ -9,6 +11,7 @@ class ForgotPassword extends StatefulWidget {
 }
 
 class _ForgotPasswordState extends State<ForgotPassword> {
+  TextEditingController forgotpass = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,8 +68,9 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                           MediaQuery.of(context).size.width * 0.03,
                           0,
                           0),
-                      child: const TextField(
-                        decoration: InputDecoration(
+                      child: TextField(
+                        controller: forgotpass,
+                        decoration: const InputDecoration(
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.only(
                                   topLeft: Radius.circular(10),
@@ -94,7 +98,18 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                           0,
                           0),
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Forgetpassword forget = Forgetpassword();
+                          forget.forgetpassword(Forgotpasswordmodel(username: forgotpass.text));
+                          setState(() {
+                            
+                          });
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const LoginForm(),
+                              ));
+                        },
                         style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(13),

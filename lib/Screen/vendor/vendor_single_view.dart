@@ -4,7 +4,6 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:wedding_planning_application/Screen/Booking/WishList/Wishlist.dart';
-import 'package:wedding_planning_application/models/GetVendor/getvendorbyserviceitem.dart';
 import 'package:wedding_planning_application/models/getvendorbyserviceitem.dart';
 import 'package:wedding_planning_application/models/service_itemmodel.dart';
 import 'package:wedding_planning_application/repository/vendor/getvendorbyserviceitem.dart';

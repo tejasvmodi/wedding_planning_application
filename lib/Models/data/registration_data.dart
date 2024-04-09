@@ -14,7 +14,6 @@ class Registrationdata {
     required this.password,
     required this.couple,
   });
- 
 
   Registrationdata copyWith({
     String? firstName,
@@ -52,7 +51,15 @@ class Registrationdata {
     );
   }
 
-  String toJson() => json.encode(toMap());
+ Map<String, dynamic> toJson() {
+    return  <String, dynamic> {
+      'firstName': firstName,
+      'lastName': lastName,
+      'email': email,
+      'password': password,
+      'couple': couple,
+    };
+  }
 
   factory Registrationdata.fromJson(String source) => Registrationdata.fromMap(json.decode(source) as Map<String, dynamic>);
 

@@ -6,8 +6,6 @@ import 'package:wedding_planning_application/Screen/other_screens/budget.dart';
 import 'package:wedding_planning_application/Screen/screen_navigation.dart';
 import 'package:wedding_planning_application/screen/chats/chat_inbox.dart';
 import 'package:wedding_planning_application/screen/other_screens/help.dart';
-import 'package:wedding_planning_application/screen/other_screens/notification.dart';
-
 class Drawer123 extends StatelessWidget {
   const Drawer123({super.key});
 
@@ -100,49 +98,6 @@ class Drawer123 extends StatelessWidget {
             ),
             Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 15, top: 15),
-                  child: InkWell(
-                    child: Row(
-                      children: [
-                        Icon(
-                          MdiIcons.bellOutline,
-                          size: 35,
-                          color: const Color.fromRGBO(62, 53, 53, 1),
-                        ),
-                        const SizedBox(
-                          width: 30,
-                        ),
-                        InkWell(
-                          child: const Text(
-                            'Notification',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                color: Color.fromRGBO(62, 53, 53, 1),
-                                fontFamily: 'EBGaramond',
-                                fontSize: 20,
-                                letterSpacing: 0,
-                                fontWeight: FontWeight.bold,
-                                height: 1),
-                          ),
-                          onTap: () {
-                            Get.to(() => const NotificationW());
-                          },
-                        ),
-                      ],
-                    ),
-                    onTap: () {
-                      Get.to(() => ScreenNavigation(
-                            currentIndex: 2,
-                          ));
-                    },
-                  ),
-                ),
-                const Divider(
-                  indent: 23,
-                  endIndent: 34,
-                  color: Color.fromRGBO(105, 96, 96, 1),
-                ),
                 Padding(
                   padding: const EdgeInsets.only(left: 15, top: 15),
                   child: InkWell(

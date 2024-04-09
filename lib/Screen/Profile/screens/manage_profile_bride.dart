@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -6,8 +7,9 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:wedding_planning_application/models/Address/citymodel.dart';
 import 'package:wedding_planning_application/models/Address/statemdel.dart';
 import 'package:wedding_planning_application/models/ProfileModels/getprofilemodel.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:wedding_planning_application/repository/Profile/addphoto.dart';
 import 'package:wedding_planning_application/screen/profile/components/profile_details.dart';
-import 'package:wedding_planning_application/screen/profile/components/profile_photo.dart';
 import 'package:wedding_planning_application/screen/profile/screens/manage_profile_groom.dart';
 import 'package:wedding_planning_application/services/Address/addressService.dart';
 import 'package:wedding_planning_application/services/profile.dart';
@@ -27,7 +29,9 @@ class _ManageFprofileState extends State<ManageFprofile> {
   List<StateModel> getstate = [];
   List<CityModel> city = [];
   AddressService address = AddressService();
-
+  final ImagePicker _picker =
+      ImagePicker(); // Create an instance of ImagePicker
+  XFile? _image; // Variable to store the selected image
   TextEditingController fname = TextEditingController();
   TextEditingController lname = TextEditingController();
   TextEditingController email = TextEditingController();
@@ -51,6 +55,16 @@ class _ManageFprofileState extends State<ManageFprofile> {
     setState(() {});
   }
 
+  Future<void> _openImagePicker() async {
+    final XFile? pickedImage = await _picker.pickImage(
+        source: ImageSource.gallery); // Open image picker
+    if (pickedImage != null) {
+      setState(() {
+        _image = pickedImage; // Update selected image
+      });
+    }
+  }
+
   Future<void> getcitydata(int id) async {
     city = await address.getcity(id);
     setState(() {
@@ -61,8 +75,9 @@ class _ManageFprofileState extends State<ManageFprofile> {
 
   Future<void> getstatedata() async {
     getstate = await address.getstate();
-    setState(() {
       getstate;
+    setState(() {
+    
       log(getstate.toString());
     });
   }
@@ -142,7 +157,106 @@ class _ManageFprofileState extends State<ManageFprofile> {
           if (getuser.isNotEmpty)
             Column(
               children: [
-                profilephoto(getuser[0].firstName, getuser[0].avatar),
+                SizedBox(
+                  width: 400,
+                  height: 370,
+                  child: Stack(children: <Widget>[
+                    Container(
+                      width: 500,
+                      height: 265,
+                      decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                            begin: Alignment(6.123234262925839e-17, 1),
+                            end: Alignment(0, 123234262925839e-17),
+                            colors: [
+                              Color.fromRGBO(177, 83, 159, 1),
+                              Color.fromRGBO(255, 217, 247, 0.6)
+                            ]),
+                      ),
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                                color: Color.fromRGBO(177, 73, 129, 0.25),
+                                blurRadius: 10,
+                                spreadRadius: 3,
+                                blurStyle: BlurStyle.inner),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      top: 120,
+                      left: 92,
+                      child: InkWell(
+                        onTap: _openImagePicker,
+                        child: Container(
+                            padding: const EdgeInsets.only(left: 134),
+                            alignment: Alignment.bottomRight,
+                            width: 195,
+                            height: 195,
+                            decoration: BoxDecoration(
+                              border: const Border(
+                                  bottom: BorderSide(color: Colors.black)),
+                              boxShadow: const [
+                                BoxShadow(
+                                    color: Color.fromRGBO(0, 0, 0, 0.5),
+                                    offset: Offset(0, 4),
+                                    blurRadius: 3,
+                                    spreadRadius: 1)
+                              ],
+                              image: _image != null
+                                  ? DecorationImage(
+                                      image: FileImage(File(_image!.path)),
+                                      fit: BoxFit.fitWidth,
+                                    )
+                                  : DecorationImage(
+                                      image: NetworkImage(getuser[0].avatar.url.toString()),
+                                      fit: BoxFit.fitWidth,
+                                    ),
+                              borderRadius: const BorderRadius.all(
+                                  Radius.elliptical(195, 195)),
+                            ),
+                            child: TextButton.icon(
+                                style: const ButtonStyle(
+                                    backgroundColor: MaterialStatePropertyAll(
+                                        Color.fromARGB(255, 254, 191, 191))),
+                                onPressed: () async {
+                                  if (_image != null) {
+                                    MyRepository repository = MyRepository();
+                                    repository.uploadFile(_image!);
+                                    await getserviceitemdata();
+                                  }
+
+                                  setState(() {});
+                                  log(_image!.path.toString());
+                                },
+                                icon: Icon(
+                                  MdiIcons.pen,
+                                  size: 20,
+                                ),
+                                label: const Text(''))),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 325, left: 155),
+                      child: SizedBox(
+                        height: 50,
+                        child: Text(
+                          getuser[0].firstName,
+                          textAlign: TextAlign.left,
+                          style: const TextStyle(
+                              color: Color.fromRGBO(85, 32, 32, 1),
+                              fontFamily: 'EBGaramond',
+                              fontSize: 26,
+                              letterSpacing: 0,
+                              fontWeight: FontWeight.bold,
+                              height: 1),
+                        ),
+                      ),
+                    ),
+                  ]),
+                ),
                 SizedBox(
                   width: 370,
                   height: 60,
@@ -278,12 +392,12 @@ class _ManageFprofileState extends State<ManageFprofile> {
                   height: 25,
                 ),
                 profiledetails('Address line 1',
-                    getuser[0].addressInfo.toString(), address1),
+                    getuser[0].addressInfo.addressLine2.toString(), address1),
                 const SizedBox(
                   height: 25,
                 ),
                 profiledetails('Address line 2',
-                    getuser[0].addressInfo.toString(), address2),
+                    getuser[0].addressInfo.addressLine1.toString(), address2),
                 const SizedBox(
                   height: 25,
                 ),
@@ -336,7 +450,7 @@ class _ManageFprofileState extends State<ManageFprofile> {
                 const SizedBox(
                   height: 25,
                 ),
-                
+
                 if (city.isNotEmpty)
                   SizedBox(
                     width: 370,
@@ -373,7 +487,6 @@ class _ManageFprofileState extends State<ManageFprofile> {
                                   selectedcity = int.parse(value);
                                 });
                                 log(selectedcity.toString());
-                              
                               },
                               relations: city,
                             ),
@@ -481,7 +594,7 @@ class _ManageFprofileState extends State<ManageFprofile> {
                                     BorderRadius.all(Radius.elliptical(8, 8))),
                           ),
                         ),
-                        onPressed: () {
+                        onPressed: () async{
                           if (email.text.isEmpty) {
                             email.text = getuser[0].email.toString();
                           }
@@ -495,18 +608,14 @@ class _ManageFprofileState extends State<ManageFprofile> {
                             phone.text = getuser[0].phone.toString();
                           }
 
-                       
                           profile
                               .updateuser(getuser[0].userId, fname.text,
                                   lname.text, email.text, phone.text)
-                              .then((value) {
-                            Future.delayed(const Duration(microseconds: 10),
-                                () {
-                              setState(() {
-                                getserviceitemdata();
-                              });
-                            });
-                          });
+                          
+                        ; 
+                        setState(() async{
+                           await getserviceitemdata();
+                        });
                         },
                         child: const Text(
                           'Change Information',
@@ -539,14 +648,10 @@ class _ManageFprofileState extends State<ManageFprofile> {
                           log(address1.text);
                           log(address2.text);
                           log(selectedcity.toString());
-                          address.addadress(address1.text, address2.text, selectedcity!).then((value) {
-                            Future.delayed(const Duration(microseconds: 10),
-                                () {
-                              setState(() {
-                                getserviceitemdata();
-                              });
-                            });
-                          });
+                          address
+                              .addadress(
+                                  address1.text, address2.text, selectedcity!);
+                             
                         },
                         child: const Text(
                           ' Add Address',
@@ -651,12 +756,13 @@ class _DropDownWidgetState extends State<DropDownWidget> {
     );
   }
 }
+
 class Citydropdown extends StatefulWidget {
   const Citydropdown({
-    Key? key,
+    super.key,
     required this.relations,
     this.onRelationShipSelected,
-  }) : super(key: key);
+  });
 
   final List<CityModel> relations;
   final Function(String)? onRelationShipSelected;

@@ -1,9 +1,10 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:wedding_planning_application/models/Address/citymodel.dart';
-import 'package:wedding_planning_application/models/Address/statemdel.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wedding_planning_application/models/Inspiration/inspirationmodel.dart';
 import 'package:wedding_planning_application/models/ProfileModels/getprofilemodel.dart';
 import 'package:wedding_planning_application/screen/authentication/forms/login_form.dart';
@@ -120,7 +121,7 @@ class _ProfileState extends State<Profile> {
                 ),
             
               if(profil.isNotEmpty)
-              profilephoto(profil[0].firstName, profil[0].avatar),
+              profilephoto(profil[0].firstName, profil[0].avatar.url.toString()),
               accountitem('My Booking', MdiIcons.listBoxOutline, context,
                   const ShowBooking()),
               const Divider(
@@ -204,9 +205,12 @@ class _ProfileState extends State<Profile> {
                             letterSpacing: 0,
                             fontWeight: FontWeight.w600,
                             height: 1)),
-                    onTap: () {
-                      authService.logOut();
-                      Get.to(() => const LoginForm());
+                    onTap: () async{
+                        SharedPreferences prefs = await SharedPreferences.getInstance();
+                        prefs.clear();
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+                        return const LoginForm();
+                      },));
                     },
                   ),
                 ],

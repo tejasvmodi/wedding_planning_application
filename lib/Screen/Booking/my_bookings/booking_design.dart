@@ -105,7 +105,7 @@ Widget bookingdesign(String newimage, String textdata, int money,  String eventd
                       ),
                     ),
                    Text(
-                      eventdates.split('-')[0] +'-'+ eventdates.split('-')[1]+'-'+eventdates.split('-')[2]  ,
+                      '${eventdates.split('-')[0]}-${eventdates.split('-')[1]}-${eventdates.split('-')[2]}'  ,
                       style: const TextStyle(
                         color: Color.fromRGBO(85, 32, 32, 1),
                         fontFamily: 'EBGaramond',
@@ -137,7 +137,7 @@ Widget bookingdesign(String newimage, String textdata, int money,  String eventd
                       ),
                     ),
                    Text(
-                      eventdates.split('-')[3] +'-'+ eventdates.split('-')[4]  ,
+                      '${eventdates.split('-')[3]}-${eventdates.split('-')[4]}'  ,
                       style: const TextStyle(
                         color: Color.fromRGBO(85, 32, 32, 1),
                         fontFamily: 'EBGaramond',
