@@ -1,15 +1,15 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:http/http.dart' as http;
-import 'package:wedding_planning_application/models/getvendorbyserviceitem.dart';
+import 'package:wedding_planning_application/models/GetVendor/getvendorbyserviceitem.dart';
 import 'package:wedding_planning_application/models/token_manager.dart';
 import 'package:wedding_planning_application/util/constant.dart';
 
 class GetVendorbyService {
-  Future<List<GetVendorServiceitem>> getBookingRepo() async {
+  Future<List<GetVendorServiceitem>> getBookingRepo(int id) async {
     try {
       final response = await http.get(
-        Uri.parse('$apiUrl/vendor/service-item/2'),
+        Uri.parse('$apiUrl/vendor/service-item/$id'),
         headers: createAuthorizationHeaders(await TokenManager.getToken()),
       );
 

@@ -5,9 +5,9 @@ class GetprofileModel {
   String firstName;
   String lastName;
   String email;
-  String phone;
+  String? phone;
   Avatar avatar;
-  AddressInfo addressInfo;
+  AddressInfo? addressInfo;
 
   GetprofileModel({
     required this.userId,
@@ -16,20 +16,21 @@ class GetprofileModel {
     required this.email,
     required this.phone,
     required this.avatar,
-    required this.addressInfo,
+    this.addressInfo,
   });
-
-  factory GetprofileModel.fromJson(Map<String, dynamic> json) {
+  factory GetprofileModel.fromJson(Map<String, dynamic> map) {
     return GetprofileModel(
-      userId: json['userId'] as int,
-      firstName: json['firstName'] as String,
-      lastName: json['lastName'] as String,
-      email: json['email'] as String,
-      phone: json['phone'] as String,
-      avatar: Avatar.fromJson(json['avatar'] as Map<String, dynamic>),
-      addressInfo: AddressInfo.fromJson(json['addressInfo'] as Map<String, dynamic>),
+      userId: map['userId'] as int,
+      firstName: map['firstName'] as String,
+      lastName: map['lastName'] as String,
+      email: map['email'] as String,
+      phone: map['phone'] as String?,
+      avatar: Avatar.fromJson(map['avatar']),
+      addressInfo: map['addressInfo'] != null ? AddressInfo.fromJson(map['addressInfo']) : null,
     );
   }
+
+
 }
 
 class Avatar {
@@ -48,12 +49,11 @@ class Avatar {
     );
   }
 }
-
 class AddressInfo {
-  int addressId;
-  String addressLine1;
-  String addressLine2;
-  CityInfo cityInfo;
+  final int addressId;
+  final String addressLine1;
+  final String addressLine2;
+  final CityInfo cityInfo;
 
   AddressInfo({
     required this.addressId,
@@ -67,14 +67,13 @@ class AddressInfo {
       addressId: json['addressId'] as int,
       addressLine1: json['addressLine1'] as String,
       addressLine2: json['addressLine2'] as String,
-      cityInfo: CityInfo.fromJson(json['cityInfo'] as Map<String, dynamic>),
+      cityInfo: CityInfo.fromJson(json['cityInfo']),
     );
   }
 }
-
 class CityInfo {
-  int cityId;
-  String cityName;
+  final int cityId;
+  final String cityName;
 
   CityInfo({
     required this.cityId,

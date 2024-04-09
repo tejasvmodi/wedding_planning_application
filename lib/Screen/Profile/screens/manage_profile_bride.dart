@@ -75,9 +75,8 @@ class _ManageFprofileState extends State<ManageFprofile> {
 
   Future<void> getstatedata() async {
     getstate = await address.getstate();
-      getstate;
+    getstate;
     setState(() {
-    
       log(getstate.toString());
     });
   }
@@ -211,7 +210,8 @@ class _ManageFprofileState extends State<ManageFprofile> {
                                       fit: BoxFit.fitWidth,
                                     )
                                   : DecorationImage(
-                                      image: NetworkImage(getuser[0].avatar.url.toString()),
+                                      image: NetworkImage(
+                                          getuser[0].avatar.url.toString()),
                                       fit: BoxFit.fitWidth,
                                     ),
                               borderRadius: const BorderRadius.all(
@@ -391,13 +391,52 @@ class _ManageFprofileState extends State<ManageFprofile> {
                 const SizedBox(
                   height: 25,
                 ),
-                profiledetails('Address line 1',
-                    getuser[0].addressInfo.addressLine2.toString(), address1),
+                if (getuser.isNotEmpty && getuser[0].addressInfo != null)
+                  // Use addressInfo safely
+                  if (getuser[0].addressInfo!.addressLine2 != null)
+                    // Access addressLine2 safely
+                    profiledetails(
+                      'Address line 1',
+                      getuser[0].addressInfo!.addressLine1.toString(),
+                      address1,
+                    ),
                 const SizedBox(
                   height: 25,
                 ),
-                profiledetails('Address line 2',
-                    getuser[0].addressInfo.addressLine1.toString(), address2),
+                if (getuser.isNotEmpty && getuser[0].addressInfo != null)
+                  // Use addressInfo safely
+                  if (getuser[0].addressInfo!.addressLine2 != null)
+                    // Access addressLine2 safely
+                    profiledetails(
+                      'Address line 1',
+                      getuser[0].addressInfo!.addressLine1.toString(),
+                      address1,
+                    ),
+
+                const SizedBox(
+                  height: 25,
+                ),
+                if (getuser.isNotEmpty && getuser[0].addressInfo == null)
+                  // Use addressInfo safely
+
+                  // Access addressLine2 safely
+                  profiledetails(
+                    'Address line 1',
+                    'enter the Address ',
+                    address1,
+                  ),
+                const SizedBox(
+                  height: 25,
+                ),
+                if (getuser.isNotEmpty && getuser[0].addressInfo == null)
+                  // Use addressInfo safely
+
+                  // Access addressLine2 safely
+                  profiledetails(
+                    'Address line 2',
+                    'enter the Address ',
+                    address2,
+                  ),
                 const SizedBox(
                   height: 25,
                 ),
@@ -594,7 +633,7 @@ class _ManageFprofileState extends State<ManageFprofile> {
                                     BorderRadius.all(Radius.elliptical(8, 8))),
                           ),
                         ),
-                        onPressed: () async{
+                        onPressed: () async {
                           if (email.text.isEmpty) {
                             email.text = getuser[0].email.toString();
                           }
@@ -608,14 +647,11 @@ class _ManageFprofileState extends State<ManageFprofile> {
                             phone.text = getuser[0].phone.toString();
                           }
 
-                          profile
-                              .updateuser(getuser[0].userId, fname.text,
-                                  lname.text, email.text, phone.text)
-                          
-                        ; 
-                        setState(() async{
-                           await getserviceitemdata();
-                        });
+                          profile.updateuser(getuser[0].userId, fname.text,
+                              lname.text, email.text, phone.text);
+                          setState(() async {
+                            await getserviceitemdata();
+                          });
                         },
                         child: const Text(
                           'Change Information',
@@ -648,10 +684,8 @@ class _ManageFprofileState extends State<ManageFprofile> {
                           log(address1.text);
                           log(address2.text);
                           log(selectedcity.toString());
-                          address
-                              .addadress(
-                                  address1.text, address2.text, selectedcity!);
-                             
+                          address.addadress(
+                              address1.text, address2.text, selectedcity!);
                         },
                         child: const Text(
                           ' Add Address',

@@ -34,7 +34,7 @@ class _HomeState extends State<Home> {
     final ServicecategoryService categoryService = Get.find();
     await categoryService.getServicecategories().then((value) {
       setState(() {
-      items = value.items;
+        items = value.items;
       });
     });
   }
@@ -91,16 +91,99 @@ class _HomeState extends State<Home> {
               ),
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
-                child: Row(children: [
-                  for (int i = 0; i < items.length; i++)
-                    categoryWrapper(
-                      items[i].icon.toString(),
-                      items[i].serviceCategoryName.toString(),
-                      context,
-                      items[i].serviceCategoryId,
-                      
-                    ),
-                ]),
+                child: items.isEmpty
+                    ? Row(
+                      children: [
+                        Align(
+                            alignment: Alignment.topLeft,
+                            child: SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.12,
+                              width: MediaQuery.of(context).size.width * 0.45,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  boxShadow: [
+                                    BoxShadow(
+                                        color: Colors.grey.withOpacity(0.4),
+                                        offset: const Offset(2, 2),
+                                        blurRadius: 08,
+                                        spreadRadius: 2,
+                                        blurStyle: BlurStyle.solid),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 10,),
+                                                  Align(
+                            alignment: Alignment.topLeft,
+                            child: SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.12,
+                              width: MediaQuery.of(context).size.width * 0.45,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  boxShadow: [
+                                    BoxShadow(
+                                        color: Colors.grey.withOpacity(0.4),
+                                        offset: const Offset(2, 2),
+                                        blurRadius: 08,
+                                        spreadRadius: 2,
+                                        blurStyle: BlurStyle.solid),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 10,),
+                                                  Align(
+                            alignment: Alignment.topLeft,
+                            child: SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.12,
+                              width: MediaQuery.of(context).size.width * 0.45,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  boxShadow: [
+                                    BoxShadow(
+                                        color: Colors.grey.withOpacity(0.4),
+                                        offset: const Offset(2, 2),
+                                        blurRadius: 08,
+                                        spreadRadius: 2,
+                                        blurStyle: BlurStyle.solid),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 10,),
+                                                  Align(
+                            alignment: Alignment.topLeft,
+                            child: SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.12,
+                              width: MediaQuery.of(context).size.width * 0.45,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  boxShadow: [
+                                    BoxShadow(
+                                        color: Colors.grey.withOpacity(0.4),
+                                        offset: const Offset(2, 2),
+                                        blurRadius: 08,
+                                        spreadRadius: 2,
+                                        blurStyle: BlurStyle.solid),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                      ],
+                    )
+                    : Row(children: [
+                        for (int i = 0; i < items.length; i++)
+                          categoryWrapper(
+                            items[i].icon.toString(),
+                            items[i].serviceCategoryName.toString(),
+                            context,
+                            items[i].serviceCategoryId,
+                          ),
+                      ]),
               ),
               const Divider(
                 color: Color.fromARGB(50, 0, 0, 0),

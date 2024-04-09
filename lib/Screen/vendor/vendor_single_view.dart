@@ -4,12 +4,13 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:wedding_planning_application/Screen/Booking/WishList/Wishlist.dart';
-import 'package:wedding_planning_application/models/getvendorbyserviceitem.dart';
+import 'package:wedding_planning_application/models/GetVendor/getvendorbyserviceitem.dart';
 import 'package:wedding_planning_application/models/service_itemmodel.dart';
 import 'package:wedding_planning_application/repository/vendor/getvendorbyserviceitem.dart';
 import 'package:wedding_planning_application/screen/booking/book_service/book_service.dart';
-import 'package:wedding_planning_application/screen/other_screens/inquiry.dart';
+import 'package:wedding_planning_application/services/GetVendor/getvendor.dart';
 import 'package:wedding_planning_application/services/vendor_service.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class VendorSingleView extends StatefulWidget {
   const VendorSingleView({
@@ -30,25 +31,36 @@ class _VendorSingleViewState extends State<VendorSingleView> {
   int flag=0;
   List<GetVendorServiceitem> service = [];
   GetVendorbyService vendorser = GetVendorbyService();
-
+GetVendorService get = GetVendorService();
+ List<GetVendorServiceitem> vendordata = [];
+ 
   @override
   void initState() {
     super.initState();
     getserviceitemdata();
-    getvendordata();
   }
  
- Future<void> getvendordata() async{
- service = await vendorser.getBookingRepo();
- setState(() {
-   service;
-   log(service.toString());
- });
- }
+ 
+  void _launchWhatsApp(String phone) async {
+    String url = 'https://wa.me/$phone';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
 
   Future<void> getserviceitemdata() async {
     try {
       itemdata = await vendor.getserviceitem(widget.serviceid);
+      if(itemdata.isNotEmpty){
+        vendordata= await get.getvendordata(itemdata[0].serviceItemId);
+        setState(() {
+          vendordata;
+          log(vendordata.toString());
+
+        });
+      }
       setState(() {
         itemdata;
       });
@@ -528,7 +540,8 @@ class _VendorSingleViewState extends State<VendorSingleView> {
                                       MediaQuery.of(context).size.height * 0.06,
                                   child: TextButton(
                                       onPressed: () {
-                                        Get.to(() => const InquiryW());
+                                        if(vendordata.isNotEmpty){
+                                         _launchWhatsApp("+91${vendordata[0].businesscontact}");}
                                       },
                                       style: ButtonStyle(
                                         backgroundColor:
@@ -709,11 +722,12 @@ class _FirstItemDetailsState extends State<FirstItemDetails> {
         ),
         const SizedBox(height: 10,),
        Container(
-        margin: const EdgeInsets.only(right: 100),
+       alignment: Alignment.topLeft,
+       padding: const EdgeInsets.only(left: 10),
          child: Text('Approximately Price :  ${widget.approxprice}',  style: const TextStyle(
                 color: Color.fromRGBO(62, 53, 53, 1),
                 fontFamily: 'EBGaramond',
-                fontSize: 25,
+                fontSize: 20,
                 letterSpacing: 0,
                 fontWeight: FontWeight.normal,
                 height: 1,
