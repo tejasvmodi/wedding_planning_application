@@ -141,7 +141,7 @@ class _ShowinspirationPhotoState extends State<ShowinspirationPhoto> {
                         padding: EdgeInsets.only(left: 22, top: 10),
                         child: SizedBox(
                           child: Text(
-                            "",
+                          "",
                             // "${getuser[0].firstName}  ${getuser[0].lastName}",
                             textAlign: TextAlign.left,
                             style: TextStyle(

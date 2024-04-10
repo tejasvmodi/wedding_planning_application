@@ -9,6 +9,7 @@ import 'package:wedding_planning_application/models/Address/statemdel.dart';
 import 'package:wedding_planning_application/models/ProfileModels/getprofilemodel.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:wedding_planning_application/repository/Profile/addphoto.dart';
+import 'package:wedding_planning_application/screen/profile/Couple/coupleadd.dart';
 import 'package:wedding_planning_application/screen/profile/components/profile_details.dart';
 import 'package:wedding_planning_application/screen/profile/screens/manage_profile_groom.dart';
 import 'package:wedding_planning_application/services/Address/addressService.dart';
@@ -136,7 +137,7 @@ class _ManageFprofileState extends State<ManageFprofile> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const ManageMprofile(),
+                    builder: (context) => const AddCouple(),
                   ));
             },
           ),
@@ -393,25 +394,22 @@ class _ManageFprofileState extends State<ManageFprofile> {
                 ),
                 if (getuser.isNotEmpty && getuser[0].addressInfo != null)
                   // Use addressInfo safely
-                  if (getuser[0].addressInfo!.addressLine2 != null)
-                    // Access addressLine2 safely
-                    profiledetails(
-                      'Address line 1',
-                      getuser[0].addressInfo!.addressLine1.toString(),
-                      address1,
-                    ),
+                  // Access addressLine2 safely
+                  profiledetails(
+                    'Address line 1',
+                    getuser[0].addressInfo!.addressLine1.toString(),
+                    address1,
+                  ),
                 const SizedBox(
                   height: 25,
                 ),
                 if (getuser.isNotEmpty && getuser[0].addressInfo != null)
-                  // Use addressInfo safely
-                  if (getuser[0].addressInfo!.addressLine2 != null)
-                    // Access addressLine2 safely
-                    profiledetails(
-                      'Address line 1',
-                      getuser[0].addressInfo!.addressLine1.toString(),
-                      address1,
-                    ),
+
+                  profiledetails(
+                    'Address line 1',
+                    getuser[0].addressInfo!.addressLine1.toString(),
+                    address1,
+                  ),
 
                 const SizedBox(
                   height: 25,

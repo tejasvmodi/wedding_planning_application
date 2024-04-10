@@ -12,17 +12,27 @@ import 'package:wedding_planning_application/screen/home/components/feature.dart
 import 'package:wedding_planning_application/screen/other_screens/budget.dart';
 
 class Home extends StatefulWidget {
-  const Home({super.key});
+  const Home({Key? key}) : super(key: key);
 
   @override
   State<Home> createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> {
+class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _animation;
+
   @override
   void initState() {
     super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 5), // Adjust duration as needed
+    );
+    _animation = Tween<double>(begin: 0.0, end: 1.0).animate(_controller);
 
+    // Start the animation
+    _controller.forward();
     setState(() {
       getServiceCategories();
     });
@@ -93,88 +103,134 @@ class _HomeState extends State<Home> {
                 scrollDirection: Axis.horizontal,
                 child: items.isEmpty
                     ? Row(
-                      children: [
-                        Align(
+                        children: [
+                          Align(
                             alignment: Alignment.topLeft,
                             child: SizedBox(
                               height: MediaQuery.of(context).size.height * 0.12,
                               width: MediaQuery.of(context).size.width * 0.45,
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color: Colors.grey.withOpacity(0.4),
-                                        offset: const Offset(2, 2),
-                                        blurRadius: 08,
-                                        spreadRadius: 2,
-                                        blurStyle: BlurStyle.solid),
-                                  ],
-                                ),
+                              child: AnimatedBuilder(
+                                animation: _animation,
+                                builder: (context, child) {
+                                  return Opacity(
+                                    opacity: _animation.value,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.grey.withOpacity(0.4),
+                                            offset: const Offset(2, 2),
+                                            blurRadius: 08,
+                                            spreadRadius: 2,
+                                            blurStyle: BlurStyle.solid,
+                                          ),
+                                        ],
+                                      ),
+                                      // Add child widgets here if needed
+                                    ),
+                                  );
+                                },
                               ),
                             ),
                           ),
-                          const SizedBox(width: 10,),
-                                                  Align(
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Align(
                             alignment: Alignment.topLeft,
                             child: SizedBox(
                               height: MediaQuery.of(context).size.height * 0.12,
                               width: MediaQuery.of(context).size.width * 0.45,
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color: Colors.grey.withOpacity(0.4),
-                                        offset: const Offset(2, 2),
-                                        blurRadius: 08,
-                                        spreadRadius: 2,
-                                        blurStyle: BlurStyle.solid),
-                                  ],
-                                ),
+                              child: AnimatedBuilder(
+                                animation: _animation,
+                                builder: (context, child) {
+                                  return Opacity(
+                                    opacity: _animation.value,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.grey.withOpacity(0.4),
+                                            offset: const Offset(2, 2),
+                                            blurRadius: 08,
+                                            spreadRadius: 2,
+                                            blurStyle: BlurStyle.solid,
+                                          ),
+                                        ],
+                                      ),
+                                      // Add child widgets here if needed
+                                    ),
+                                  );
+                                },
                               ),
                             ),
                           ),
-                          const SizedBox(width: 10,),
-                                                  Align(
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Align(
                             alignment: Alignment.topLeft,
                             child: SizedBox(
                               height: MediaQuery.of(context).size.height * 0.12,
                               width: MediaQuery.of(context).size.width * 0.45,
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color: Colors.grey.withOpacity(0.4),
-                                        offset: const Offset(2, 2),
-                                        blurRadius: 08,
-                                        spreadRadius: 2,
-                                        blurStyle: BlurStyle.solid),
-                                  ],
-                                ),
+                              child: AnimatedBuilder(
+                                animation: _animation,
+                                builder: (context, child) {
+                                  return Opacity(
+                                    opacity: _animation.value,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.grey.withOpacity(0.4),
+                                            offset: const Offset(2, 2),
+                                            blurRadius: 08,
+                                            spreadRadius: 2,
+                                            blurStyle: BlurStyle.solid,
+                                          ),
+                                        ],
+                                      ),
+                                      // Add child widgets here if needed
+                                    ),
+                                  );
+                                },
                               ),
                             ),
                           ),
-                          const SizedBox(width: 10,),
-                                                  Align(
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Align(
                             alignment: Alignment.topLeft,
                             child: SizedBox(
                               height: MediaQuery.of(context).size.height * 0.12,
                               width: MediaQuery.of(context).size.width * 0.45,
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color: Colors.grey.withOpacity(0.4),
-                                        offset: const Offset(2, 2),
-                                        blurRadius: 08,
-                                        spreadRadius: 2,
-                                        blurStyle: BlurStyle.solid),
-                                  ],
-                                ),
+                              child: AnimatedBuilder(
+                                animation: _animation,
+                                builder: (context, child) {
+                                  return Opacity(
+                                    opacity: _animation.value,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.grey.withOpacity(0.4),
+                                            offset: const Offset(2, 2),
+                                            blurRadius: 08,
+                                            spreadRadius: 2,
+                                            blurStyle: BlurStyle.solid,
+                                          ),
+                                        ],
+                                      ),
+                                      // Add child widgets here if needed
+                                    ),
+                                  );
+                                },
                               ),
                             ),
                           ),
-                      ],
-                    )
+                        ],
+                      )
                     : Row(children: [
                         for (int i = 0; i < items.length; i++)
                           categoryWrapper(
@@ -239,16 +295,17 @@ class _HomeState extends State<Home> {
                       ),
                     ),
                     Padding(
-                        padding: const EdgeInsets.only(left: 0, right: 195),
-                        child: feature(
-                          'assets/images/Ceremoney.jpg',
-                          'Ceremony',
-                          26,
-                          context,
-                          ScreenNavigation(
-                            currentIndex: 2,
-                          ),
-                        )),
+                      padding: const EdgeInsets.only(left: 0, right: 195),
+                      child: feature(
+                        'assets/images/Ceremoney.jpg',
+                        'Ceremony',
+                        26,
+                        context,
+                        ScreenNavigation(
+                          currentIndex: 2,
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),

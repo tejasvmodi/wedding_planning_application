@@ -6,6 +6,7 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:wedding_planning_application/Screen/Booking/WishList/Wishlist.dart';
 import 'package:wedding_planning_application/models/GetVendor/getvendorbyserviceitem.dart';
 import 'package:wedding_planning_application/models/service_itemmodel.dart';
+import 'package:wedding_planning_application/models/wishlist.dart';
 import 'package:wedding_planning_application/repository/vendor/getvendorbyserviceitem.dart';
 import 'package:wedding_planning_application/screen/booking/book_service/book_service.dart';
 import 'package:wedding_planning_application/services/GetVendor/getvendor.dart';
@@ -28,19 +29,18 @@ class VendorSingleView extends StatefulWidget {
 class _VendorSingleViewState extends State<VendorSingleView> {
   List<ServiceitemModel> itemdata = [];
   VendorService vendor = VendorService();
-  int flag=0;
+  int flag = 0;
   List<GetVendorServiceitem> service = [];
   GetVendorbyService vendorser = GetVendorbyService();
-GetVendorService get = GetVendorService();
- List<GetVendorServiceitem> vendordata = [];
- 
+  GetVendorService get = GetVendorService();
+  List<GetVendorServiceitem> vendordata = [];
+
   @override
   void initState() {
     super.initState();
     getserviceitemdata();
   }
- 
- 
+
   void _launchWhatsApp(String phone) async {
     String url = 'https://wa.me/$phone';
     if (await canLaunch(url)) {
@@ -53,12 +53,11 @@ GetVendorService get = GetVendorService();
   Future<void> getserviceitemdata() async {
     try {
       itemdata = await vendor.getserviceitem(widget.serviceid);
-      if(itemdata.isNotEmpty){
-        vendordata= await get.getvendordata(itemdata[0].serviceItemId);
+      if (itemdata.isNotEmpty) {
+        vendordata = await get.getvendordata(itemdata[0].serviceItemId);
         setState(() {
           vendordata;
           log(vendordata.toString());
-
         });
       }
       setState(() {
@@ -173,19 +172,16 @@ GetVendorService get = GetVendorService();
                           const Center(
                               heightFactor: 5,
                               child: CircularProgressIndicator()),
-                   
-                      
                         if (itemdata.isNotEmpty)
                           FirstItemDetails(
                             itemName: itemdata[j].itemName,
                             images: itemdata[j].images,
                             approxprice: itemdata[j].approxPrice.toInt(),
                           ),
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.02,
-                          ),
-                         
-                            if (itemdata.length > 1)
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.02,
+                        ),
+                        if (itemdata.length > 1)
                           SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
                             child: Row(
@@ -206,7 +202,7 @@ GetVendorService get = GetVendorService();
                                     ),
                                     onPressed: () {
                                       j = index;
-                                      flag = index ;
+                                      flag = index;
                                       setState(() {});
                                     },
                                     child: Text(
@@ -540,8 +536,10 @@ GetVendorService get = GetVendorService();
                                       MediaQuery.of(context).size.height * 0.06,
                                   child: TextButton(
                                       onPressed: () {
-                                        if(vendordata.isNotEmpty){
-                                         _launchWhatsApp("+91${vendordata[0].businesscontact}");}
+                                        if (vendordata.isNotEmpty) {
+                                          _launchWhatsApp(
+                                              "+91${vendordata[0].businesscontact}");
+                                        }
                                       },
                                       style: ButtonStyle(
                                         backgroundColor:
@@ -565,35 +563,64 @@ GetVendorService get = GetVendorService();
                                             height: 1),
                                       ))),
                               SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.height * 0.21,
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.06,
-                                  child: TextButton(
-                                      onPressed: () {
-                                        Get.to(() => const WishListW());
-                                      },
-                                      style: ButtonStyle(
-                                        backgroundColor:
-                                            const MaterialStatePropertyAll(
-                                                Color.fromRGBO(77, 43, 43, 1)),
-                                        shape: MaterialStatePropertyAll(
-                                            RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                        )),
-                                      ),
-                                      child: const Text(
-                                        'Add To Favorite',
-                                        textAlign: TextAlign.left,
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontFamily: 'EBGaramond',
-                                            fontSize: 20,
-                                            letterSpacing: 0,
-                                            fontWeight: FontWeight.w400,
-                                            height: 1),
-                                      ))),
+                                width:
+                                    MediaQuery.of(context).size.height * 0.21,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.06,
+                                child: TextButton(
+                                  onPressed: () async {
+                                    // Check if itemdata is not empty
+                                    if (itemdata.isNotEmpty) {
+                                      // Create a new Wishlistdata object with the item details
+                                      Wishlistdata newItem = Wishlistdata(
+                                        id: widget.serviceid,
+                                        description:
+                                            widget.description.toString(),
+                                        name: itemdata[0].itemName,
+                                        image: itemdata[0].images[0].toString(),
+                                      );
+
+                                      // Get the current list of wishlist items from SharedPreferences
+                                      List<Wishlistdata> currentList =
+                                          await getWishlistdataList();
+
+                                      // Check if the item is already in the wishlist
+                                      bool alreadyExists = currentList
+                                          .any((item) => item.id == newItem.id);
+
+                                      // If the item does not already exist in the wishlist, add it
+                                      if (!alreadyExists) {
+                                        currentList.add(newItem);
+                                        await saveWishlistdataList(currentList);
+                                      }
+
+                                      // Navigate to the WishListW screen
+                                      Get.to(() => const WishListW());
+                                    }
+                                  },
+                                  style: ButtonStyle(
+                                    backgroundColor:
+                                        const MaterialStatePropertyAll(
+                                            Color.fromRGBO(77, 43, 43, 1)),
+                                    shape: MaterialStatePropertyAll(
+                                        RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15),
+                                    )),
+                                  ),
+                                  child: const Text(
+                                    'Add To Favorite',
+                                    textAlign: TextAlign.left,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontFamily: 'EBGaramond',
+                                      fontSize: 20,
+                                      letterSpacing: 0,
+                                      fontWeight: FontWeight.w400,
+                                      height: 1,
+                                    ),
+                                  ),
+                                ),
+                              ),
                             ],
                           ),
                         ),
@@ -609,8 +636,17 @@ GetVendorService get = GetVendorService();
                                   onPressed: () {
                                     // Get.to(() => const bookservicew());
                                     log(itemdata[flag].images[0].toString());
-                                    Get.to(()=>bookservicew(servicebookingId: itemdata[flag].serviceItemId, approxprice: itemdata[flag].approxPrice.toInt(), servicename: itemdata[flag].itemName, image: itemdata[flag].images[0].toString(),));
-
+                                    Get.to(() => bookservicew(
+                                          servicebookingId:
+                                              itemdata[flag].serviceItemId,
+                                          approxprice: itemdata[flag]
+                                              .approxPrice
+                                              .toInt(),
+                                          servicename: itemdata[flag].itemName,
+                                          image: itemdata[flag]
+                                              .images[0]
+                                              .toString(),
+                                        ));
                                   },
                                   style: ButtonStyle(
                                     backgroundColor:
@@ -649,8 +685,8 @@ class FirstItemDetails extends StatefulWidget {
   const FirstItemDetails({
     super.key,
     required this.itemName,
-    required this.images, required this.approxprice,
-
+    required this.images,
+    required this.approxprice,
   });
 
   @override
@@ -720,19 +756,24 @@ class _FirstItemDetailsState extends State<FirstItemDetails> {
             ),
           ),
         ),
-        const SizedBox(height: 10,),
-       Container(
-       alignment: Alignment.topLeft,
-       padding: const EdgeInsets.only(left: 10),
-         child: Text('Approximately Price :  ${widget.approxprice}',  style: const TextStyle(
-                color: Color.fromRGBO(62, 53, 53, 1),
-                fontFamily: 'EBGaramond',
-                fontSize: 20,
-                letterSpacing: 0,
-                fontWeight: FontWeight.normal,
-                height: 1,
-              ),),
-       ),
+        const SizedBox(
+          height: 10,
+        ),
+        Container(
+          alignment: Alignment.topLeft,
+          padding: const EdgeInsets.only(left: 10),
+          child: Text(
+            'Approximately Price :  ${widget.approxprice}',
+            style: const TextStyle(
+              color: Color.fromRGBO(62, 53, 53, 1),
+              fontFamily: 'EBGaramond',
+              fontSize: 20,
+              letterSpacing: 0,
+              fontWeight: FontWeight.normal,
+              height: 1,
+            ),
+          ),
+        ),
       ],
     );
   }
