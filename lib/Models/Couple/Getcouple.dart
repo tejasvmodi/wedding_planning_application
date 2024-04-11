@@ -1,6 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
 // ignore: file_names
+import 'dart:convert';
+import 'dart:developer';
+
+import 'package:shared_preferences/shared_preferences.dart';
+
 class Getcouple {
  int coupleId;
  String bride;
@@ -40,14 +45,14 @@ class Getcouple {
   }
 
    Map<String, dynamic> tojson() {
-    return <String, dynamic>{
+    return {
       'coupleId': coupleId,
       'bride': bride,
       'groom': groom,
     };
   }
 
-  factory Getcouple.fromJson( Map<String, dynamic> map){
+  factory Getcouple.fromJson(Map<String, dynamic> map){
       return Getcouple(
       coupleId: map['coupleId'] as int,
       bride: map['bride'] as String,
@@ -70,4 +75,25 @@ class Getcouple {
 
   @override
   int get hashCode => coupleId.hashCode ^ bride.hashCode ^ groom.hashCode;
+}
+Future<void> saveCouple(Getcouple couple) async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  final String serializedCouple = json.encode(couple.tojson());
+  await prefs.setString('couple_data', serializedCouple);
+}
+
+Future<Getcouple?> getCouple() async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  final String? serializedCouple = prefs.getString('couple_data');
+  if (serializedCouple != null) {
+    return Getcouple.fromJson(json.decode(serializedCouple));
+  } else {
+    return null;
+  }
+}
+
+Future<void> deleteCouple() async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  await prefs.remove('couple_data');
+  log('Couple is removed');
 }

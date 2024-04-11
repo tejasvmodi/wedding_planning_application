@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
 class Addcouple {
@@ -15,7 +17,6 @@ class Addcouple {
     required this.couple,
     required this.user,
   });
-
 
   Addcouple copyWith({
     String? firstName,
@@ -57,27 +58,9 @@ class Addcouple {
     );
   }
 
- 
-  Map<String, dynamic> tojson() {
-    return <String, dynamic>{
-      'firstName': firstName,
-      'lastName': lastName,
-      'email': email,
-      'password': password,
-      'couple': couple,
-      'user': user,
-    };
-  }
-  factory Addcouple.fromJson(Map<String, dynamic> map){
-    return Addcouple(
-      firstName: map['firstName'] as String,
-      lastName: map['lastName'] as String,
-      email: map['email'] as String,
-      password: map['password'] as String,
-      couple: map['couple'] as String,
-      user: map['user'] as String,
-    );
-  }
+  String toJson() => json.encode(toMap());
+
+  factory Addcouple.fromJson(String source) => Addcouple.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {

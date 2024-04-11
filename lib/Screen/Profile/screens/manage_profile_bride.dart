@@ -9,7 +9,7 @@ import 'package:wedding_planning_application/models/Address/statemdel.dart';
 import 'package:wedding_planning_application/models/ProfileModels/getprofilemodel.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:wedding_planning_application/repository/Profile/addphoto.dart';
-import 'package:wedding_planning_application/screen/profile/Couple/coupleadd.dart';
+// import 'package:wedding_planning_application/screen/profile/Couple/coupleadd.dart';
 import 'package:wedding_planning_application/screen/profile/components/profile_details.dart';
 import 'package:wedding_planning_application/screen/profile/screens/manage_profile_groom.dart';
 import 'package:wedding_planning_application/services/Address/addressService.dart';
@@ -133,13 +133,20 @@ class _ManageFprofileState extends State<ManageFprofile> {
               ),
               height: 40,
             ),
-            onTap: () {
-              Navigator.push(
+            onTap: () async {
+              // Navigator.push(
+              //     context,
+              //     MaterialPageRoute(
+              //       builder: (
+              //         context) =>  AddCouple(userid: getuser[0].userId.toString(),),
+              //     ));
+                   Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const AddCouple(),
-                  ));
+                    builder: (context) =>  const ManageMprofile()),
+                                      );
             },
+
           ),
           const SizedBox(
             width: 5,

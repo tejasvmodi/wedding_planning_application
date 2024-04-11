@@ -1,13 +1,23 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:wedding_planning_application/screen/profile/screens/manage_profile_groom.dart';
+import 'package:wedding_planning_application/services/Couple/couple.dart';
 
 class AddCouple extends StatefulWidget {
-  const AddCouple({super.key});
+  const AddCouple({super.key, required this.userid});
+  final String userid;
 
   @override
   State<AddCouple> createState() => _AddCoupleState();
 }
 
 class _AddCoupleState extends State<AddCouple> {
+  TextEditingController firstname= TextEditingController();
+  TextEditingController lastname= TextEditingController();
+  TextEditingController email= TextEditingController();
+  TextEditingController password = TextEditingController();
   String _selectedGender = 'BRIDE';
   @override
   Widget build(BuildContext context) {
@@ -104,11 +114,11 @@ class _AddCoupleState extends State<AddCouple> {
                         ],
                         color: Color.fromRGBO(245, 201, 238, 1),
                       ),
-                      child: const TextField(
-                        // controller: name,
+                      child:  TextField(
+                        controller: firstname,
                         keyboardType: TextInputType.multiline,
                         maxLines: 1,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           border:
                               OutlineInputBorder(borderSide: BorderSide.none),
                           hintText: 'First Name',
@@ -120,8 +130,8 @@ class _AddCoupleState extends State<AddCouple> {
                               fontWeight: FontWeight.normal,
                               height: 1),
                         ),
-                        // controller: TextEditingController(text:),
-                        style: TextStyle(
+                        
+                        style: const TextStyle(
                             color: Color.fromRGBO(85, 32, 32, 1),
                             fontFamily: 'EBGaramond',
                             fontSize: 20,
@@ -148,11 +158,11 @@ class _AddCoupleState extends State<AddCouple> {
                         ],
                         color: Color.fromRGBO(245, 201, 238, 1),
                       ),
-                      child: const TextField(
-                        keyboardType: TextInputType.number,
-                        // controller:  phonenumber,
+                      child:  TextField(
+                        // keyboardType: TextInputType.number,
+                        controller:  lastname,
                         maxLines: 1,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           border:
                               OutlineInputBorder(borderSide: BorderSide.none),
                           hintText: 'Last Name',
@@ -164,8 +174,8 @@ class _AddCoupleState extends State<AddCouple> {
                               fontWeight: FontWeight.normal,
                               height: 1),
                         ),
-                        // controller: TextEditingController(text:),
-                        style: TextStyle(
+                        
+                        style: const TextStyle(
                             color: Color.fromRGBO(85, 32, 32, 1),
                             fontFamily: 'EBGaramond',
                             fontSize: 20,
@@ -192,11 +202,11 @@ class _AddCoupleState extends State<AddCouple> {
                         ],
                         color: Color.fromRGBO(245, 201, 238, 1),
                       ),
-                      child: const TextField(
-                        keyboardType: TextInputType.number,
-                        // controller: ,
+                       child:  TextField(
+                        // keyboardType: TextInputType.number,
+                        controller: email ,
                         maxLines: 1,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           border:
                               OutlineInputBorder(borderSide: BorderSide.none),
                           hintText: 'Email',
@@ -208,8 +218,8 @@ class _AddCoupleState extends State<AddCouple> {
                               fontWeight: FontWeight.normal,
                               height: 1),
                         ),
-                        // controller: TextEditingController(text:),
-                        style: TextStyle(
+                        
+                        style: const TextStyle(
                             color: Color.fromRGBO(85, 32, 32, 1),
                             fontFamily: 'EBGaramond',
                             fontSize: 20,
@@ -236,11 +246,11 @@ class _AddCoupleState extends State<AddCouple> {
                         ],
                         color: Color.fromRGBO(245, 201, 238, 1),
                       ),
-                      child: const TextField(
-                        keyboardType: TextInputType.number,
-                        // controller: ,
+                      child: TextField(
+                        // keyboardType: TextInputType.number,
+                        controller: password ,
                         maxLines: 1,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           border:
                               OutlineInputBorder(borderSide: BorderSide.none),
                           hintText: 'password',
@@ -252,8 +262,8 @@ class _AddCoupleState extends State<AddCouple> {
                               fontWeight: FontWeight.normal,
                               height: 1),
                         ),
-                        // controller: TextEditingController(text:),
-                        style: TextStyle(
+                        
+                        style: const TextStyle(
                             color: Color.fromRGBO(85, 32, 32, 1),
                             fontFamily: 'EBGaramond',
                             fontSize: 20,
@@ -326,7 +336,21 @@ class _AddCoupleState extends State<AddCouple> {
                       height: 50,
                       width: 300,
                       child: TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            log(firstname.text.toString());
+                            log(lastname.text.toString());
+                            log(email.text.toString());
+                            log(password.text.toString());
+                            log(_selectedGender.toString());
+                            log(widget.userid.toString());
+                            Coupleservice couple = Coupleservice();
+                            couple.addcouple(firstname.text, lastname.text, email.text, password.text, _selectedGender, widget.userid).then((value) {
+                              Future.delayed(const Duration(seconds: 1),(){
+                                Get.to(()=> const ManageMprofile());
+                              });
+                            });
+
+                          },
                           style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all(
                                   const Color.fromRGBO(77, 43, 43, 1)),

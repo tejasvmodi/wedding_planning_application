@@ -53,7 +53,7 @@ profilephoto(String name, String image) {
         ),
       ),
       Padding(
-        padding: const EdgeInsets.only(top: 325, left: 155),
+        padding: const EdgeInsets.only(top: 325, left: 150),
         child: SizedBox(
           height: 50,
           child: Text(
