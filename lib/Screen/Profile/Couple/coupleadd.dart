@@ -345,8 +345,8 @@ class _AddCoupleState extends State<AddCouple> {
                             log(widget.userid.toString());
                             Coupleservice couple = Coupleservice();
                             couple.addcouple(firstname.text, lastname.text, email.text, password.text, _selectedGender, widget.userid).then((value) {
-                              Future.delayed(const Duration(seconds: 1),(){
-                                Get.to(()=> const ManageMprofile());
+                              Future.delayed( Duration(seconds: 1),(){
+                                Get.to(()=>  ManageMprofile(userid: int.parse(widget.userid),));
                               });
                             });
 

@@ -1,8 +1,12 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wedding_planning_application/models/Couple/Getcouple.dart';
 import 'package:wedding_planning_application/models/service_category.dart';
 import 'package:wedding_planning_application/screen/Screen_Navigation.dart';
 import 'package:wedding_planning_application/screen/home/components/appbar_home.dart';
+import 'package:wedding_planning_application/services/Couple/couple.dart';
 import 'package:wedding_planning_application/services/core/service_category_service.dart';
 import 'package:wedding_planning_application/screen/common_components/drawer.dart';
 import 'package:wedding_planning_application/screen/emergency_contacts/emergency_contact_list.dart';
@@ -21,6 +25,8 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
+  Coupleservice getcouple1 = Coupleservice();
+  List<Getcouple> updatedCoupleList = [];
 
   @override
   void initState() {
@@ -35,10 +41,47 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     _controller.forward();
     setState(() {
       getServiceCategories();
+      fetchAndSaveCoupleData();
     });
   }
 
   List<ServiceCategory> items = [];
+  Future<void> fetchAndSaveCoupleData() async {
+    List<Getcouple> newCouples = await getcouple1.getcoupleservice();
+
+    final Getcouple? storedCouple = await getCouple();
+
+    if (newCouples.isNotEmpty) {
+      Getcouple? newCoupleToSave;
+      if (storedCouple != null) {
+        bool foundMatchingStoredCouple = false;
+        for (Getcouple couple in newCouples) {
+          if (couple == storedCouple) {
+            foundMatchingStoredCouple = true;
+            break;
+          }
+        }
+        if (!foundMatchingStoredCouple) {
+          newCoupleToSave = newCouples.first;
+        }
+      } else {
+        newCoupleToSave = newCouples.first;
+      }
+
+      if (newCoupleToSave != null) {
+        await saveCouple(newCoupleToSave);
+
+        setState(() {
+          updatedCoupleList = newCouples;
+          log(newCoupleToSave.toString());
+        });
+      } else {
+        log('No new couples to save.');
+      }
+    } else {
+      log('No couples fetched from the service.');
+    }
+  }
 
   Future<void> getServiceCategories() async {
     final ServicecategoryService categoryService = Get.find();

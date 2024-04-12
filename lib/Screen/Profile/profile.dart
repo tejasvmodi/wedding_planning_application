@@ -9,7 +9,7 @@ import 'package:wedding_planning_application/models/Inspiration/inspirationmodel
 import 'package:wedding_planning_application/models/ProfileModels/getprofilemodel.dart';
 import 'package:wedding_planning_application/screen/authentication/forms/login_form.dart';
 import 'package:wedding_planning_application/screen/booking/my_bookings/show_bookings.dart';
-import 'package:wedding_planning_application/screen/chats/chat_inbox.dart';
+// import 'package:wedding_planning_application/screen/chats/chat_inbox.dart';
 import 'package:wedding_planning_application/screen/common_components/drawer.dart'; 
 import 'package:wedding_planning_application/screen/other_screens/review.dart';
 import 'package:wedding_planning_application/screen/other_screens/support.dart';

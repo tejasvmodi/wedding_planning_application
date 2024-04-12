@@ -4,15 +4,17 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:wedding_planning_application/Models/Couple/Getcouple.dart';
+import 'package:wedding_planning_application/Screen/Profile/Couple/coupleadd.dart';
 import 'package:wedding_planning_application/models/Address/citymodel.dart';
 import 'package:wedding_planning_application/models/Address/statemdel.dart';
 import 'package:wedding_planning_application/models/ProfileModels/getprofilemodel.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:wedding_planning_application/repository/Profile/addphoto.dart';
-// import 'package:wedding_planning_application/screen/profile/Couple/coupleadd.dart';
 import 'package:wedding_planning_application/screen/profile/components/profile_details.dart';
 import 'package:wedding_planning_application/screen/profile/screens/manage_profile_groom.dart';
 import 'package:wedding_planning_application/services/Address/addressService.dart';
+import 'package:wedding_planning_application/services/Couple/couple.dart';
 import 'package:wedding_planning_application/services/profile.dart';
 
 class ManageFprofile extends StatefulWidget {
@@ -39,6 +41,8 @@ class _ManageFprofileState extends State<ManageFprofile> {
   TextEditingController phone = TextEditingController();
   TextEditingController address1 = TextEditingController();
   TextEditingController address2 = TextEditingController();
+  Coupleservice couple = Coupleservice();
+  List<Getcouple> getcouple = [];
   int? selectedRelationship;
   int? selectedcity;
   String? selectedstate;
@@ -53,7 +57,30 @@ class _ManageFprofileState extends State<ManageFprofile> {
       fname.text = getuser[0].firstName.toString();
       lname.text = getuser[0].lastName.toString();
     }
+    getcoupledata()
+//     .then((value) => {
+//  getcouple,
+//          log(getcouple.toString()),
+//          setState(() {
+
+//          })
+//     });
+        ;
     setState(() {});
+  }
+
+  Future<void> getcoupledata() async {
+    final Getcouple? storedCouple = await getCouple();
+
+    setState(() {
+      // Check if storedCouple is not null before assigning to the list
+      if (storedCouple != null) {
+        getcouple = [storedCouple];
+      } else {
+        log('it is null');
+        getcouple = [];
+      }
+    });
   }
 
   Future<void> _openImagePicker() async {
@@ -70,7 +97,7 @@ class _ManageFprofileState extends State<ManageFprofile> {
     city = await address.getcity(id);
     setState(() {
       city;
-      log(city.toString());
+      // log(city.toString());
     });
   }
 
@@ -78,7 +105,7 @@ class _ManageFprofileState extends State<ManageFprofile> {
     getstate = await address.getstate();
     getstate;
     setState(() {
-      log(getstate.toString());
+      // log(getstate.toString());
     });
   }
 
@@ -87,7 +114,7 @@ class _ManageFprofileState extends State<ManageFprofile> {
       getuser = await profile.getprofile();
       setState(() {
         getuser;
-        log(getuser.toString());
+        // log(getuser.toString());
       });
     } catch (e) {
       log('Error fetching service data: $e');
@@ -134,19 +161,23 @@ class _ManageFprofileState extends State<ManageFprofile> {
               height: 40,
             ),
             onTap: () async {
-              // Navigator.push(
-              //     context,
-              //     MaterialPageRoute(
-              //       builder: (
-              //         context) =>  AddCouple(userid: getuser[0].userId.toString(),),
-              //     ));
-                   Navigator.push(
+              if(getcouple.isEmpty){
+  Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) =>  const ManageMprofile()),
-                                      );
-            },
-
+                    builder: (
+                      context) =>  AddCouple(userid: getuser[0].userId.toString(),),
+                  ));
+              }else{
+            
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => ManageMprofile(
+                          userid: getuser[0].userId,
+                        )),
+              );
+            }}
           ),
           const SizedBox(
             width: 5,
@@ -237,7 +268,7 @@ class _ManageFprofileState extends State<ManageFprofile> {
                                   }
 
                                   setState(() {});
-                                  log(_image!.path.toString());
+                                  // log(_image!.path.toString());
                                 },
                                 icon: Icon(
                                   MdiIcons.pen,
@@ -411,7 +442,6 @@ class _ManageFprofileState extends State<ManageFprofile> {
                   height: 25,
                 ),
                 if (getuser.isNotEmpty && getuser[0].addressInfo != null)
-
                   profiledetails(
                     'Address line 1',
                     getuser[0].addressInfo!.addressLine1.toString(),
@@ -593,19 +623,33 @@ class _ManageFprofileState extends State<ManageFprofile> {
                                   height: 1,
                                 ),
                               ),
-                              const Expanded(
-                                child: Text(
-                                  'bride',
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(
-                                    color: Color.fromRGBO(85, 32, 32, 1),
-                                    fontFamily: 'EBGaramond',
-                                    fontSize: 15,
-                                    letterSpacing: 0,
-                                    fontWeight: FontWeight.normal,
-                                    height: 1,
-                                  ),
-                                ),
+                              if(getcouple.isNotEmpty && getuser.isNotEmpty)
+                              Expanded(
+                                child: int.parse(getcouple[0].bride) == getuser[0].userId
+                                    ? const Text(
+                                        'Bride',
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                          color: Color.fromRGBO(85, 32, 32, 1),
+                                          fontFamily: 'EBGaramond',
+                                          fontSize: 15,
+                                          letterSpacing: 0,
+                                          fontWeight: FontWeight.normal,
+                                          height: 1,
+                                        ),
+                                      )
+                                    : const Text(
+                                        'Groom',
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                          color: Color.fromRGBO(85, 32, 32, 1),
+                                          fontFamily: 'EBGaramond',
+                                          fontSize: 15,
+                                          letterSpacing: 0,
+                                          fontWeight: FontWeight.normal,
+                                          height: 1,
+                                        ),
+                                      ),
                               ),
                               IconButton(
                                 onPressed: () {},

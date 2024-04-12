@@ -9,13 +9,14 @@ import 'package:wedding_planning_application/services/Couple/couple.dart';
 import 'package:wedding_planning_application/services/profile.dart';
 
 class ManageMprofile extends StatefulWidget {
-  const ManageMprofile({Key? key}) : super(key: key);
-
+  const ManageMprofile({super.key, required this.userid});
+  final int userid;
   @override
   State<ManageMprofile> createState() => _ManageMprofileState();
 }
 
 class _ManageMprofileState extends State<ManageMprofile> {
+
   ProfileService profile = ProfileService();
   Coupleservice couple = Coupleservice();
   List<Getcouple> getcouple = [];
@@ -27,7 +28,12 @@ class _ManageMprofileState extends State<ManageMprofile> {
     getcoupledata().then((value) {
       log(getcouple.toString());
       if (getcouple.isNotEmpty) {
-        getcoupleinformation(int.parse(getcouple[0].groom));
+        // ignore: unrelated_type_equality_checks
+        if (int.parse(getcouple[0].bride) == widget.userid) {
+          getcoupleinformation(int.parse(getcouple[0].groom));
+        } else {
+          getcoupleinformation(int.parse(getcouple[0].bride));
+        }
       }
     });
   }
@@ -332,9 +338,6 @@ class _ManageMprofileState extends State<ManageMprofile> {
                         'Address line 2',
                         'enter the Address ',
                       ),
-                    const SizedBox(
-                      height: 25,
-                    ),
                     SizedBox(
                       width: 370,
                       height: 60,
@@ -383,20 +386,37 @@ class _ManageMprofileState extends State<ManageMprofile> {
                                       height: 1,
                                     ),
                                   ),
-                                  const Expanded(
-                                    child: Text(
-                                      '   Groom',
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                        color: Color.fromRGBO(85, 32, 32, 1),
-                                        fontFamily: 'EBGaramond',
-                                        fontSize: 15,
-                                        letterSpacing: 0,
-                                        fontWeight: FontWeight.normal,
-                                        height: 1,
-                                      ),
+                                  if (getcouple.isNotEmpty)
+                                    Expanded(
+                                      child: int.parse(getcouple[0].bride) ==
+                                              widget.userid
+                                          ? const Text(
+                                              'bride',
+                                              textAlign: TextAlign.left,
+                                              style: TextStyle(
+                                                color: Color.fromRGBO(
+                                                    85, 32, 32, 1),
+                                                fontFamily: 'EBGaramond',
+                                                fontSize: 15,
+                                                letterSpacing: 0,
+                                                fontWeight: FontWeight.normal,
+                                                height: 1,
+                                              ),
+                                            )
+                                          : const Text(
+                                              'Groom',
+                                              textAlign: TextAlign.left,
+                                              style: TextStyle(
+                                                color: Color.fromRGBO(
+                                                    85, 32, 32, 1),
+                                                fontFamily: 'EBGaramond',
+                                                fontSize: 15,
+                                                letterSpacing: 0,
+                                                fontWeight: FontWeight.normal,
+                                                height: 1,
+                                              ),
+                                            ),
                                     ),
-                                  ),
                                   IconButton(
                                     onPressed: () {},
                                     icon: const Icon(
@@ -417,7 +437,7 @@ class _ManageMprofileState extends State<ManageMprofile> {
                 ),
               )
             : const Center(
-                heightFactor: 7,
+                heightFactor: 1,
                 child: Column(
                   children: [
                     CircularProgressIndicator(),
