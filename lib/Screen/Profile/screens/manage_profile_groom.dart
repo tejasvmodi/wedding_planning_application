@@ -1,5 +1,7 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:wedding_planning_application/Screen/Screen_Navigation.dart';
 import 'package:wedding_planning_application/models/Couple/Getcouple.dart';
 import 'package:wedding_planning_application/models/getUsername.dart';
 import 'package:wedding_planning_application/screen/profile/components/profile_photo.dart';
@@ -92,7 +94,7 @@ class _ManageMprofileState extends State<ManageMprofile> {
           backgroundColor: const Color.fromARGB(255, 238, 190, 221),
           leading: IconButton(
             onPressed: () {
-              Navigator.pop(context);
+             Get.to(()=>  ScreenNavigation(currentIndex: 4,));
             },
             icon: const Icon(
               Icons.arrow_back_ios,

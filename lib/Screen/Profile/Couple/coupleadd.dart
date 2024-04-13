@@ -72,15 +72,7 @@ class _AddCoupleState extends State<AddCouple> {
                 height: 60,
                 width: double.infinity,
               ),
-              // Container(
-              //   height: 100,
-              //   width: 100,
-              //   decoration: const BoxDecoration(
-              //       image: DecorationImage(
-              //           image:
-              //               AssetImage('assets/images/icon_emergency-call.png'),
-              //           fit: BoxFit.cover)),
-              // ),
+          
               const SizedBox(
                 height: 20,
               ),

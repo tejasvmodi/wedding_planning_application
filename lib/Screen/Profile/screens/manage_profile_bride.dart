@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:wedding_planning_application/Models/Couple/Getcouple.dart';
 import 'package:wedding_planning_application/Screen/Profile/Couple/coupleadd.dart';
+import 'package:wedding_planning_application/Screen/Profile/Couple/fetchemail.dart';
 import 'package:wedding_planning_application/models/Address/citymodel.dart';
 import 'package:wedding_planning_application/models/Address/statemdel.dart';
 import 'package:wedding_planning_application/models/ProfileModels/getprofilemodel.dart';
@@ -160,7 +161,7 @@ class _ManageFprofileState extends State<ManageFprofile> {
               ),
               onTap: () async {
                 if (getcouple.isEmpty) {
-                 _showMyDialog(context);
+                 _showMyDialog(context,getuser[0].userId);
                 } else {
                   Navigator.push(
                     context,
@@ -912,7 +913,7 @@ class _CitydropdownState extends State<Citydropdown> {
   }
 }
 
-  Future<void> _showMyDialog(BuildContext context) async {
+  Future<void> _showMyDialog(BuildContext context,int userid) async {
     return showDialog<void>(
       context: context,
       barrierDismissible: true,
@@ -951,7 +952,7 @@ class _CitydropdownState extends State<Citydropdown> {
                       onPressed: () {
                         Navigator.push(context, MaterialPageRoute(
                           builder: (context) {
-                            return const AddCouple(userid: '',);
+                            return AddCouple(userid: userid.toString(),);
                           },
                         ));
                       },
@@ -982,7 +983,11 @@ class _CitydropdownState extends State<Citydropdown> {
                 Center(
                   child: TextButton(
                       onPressed: () {
-                       
+                      Navigator.push(context, MaterialPageRoute(
+                          builder: (context) {
+                            return  Fetchemail(userid: userid,);
+                          },
+                        ));
                       },
                       style: ButtonStyle(
                         minimumSize: MaterialStatePropertyAll(Size(
