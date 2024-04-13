@@ -1,8 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:wedding_planning_application/Models/Couple/Getcouple.dart';
 import 'package:wedding_planning_application/Screen/Profile/Couple/coupleadd.dart';
@@ -154,31 +152,25 @@ class _ManageFprofileState extends State<ManageFprofile> {
         elevation: 0,
         actions: [
           InkWell(
-            child: const Image(
-              image: AssetImage(
-                'assets/images/icon_groom.png',
+              child: const Image(
+                image: AssetImage(
+                  'assets/images/icon_groom.png',
+                ),
+                height: 40,
               ),
-              height: 40,
-            ),
-            onTap: () async {
-              if(getcouple.isEmpty){
-  Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (
-                      context) =>  AddCouple(userid: getuser[0].userId.toString(),),
-                  ));
-              }else{
-            
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => ManageMprofile(
-                          userid: getuser[0].userId,
-                        )),
-              );
-            }}
-          ),
+              onTap: () async {
+                if (getcouple.isEmpty) {
+                 _showMyDialog(context);
+                } else {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ManageMprofile(
+                              userid: getuser[0].userId,
+                            )),
+                  );
+                }
+              }),
           const SizedBox(
             width: 5,
           )
@@ -443,9 +435,9 @@ class _ManageFprofileState extends State<ManageFprofile> {
                 ),
                 if (getuser.isNotEmpty && getuser[0].addressInfo != null)
                   profiledetails(
-                    'Address line 1',
-                    getuser[0].addressInfo!.addressLine1.toString(),
-                    address1,
+                    'Address line 2',
+                    getuser[0].addressInfo!.addressLine2.toString(),
+                    address2,
                   ),
 
                 const SizedBox(
@@ -453,7 +445,6 @@ class _ManageFprofileState extends State<ManageFprofile> {
                 ),
                 if (getuser.isNotEmpty && getuser[0].addressInfo == null)
                   // Use addressInfo safely
-
                   // Access addressLine2 safely
                   profiledetails(
                     'Address line 1',
@@ -623,34 +614,38 @@ class _ManageFprofileState extends State<ManageFprofile> {
                                   height: 1,
                                 ),
                               ),
-                              if(getcouple.isNotEmpty && getuser.isNotEmpty)
-                              Expanded(
-                                child: int.parse(getcouple[0].bride.toString()) == getuser[0].userId
-                                    ? const Text(
-                                        'Bride',
-                                        textAlign: TextAlign.left,
-                                        style: TextStyle(
-                                          color: Color.fromRGBO(85, 32, 32, 1),
-                                          fontFamily: 'EBGaramond',
-                                          fontSize: 15,
-                                          letterSpacing: 0,
-                                          fontWeight: FontWeight.normal,
-                                          height: 1,
+                              if (getcouple.isNotEmpty && getuser.isNotEmpty)
+                                Expanded(
+                                  child: int.parse(
+                                              getcouple[0].bride.toString()) ==
+                                          getuser[0].userId
+                                      ? const Text(
+                                          'Bride',
+                                          textAlign: TextAlign.left,
+                                          style: TextStyle(
+                                            color:
+                                                Color.fromRGBO(85, 32, 32, 1),
+                                            fontFamily: 'EBGaramond',
+                                            fontSize: 15,
+                                            letterSpacing: 0,
+                                            fontWeight: FontWeight.normal,
+                                            height: 1,
+                                          ),
+                                        )
+                                      : const Text(
+                                          'Groom',
+                                          textAlign: TextAlign.left,
+                                          style: TextStyle(
+                                            color:
+                                                Color.fromRGBO(85, 32, 32, 1),
+                                            fontFamily: 'EBGaramond',
+                                            fontSize: 15,
+                                            letterSpacing: 0,
+                                            fontWeight: FontWeight.normal,
+                                            height: 1,
+                                          ),
                                         ),
-                                      )
-                                    : const Text(
-                                        'Groom',
-                                        textAlign: TextAlign.left,
-                                        style: TextStyle(
-                                          color: Color.fromRGBO(85, 32, 32, 1),
-                                          fontFamily: 'EBGaramond',
-                                          fontSize: 15,
-                                          letterSpacing: 0,
-                                          fontWeight: FontWeight.normal,
-                                          height: 1,
-                                        ),
-                                      ),
-                              ),
+                                ),
                               IconButton(
                                 onPressed: () {},
                                 icon: Icon(MdiIcons
@@ -916,3 +911,107 @@ class _CitydropdownState extends State<Citydropdown> {
     );
   }
 }
+
+  Future<void> _showMyDialog(BuildContext context) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shadowColor: Colors.black38,
+          title: Center(
+            child: Icon(
+              MdiIcons.accountOutline,
+              size: 50,
+            ),
+          ),
+          content: const SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Center(
+                  child: Text(
+                    'Add Couple',
+                    style: TextStyle(
+                      color: Color.fromRGBO(62, 53, 53, 1),
+                      fontFamily: 'EBGaramond',
+                      fontSize: 20,
+                      letterSpacing: 0,
+                      fontWeight: FontWeight.bold,
+                      height: 1,
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            Column(
+              children: [
+                 TextButton(
+                      onPressed: () {
+                        Navigator.push(context, MaterialPageRoute(
+                          builder: (context) {
+                            return const AddCouple(userid: '',);
+                          },
+                        ));
+                      },
+                      style: ButtonStyle(
+                        minimumSize: MaterialStatePropertyAll(Size(
+                            MediaQuery.of(context).size.width * 0.60,
+                            MediaQuery.of(context).size.height * 0.07)),
+                        backgroundColor: const MaterialStatePropertyAll(
+                            Color.fromRGBO(54, 29, 29, 1)),
+                        shape: const MaterialStatePropertyAll(
+                          RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.elliptical(8, 8))),
+                        ),
+                      ),
+                      child: const Text(
+                        'create new Account',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'EBGaramond',
+                          fontSize: 18,
+                          letterSpacing: 0,
+                          fontWeight: FontWeight.bold,
+                          height: 1,
+                        ),
+                      )),
+              const SizedBox(height: 10,),
+                Center(
+                  child: TextButton(
+                      onPressed: () {
+                       
+                      },
+                      style: ButtonStyle(
+                        minimumSize: MaterialStatePropertyAll(Size(
+                            MediaQuery.of(context).size.width * 0.50,
+                            MediaQuery.of(context).size.height * 0.07)),
+                        backgroundColor: const MaterialStatePropertyAll(
+                            Color.fromRGBO(54, 29, 29, 1)),
+                        shape: const MaterialStatePropertyAll(
+                          RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.elliptical(8, 8))),
+                        ),
+                      ),
+                      child: const Text(
+                        'Connect with existing account ',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'EBGaramond',
+                          fontSize: 18,
+                          letterSpacing: 0,
+                          fontWeight: FontWeight.bold,
+                          height: 1,
+                        ),
+                      )),
+                ),
+              ],
+            ),
+          ],
+        );
+      },
+    );
+  }

@@ -4,10 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:wedding_planning_application/Screen/Screen_Navigation.dart';
+import 'package:wedding_planning_application/models/Couple/Getcouple.dart';
 import 'package:wedding_planning_application/models/Emergency%20Contanct/getcontact.dart';
 import 'package:wedding_planning_application/screen/emergency_contacts/add_emergency_contact.dart';
 import 'package:wedding_planning_application/screen/emergency_contacts/components/emergency_contact_design.dart';
 import 'package:wedding_planning_application/services/Contact/EmergencyContactservice.dart';
+import 'package:wedding_planning_application/services/Userid/userid.dart';
 
 class EmergencycontlistW extends StatefulWidget {
   const EmergencycontlistW({super.key});
@@ -18,11 +22,76 @@ class EmergencycontlistW extends StatefulWidget {
 
 class _EmergencycontlistWState extends State<EmergencycontlistW> {
   List<Getcontact> get = [];
+  List<Getcontact> getcouple = [];
   EmergencyContactService emergency = EmergencyContactService();
+
+String? _selectedGender;
+  List<Getcouple> updatedCoupleList = [];
+  String userId1 = '';
+
+
   @override
   void initState() {
     super.initState();
+    someFunction();
     getcontact();
+     _loadGenderFromPrefs().then((value) {
+      if (updatedCoupleList.isNotEmpty) {
+        log(updatedCoupleList[0].groom.toString());
+        log(userId1);
+        if (int.parse(updatedCoupleList[0].groom.toString()) == int.parse(userId1)) {
+          getcontactcouple(
+              int.parse(updatedCoupleList[0].bride.toString())); 
+              log('not come here');
+              log(updatedCoupleList[0].bride.toString());
+        } else {
+          getcontactcouple(int.parse(updatedCoupleList[0].groom.toString()));
+          log('direct here ');
+          log(updatedCoupleList[0].groom.toString());
+        }
+      } else {
+        log('Wait for the seconds ');
+      }
+    });
+  }
+
+    Future<void> someFunction() async {
+    final userId = await getUserId();
+    if (userId != null) {
+      userId1 = userId.toString();
+      // Use the user ID for further processing
+      setState(() {
+        userId1;
+        log(userId1);
+      });
+    } else {
+      log('User ID not found in SharedPreferences');
+    }
+  }
+
+
+
+ Future<void> _loadGenderFromPrefs() async {
+    // final Getcouple? storedCouple = await getCouple();
+    final Getcouple? storedCouple = await getCouple();
+
+    if (storedCouple != null) {
+      setState(() {
+        updatedCoupleList = [storedCouple];
+        log(storedCouple.toString());
+      });
+    } else {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      _selectedGender = (prefs.getString('gender') ?? 'BRIDE');
+      log('No couples found in SharedPreferences.');
+    }
+  }
+ Future<void> getcontactcouple(int id) async {
+    getcouple = await emergency.getcontactservicecouple(id);
+    setState(() {
+      getcouple;
+      log(getcouple.toString());
+    });
   }
 
   Future<void> getcontact() async {
@@ -40,7 +109,7 @@ class _EmergencycontlistWState extends State<EmergencycontlistW> {
         backgroundColor: const Color.fromRGBO(255, 217, 249, 1),
         leading: IconButton(
           onPressed: () {
-            Navigator.pop(context);
+            Get.to(ScreenNavigation(currentIndex: 0,));                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
           },
           icon: const Icon(
             Icons.arrow_back_ios,
@@ -158,6 +227,18 @@ class _EmergencycontlistWState extends State<EmergencycontlistW> {
                 indent: 20,
                 endIndent: 20,
               ),
+               if (getcouple.isNotEmpty)
+                for (int i = 0; i < getcouple.length; i++)
+                  EmergencyCallDesign(
+                      id: getcouple[i].contactId,
+                      contactName: getcouple[i].contactName,
+                      status: getcouple[i].status,
+                      number: getcouple[i].numbers[0],
+                      alternativenumber: getcouple[i].numbers[1]),
+              if (getcouple.isEmpty)
+                const Center(
+                  child: CircularProgressIndicator(),
+                ),
             ],
           ),
         ),

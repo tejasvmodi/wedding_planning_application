@@ -1,22 +1,16 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wedding_planning_application/models/Inspiration/inspirationmodel.dart';
 import 'package:wedding_planning_application/models/ProfileModels/getprofilemodel.dart';
 import 'package:wedding_planning_application/screen/authentication/forms/login_form.dart';
 import 'package:wedding_planning_application/screen/booking/my_bookings/show_bookings.dart';
-// import 'package:wedding_planning_application/screen/chats/chat_inbox.dart';
 import 'package:wedding_planning_application/screen/common_components/drawer.dart'; 
 import 'package:wedding_planning_application/screen/other_screens/review.dart';
 import 'package:wedding_planning_application/screen/other_screens/support.dart';
 import 'package:wedding_planning_application/screen/profile/components/account_items.dart';
 import 'package:wedding_planning_application/screen/profile/components/profile_photo.dart';
-// import 'package:wedding_planning_application/screen/profile/recommandation/location.dart';
-// import 'package:wedding_planning_application/screen/profile/recommandation/recommendation.dart';
 import 'package:wedding_planning_application/screen/profile/screens/editpost.dart';
 import 'package:wedding_planning_application/screen/profile/screens/manage_profile_bride.dart';
 import 'package:wedding_planning_application/services/Address/addressService.dart';

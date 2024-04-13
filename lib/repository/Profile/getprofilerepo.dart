@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
-
 import 'package:http/http.dart' as http;
 import 'package:wedding_planning_application/models/ProfileModels/getprofilemodel.dart';
 import 'package:wedding_planning_application/models/token_manager.dart';
@@ -16,8 +14,7 @@ class GetProfileRepo {
     
     if (response.statusCode == 200) {
       try {
-        log(response.body);
-        // Parse JSON string into a Map<String, dynamic>
+        
         final Map<String, dynamic> jsonData = json.decode(response.body);
         return GetprofileModel.fromJson(jsonData);
       } catch (e) {

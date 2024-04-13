@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:wedding_planning_application/screen/chats/chat_inbox.dart';
 
 class AppbarHome extends StatefulWidget {
   const AppbarHome({super.key});
@@ -13,16 +10,17 @@ class AppbarHome extends StatefulWidget {
 class _AppbarHomeState extends State<AppbarHome> {
   @override
   Widget build(BuildContext context) {
-    return Material(
+    return const Material(
       color: Colors.transparent,
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          const SizedBox(
+          SizedBox(
             width: 12,
           ),
-          const SizedBox(
+          SizedBox(
             height: 40,
-            width: 250,
+            width:300,
             child: TextField(
               style: TextStyle(
                   color: Colors.white,
@@ -56,18 +54,10 @@ class _AppbarHomeState extends State<AppbarHome> {
               ),
             ),
           ),
-          const SizedBox(
+          SizedBox(
             width: 23,
           ),
-          IconButton(
-              onPressed: () {
-                Get.to(const ChatInboxW());
-              },
-              icon: Icon(
-                MdiIcons.messageText,
-                size: 35,
-                color: Colors.white,
-              )),
+         
         ],
       ),
     );
