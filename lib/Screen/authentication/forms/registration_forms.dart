@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart'; // Add this import
 import 'package:wedding_planning_application/screen/authentication/forms/login_form.dart';
 import 'package:wedding_planning_application/services/authentication/auth_service.dart';
 
@@ -195,6 +196,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                               onChanged: (value) {
                                 setState(() {
                                   _selectedGender = value!;
+                                  _saveGenderToPrefs(value);
                                 });
                               },
                             ),
@@ -219,6 +221,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                               onChanged: (value) {
                                 setState(() {
                                   _selectedGender = value!;
+                                  _saveGenderToPrefs(value);
                                 });
                               },
                             ),
@@ -313,5 +316,10 @@ class _RegistrationFormState extends State<RegistrationForm> {
         ),
       ),
     );
+  }
+
+  _saveGenderToPrefs(String gender) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('gender', gender);
   }
 }

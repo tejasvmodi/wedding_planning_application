@@ -6,6 +6,7 @@ import 'package:wedding_planning_application/models/Emergency%20Contanct/updatec
 import 'package:wedding_planning_application/repository/Emergency%20Contanct/addemergencycontact.dart';
 import 'package:wedding_planning_application/repository/Emergency%20Contanct/deletecontact.dart';
 import 'package:wedding_planning_application/repository/Emergency%20Contanct/getEmergencycontact.dart';
+import 'package:wedding_planning_application/repository/Emergency%20Contanct/getemergencycouple.dart';
 import 'package:wedding_planning_application/repository/Emergency%20Contanct/getrelation.dart';
 import 'package:wedding_planning_application/repository/Emergency%20Contanct/updateemergencycontact.dart';
 
@@ -13,6 +14,7 @@ class EmergencyContactService{
   final AddEmergergencyContact emergency =  AddEmergergencyContact();
   final Relationshiprepo getRelation = Relationshiprepo();
   final GetContactdetailsrepo getcontact = GetContactdetailsrepo();
+  final GetContactdetailsrepocouple getcontactcontact = GetContactdetailsrepocouple();
   final UpdateEmergergencyContact update = UpdateEmergergencyContact();
   final DeleteContactRepo delete = DeleteContactRepo();
 
@@ -45,6 +47,18 @@ class EmergencyContactService{
     List<Getcontact> result = [];
     try{
       result = await getcontact.getcontactrepo();
+    }catch(e) {
+      log(e.toString());
+    }
+    // log(result.toString());
+    return result;
+  }
+
+  
+  Future<List<Getcontact>> getcontactservicecouple(int id) async {
+    List<Getcontact> result = [];
+    try{
+      result = await getcontactcontact.getcontactrepocouple(id); 
     }catch(e) {
       log(e.toString());
     }

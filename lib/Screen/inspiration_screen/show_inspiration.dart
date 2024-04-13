@@ -28,7 +28,7 @@ class ShowinspirationPhoto extends StatefulWidget {
 }
 
 class _ShowinspirationPhotoState extends State<ShowinspirationPhoto> {
-  final ProfileService userinfo = Get.find();
+  final ProfileService userinfo = ProfileService();
   List<getUserName> getuser = [];
 
   @override

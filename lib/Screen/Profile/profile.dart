@@ -32,8 +32,8 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  final AuthenticationService authService = Get.find();
-  final ProfileService profile = Get.find();
+  final AuthenticationService authService = AuthenticationService();
+  final ProfileService profile = ProfileService();
   InspirationSefrvice ins = InspirationSefrvice();
   AddressService address = AddressService();
  
@@ -58,7 +58,7 @@ class _ProfileState extends State<Profile> {
   getinspiration = await ins.getallinspiration();
   setState(() {
     getinspiration = getinspiration.where((inspiration) => inspiration.user == profil[0].userId.toString()).toList();
-    log(getinspiration.toString());
+    // log(getinspiration.toString());
   });
 }
 

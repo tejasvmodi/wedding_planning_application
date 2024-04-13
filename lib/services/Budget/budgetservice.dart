@@ -6,12 +6,14 @@ import 'package:wedding_planning_application/models/Budget/updatebudget.dart';
 import 'package:wedding_planning_application/models/service_category.dart';
 import 'package:wedding_planning_application/repository/Budget/addbudgetrepo.dart';
 import 'package:wedding_planning_application/repository/Budget/deletebudgetrepo.dart';
+import 'package:wedding_planning_application/repository/Budget/getbudgetcouple.dart';
 import 'package:wedding_planning_application/repository/Budget/getbudgetrepo.dart';
 import 'package:wedding_planning_application/repository/Budget/updatebudgetrepo.dart';
 
 class BudgetService {
   Addbudgetrepo addRepo = Addbudgetrepo();
   Getbudgetrepo get = Getbudgetrepo();
+  Getbudgetrepocouple getbudgetcouple = Getbudgetrepocouple();
   UpdatebudgetRepo update = UpdatebudgetRepo();
   Deletebudgetrepo delete = Deletebudgetrepo();
   
@@ -47,6 +49,17 @@ Future<void> updatebudget(double price, int id,int servicecategoryid) async {
   List<Getbudget> getbudget = [];
   try{
     getbudget = await get.getbudgetrepo();
+  }catch(e){
+    log(e.toString());
+  }
+  return getbudget;
+
+ }
+ 
+ Future<List<Getbudget>> getbudgetv(int id) async{
+  List<Getbudget> getbudget = [];
+  try{
+    getbudget = await getbudgetcouple.getbudgetrepocouple(id);
   }catch(e){
     log(e.toString());
   }

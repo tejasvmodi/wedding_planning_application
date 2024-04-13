@@ -4,10 +4,13 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wedding_planning_application/models/Budget/getbudget.dart';
+import 'package:wedding_planning_application/models/Couple/Getcouple.dart';
 import 'package:wedding_planning_application/models/service_category.dart';
 import 'package:wedding_planning_application/screen/Screen_Navigation.dart';
 import 'package:wedding_planning_application/services/Budget/budgetservice.dart';
+import 'package:wedding_planning_application/services/Userid/userid.dart';
 import 'package:wedding_planning_application/services/core/service_category_service.dart';
 
 class Budget extends StatefulWidget {
@@ -19,23 +22,91 @@ class Budget extends StatefulWidget {
 
 class _BudgetState extends State<Budget> {
   double count = 0;
+  double  count1 =0;
   TextEditingController price = TextEditingController();
   TextEditingController changeprice = TextEditingController();
   String? id;
+
+  List<Getcouple> updatedCoupleList = [];
+  String userId1 = '';
+
   String? title;
   BudgetService budget = BudgetService();
   List<Getbudget> getbudget = [];
+  List<Getbudget> getbudgetcouple = [];
+   List<ServiceCategory> items = [];
   @override
   void initState() {
     super.initState();
-     getServiceCategories();
-      getbudgetdata();
-    setState(() {
- 
+    someFunction();
+    getServiceCategories();
+    getbudgetdata();
+    _loadGenderFromPrefs().then((value) {
+      if (updatedCoupleList.isNotEmpty) {
+        log(updatedCoupleList[0].groom.toString());
+        log(userId1);
+        if (int.parse(updatedCoupleList[0].groom.toString()) == int.parse(userId1)) {
+          getbudgetdatacpouple(
+              int.parse(updatedCoupleList[0].bride.toString())); 
+              log('not come here');
+              log(updatedCoupleList[0].bride.toString());
+        } else {
+          getbudgetdatacpouple(int.parse(updatedCoupleList[0].groom.toString()));
+          log('direct here ');
+          log(updatedCoupleList[0].groom.toString());
+        }
+      } else {
+        log('Wait for the seconds ');
+      }
     });
+    setState(() {});
+  }
+ Future<void> someFunction() async {
+    final userId = await getUserId();
+    if (userId != null) {
+      userId1 = userId.toString();
+      // Use the user ID for further processing
+      setState(() {
+        userId1;
+        log(userId1);
+      });
+    } else {
+      log('User ID not found in SharedPreferences');
+    }
   }
 
-  List<ServiceCategory> items = [];
+
+  Future<void> _loadGenderFromPrefs() async {
+    // final Getcouple? storedCouple = await getCouple();
+    final Getcouple? storedCouple = await getCouple();
+
+    if (storedCouple != null) {
+      setState(() {
+        updatedCoupleList = [storedCouple];
+        log(storedCouple.toString());
+      });
+    } else {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      log('No couples found in SharedPreferences.');
+    }
+  }
+Future<void> getbudgetdatacpouple(int id) async {
+    try {
+      getbudgetcouple = await budget.getbudgetv(id);
+      setState(() {
+        getbudgetcouple;
+        log(getbudgetcouple.toString());
+        if (getbudgetcouple.isNotEmpty) {
+          for (var get in getbudgetcouple) {
+            count1 += get.expenceAmount.toDouble();
+          }
+        }
+      });
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+ 
   Future<void> getbudgetdata() async {
     try {
       getbudget = await budget.getbudget();
@@ -134,7 +205,7 @@ class _BudgetState extends State<Budget> {
                       child: Container(
                         child: expandedtitle(
                           'assets/images/icon_groom.png',
-                          1210000,
+                          count1,
                           "Groom's Budget: ",
                         ),
                       ),
@@ -146,16 +217,15 @@ class _BudgetState extends State<Budget> {
                           shrinkWrap: true, // Allow the ListView to shrink
                           children: [
                             const SizedBox(height: 10),
-                            if (getbudget.isNotEmpty)
-                              for (int i = 0; i < getbudget.length; i++)
+                            if (getbudgetcouple.isNotEmpty)
+                              for (int i = 0; i < getbudgetcouple.length; i++)
                                 InkWell(
-                                  child: budgetBox(
-                                    getbudget[i].serviceCategory['icon'],
-                                    getbudget[i]
-                                        .serviceCategory['serviceCategoryName'],
-                                    getbudget[i].expenceAmount,
-                                     getbudget[i].budgetId
-                                  ),
+                                  child: budgetBox1(
+                                      getbudgetcouple[i].serviceCategory['icon'],
+                                      getbudgetcouple[i].serviceCategory[
+                                          'serviceCategoryName'],
+                                      getbudgetcouple[i].expenceAmount,
+                                      getbudgetcouple[i].budgetId),
                                   onTap: () {},
                                 ),
                             const SizedBox(height: 10),
@@ -207,12 +277,11 @@ class _BudgetState extends State<Budget> {
                                 for (int i = 0; i < getbudget.length; i++)
                                   InkWell(
                                     child: budgetBox(
-                                      getbudget[i].serviceCategory['icon'],
-                                      getbudget[i].serviceCategory[
-                                          'serviceCategoryName'],
-                                      getbudget[i].expenceAmount,
-                                      getbudget[i].budgetId
-                                    ),
+                                        getbudget[i].serviceCategory['icon'],
+                                        getbudget[i].serviceCategory[
+                                            'serviceCategoryName'],
+                                        getbudget[i].expenceAmount,
+                                        getbudget[i].budgetId),
                                     onTap: () {
                                       changeprice.text =
                                           getbudget[i].expenceAmount.toString();
@@ -475,7 +544,8 @@ Widget expandedtitle(String image, double number, String title) {
   );
 }
 
-Widget budgetBox(String imageLink, String venueName, double venuePrice,int id) {
+Widget budgetBox(
+    String imageLink, String venueName, double venuePrice, int id) {
   final formattedPrice =
       NumberFormat.currency(locale: 'en_IN', symbol: '₹').format(venuePrice);
 
@@ -573,16 +643,125 @@ Widget budgetBox(String imageLink, String venueName, double venuePrice,int id) {
             ],
           ),
         ),
-        TextButton(onPressed:() {
-          BudgetService service = BudgetService();
-          service.deletbudget(id).then((value) {
-           Get.back();
-          });
-        }, child: Icon(MdiIcons.delete))
+        TextButton(
+            onPressed: () {
+              BudgetService service = BudgetService();
+              service.deletbudget(id).then((value) {
+                Get.back();
+              });
+            },
+            child: Icon(MdiIcons.delete))
       ],
     ),
   );
 }
+
+
+Widget budgetBox1(
+    String imageLink, String venueName, double venuePrice, int id) {
+  final formattedPrice =
+      NumberFormat.currency(locale: 'en_IN', symbol: '₹').format(venuePrice);
+
+  return SingleChildScrollView(
+    scrollDirection: Axis.horizontal,
+    child: Row(
+      children: [
+        SizedBox(
+          width: 320,
+          height: 80,
+          child: Stack(
+            children: <Widget>[
+              Positioned(
+                top: 0,
+                left: 10,
+                child: Container(
+                  width: 310,
+                  height: 70,
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.only(
+                      topRight: Radius.circular(10),
+                      bottomLeft: Radius.circular(10),
+                      bottomRight: Radius.circular(10),
+                      topLeft: Radius.circular(10),
+                    ),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Color.fromRGBO(0, 0, 0, 0.25),
+                        offset: Offset(0, 1),
+                        blurRadius: 4,
+                      )
+                    ],
+                    color: const Color.fromRGBO(221, 189, 190, 1),
+                    border: Border.all(
+                      color: const Color.fromRGBO(77, 43, 43, 1),
+                      width: 0.5,
+                    ),
+                  ),
+                  child: Row(
+                    children: [
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Container(
+                        height: 55,
+                        width: 55,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: NetworkImage(
+                              imageLink,
+                            ),
+                            fit: BoxFit.cover,
+                            opacity: 1,
+                          ),
+                          borderRadius:
+                              const BorderRadius.all(Radius.elliptical(65, 65)),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 25,
+                      ),
+                      RichText(
+                        text: TextSpan(
+                          style: const TextStyle(
+                            color: Color.fromRGBO(85, 32, 32, 1),
+                            fontFamily: 'EBGaramond',
+                            fontSize: 20,
+                            letterSpacing: 0,
+                            fontWeight: FontWeight.bold,
+                            height: 1,
+                          ),
+                          children: [
+                            TextSpan(
+                              text: '$venueName\n',
+                            ),
+                            const WidgetSpan(
+                              child: SizedBox(
+                                height: 25,
+                              ),
+                            ),
+                            TextSpan(
+                              text: 'Estimated Amount: $formattedPrice',
+                              style: const TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.normal,
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+  
+      ],
+    ),
+  );
+}
+
 
 Future<void> _showMyDialog(BuildContext context) async {
   return showDialog<void>(
@@ -789,16 +968,17 @@ Future<void> updatebudget(
           Center(
             child: TextButton(
                 onPressed: () {
-                
                   BudgetService budget = BudgetService();
-                  budget.updatebudget(double.parse(changeprice.text), budgetid,serviceCategoryId).then((value){
-                
-                    Future.delayed(const Duration( milliseconds: 10),(){
-                      Get.back();
-                    });
-                  },
+                  budget
+                      .updatebudget(double.parse(changeprice.text), budgetid,
+                          serviceCategoryId)
+                      .then(
+                    (value) {
+                      Future.delayed(const Duration(milliseconds: 10), () {
+                        Get.back();
+                      });
+                    },
                   );
-                 
                 },
                 style: ButtonStyle(
                   minimumSize: MaterialStatePropertyAll(Size(

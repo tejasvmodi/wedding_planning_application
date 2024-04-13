@@ -7,9 +7,9 @@ import 'dart:developer';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Getcouple {
- int coupleId;
- String bride;
- String groom;
+  int? coupleId;
+  String? bride;
+  String? groom;
   Getcouple({
     required this.coupleId,
     required this.bride,
@@ -39,12 +39,12 @@ class Getcouple {
   factory Getcouple.fromMap(Map<String, dynamic> map) {
     return Getcouple(
       coupleId: map['coupleId'] as int,
-      bride: map['bride'] as String,
-      groom: map['groom'] as String,
+      bride: map['bride']! as String,
+      groom: map['groom']! as String,
     );
   }
 
-   Map<String, dynamic> tojson() {
+  Map<String, dynamic> tojson() {
     return {
       'coupleId': coupleId,
       'bride': bride,
@@ -52,30 +52,31 @@ class Getcouple {
     };
   }
 
-  factory Getcouple.fromJson(Map<String, dynamic> map){
-      return Getcouple(
+  factory Getcouple.fromJson(Map<String, dynamic> map) {
+    return Getcouple(
       coupleId: map['coupleId'] as int,
-      bride: map['bride'] as String,
-      groom: map['groom'] as String,
+      bride: map['bride']! as String,
+      groom: map['groom']! as String,
     );
   }
 
   @override
-  String toString() => 'Getcouple(coupleId: $coupleId, bride: $bride, groom: $groom)';
+  String toString() =>
+      'Getcouple(coupleId: $coupleId, bride: $bride, groom: $groom)';
 
   @override
   bool operator ==(covariant Getcouple other) {
     if (identical(this, other)) return true;
-  
-    return 
-      other.coupleId == coupleId &&
-      other.bride == bride &&
-      other.groom == groom;
+
+    return other.coupleId == coupleId &&
+        other.bride == bride &&
+        other.groom == groom;
   }
 
   @override
   int get hashCode => coupleId.hashCode ^ bride.hashCode ^ groom.hashCode;
 }
+
 Future<void> saveCouple(Getcouple couple) async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   final String serializedCouple = json.encode(couple.tojson());
@@ -86,10 +87,13 @@ Future<Getcouple?> getCouple() async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   final String? serializedCouple = prefs.getString('couple_data');
   if (serializedCouple != null) {
-    return Getcouple.fromJson(json.decode(serializedCouple));
-  } else {
-    return null;
+    final decodedCouple = json.decode(serializedCouple);
+    if (decodedCouple != null && decodedCouple is Map<String, dynamic>) {
+      return Getcouple.fromJson(decodedCouple);
+    }
   }
+  // Return null if there's no valid stored couple data
+  return null;
 }
 
 Future<void> deleteCouple() async {

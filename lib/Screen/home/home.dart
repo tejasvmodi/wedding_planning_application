@@ -1,7 +1,8 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:wedding_planning_application/models/ProfileModels/getprofilemodel.dart';
 import 'package:wedding_planning_application/models/Couple/Getcouple.dart';
 import 'package:wedding_planning_application/models/service_category.dart';
 import 'package:wedding_planning_application/screen/Screen_Navigation.dart';
@@ -14,9 +15,10 @@ import 'package:wedding_planning_application/screen/home/components/carousel_sli
 import 'package:wedding_planning_application/screen/home/components/category_wrapper.dart';
 import 'package:wedding_planning_application/screen/home/components/feature.dart';
 import 'package:wedding_planning_application/screen/other_screens/budget.dart';
+import 'package:wedding_planning_application/services/profile.dart';
 
 class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+  const Home({super.key});
 
   @override
   State<Home> createState() => _HomeState();
@@ -27,6 +29,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   late Animation<double> _animation;
   Coupleservice getcouple1 = Coupleservice();
   List<Getcouple> updatedCoupleList = [];
+  final ProfileService profile = ProfileService();
+    List<GetprofileModel> profil =[];
 
   @override
   void initState() {
@@ -41,9 +45,36 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     _controller.forward();
     setState(() {
       getServiceCategories();
+      getserviceitemdata();
       fetchAndSaveCoupleData();
     });
   }
+
+
+Future<void> getserviceitemdata() async {
+  // 1. Check if user ID is already stored
+  final prefs = await SharedPreferences.getInstance();
+  final userId = prefs.getInt('userId');
+
+  if (userId == null) {
+    // 2. Fetch data and store user ID if not stored before
+    try {
+      profil = await profile.getprofile();
+      setState(() {
+        profil;
+        log(profil.toString());
+
+        // 3. Store user ID in SharedPreferences
+        prefs.setInt('userId', profil[0].userId);
+      });
+    } catch (e) {
+      log('Error fetching service data: $e');
+    }
+  } else {
+    // 4. User ID already exists, no need to refetch data
+    log('User ID already retrieved from SharedPreferences: $userId');
+  }
+}
 
   List<ServiceCategory> items = [];
   Future<void> fetchAndSaveCoupleData() async {
@@ -90,6 +121,11 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         items = value.items;
       });
     });
+  }
+  @override
+  void dispose() {
+    _controller.dispose(); // Dispose the AnimationController
+    super.dispose();
   }
 
   @override

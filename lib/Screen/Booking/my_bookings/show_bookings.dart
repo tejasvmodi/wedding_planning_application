@@ -1,10 +1,13 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wedding_planning_application/models/Booking/getbooking.dart';
 import 'package:wedding_planning_application/models/Booking/showBooking.dart';
+import 'package:wedding_planning_application/models/Couple/Getcouple.dart';
 import 'package:wedding_planning_application/screen/booking/my_bookings/booking_design.dart';
 import 'package:wedding_planning_application/services/Booking/BookingService.dart';
+import 'package:wedding_planning_application/services/Userid/userid.dart';
 
 class ShowBooking extends StatefulWidget {
   const ShowBooking({
@@ -17,16 +20,92 @@ class ShowBooking extends StatefulWidget {
 
 class _ShowBookingState extends State<ShowBooking> {
   List<GetBookings> getbook = [];
+  List<GetBookings> getbookig = [];
   BookinigService booking = BookinigService();
-  List<Showbooking> c = [];
+
+  List<Showbooking> serviceItems1 = [];
 
   List<Showbooking> serviceItems = [];
+
+  String? _selectedGender;
+  List<Getcouple> updatedCoupleList = [];
+  String userId1 = '';
+
   final List<Map<String, dynamic>> bdesignbride = [];
   @override
   void initState() {
     super.initState();
-
+    someFunction();
     getbooking();
+    _loadGenderFromPrefs().then((value) {
+      if (updatedCoupleList.isNotEmpty) {
+        log(updatedCoupleList[0].groom.toString());
+        log(userId1);
+        if (int.parse(updatedCoupleList[0].groom.toString()) ==
+            int.parse(userId1)) {
+          getbookingcouple(int.parse(updatedCoupleList[0].bride.toString()));
+          log('not come here');
+          log(updatedCoupleList[0].bride.toString());
+        } else {
+          getbookingcouple(int.parse(updatedCoupleList[0].groom.toString()));
+          log('direct here ');
+          log(updatedCoupleList[0].groom.toString());
+        }
+      } else {
+        log('Wait for the seconds ');
+      }
+    });
+  }
+
+  Future<void> someFunction() async {
+    final userId = await getUserId();
+    if (userId != null) {
+      userId1 = userId.toString();
+      // Use the user ID for further processing
+      setState(() {
+        userId1;
+        log(userId1);
+      });
+    } else {
+      log('User ID not found in SharedPreferences');
+    }
+  }
+
+  Future<void> _loadGenderFromPrefs() async {
+    // final Getcouple? storedCouple = await getCouple();
+    final Getcouple? storedCouple = await getCouple();
+
+    if (storedCouple != null) {
+      setState(() {
+        updatedCoupleList = [storedCouple];
+        log(storedCouple.toString());
+      });
+    } else {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      _selectedGender = (prefs.getString('gender') ?? 'BRIDE');
+      log('No couples found in SharedPreferences.');
+    }
+  }
+
+  Future<void> getbookingcouple(int id) async {
+    getbookig = await booking.getbookingcouple(id);
+    if (getbookig.isNotEmpty) {
+      // Create a list to hold futures for fetching service items
+      List<Future<Showbooking>> futures = [];
+      for (final booking1 in getbookig) {
+        // Use 'final' for loop variable
+        futures.add(booking.getserviceitem(int.parse(booking1.bookedService)));
+      }
+      // Wait for all service item futures to complete
+      serviceItems1 = await Future.wait(futures);
+
+      setState(() {
+        serviceItems1;
+        getbookig;
+        log(getbookig.toString());
+        log(serviceItems1.toString());
+      });
+    }
   }
 
   Future<void> getbooking() async {
@@ -50,25 +129,7 @@ class _ShowBookingState extends State<ShowBooking> {
     }
   }
 
-  final List<Map<String, dynamic>> bdesigngroom = [
-    {
-      'newimage': 'Vendor_carting.jpg',
-      'texttitle': 'Mamta Caters',
-      'content': 'All food Items serve in Div',
-      'money': '120000',
-      'booktime': "2023-11-10 00:00:00", // String format
-      'eventdates': "2023-12-10 00:00:00", // String format
-    },
-    {
-      'newimage': 'Vendors_Venue_2.jpg',
-      'texttitle': 'Smit Halls',
-      'content': 'Venue Hall At Palanpur',
-      'money': '1500',
-      'booktime': "2022-11-25 00:00:00", // String format
-      'eventdates': "2022-12-10 00:00:00", // String format
-    },
-  ];
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -152,15 +213,13 @@ class _ShowBookingState extends State<ShowBooking> {
                   runSpacing: 2,
                   spacing: 5,
                   children: [
-
-                    if(getbook.isEmpty && serviceItems.isEmpty)
-                    const Center(
-                      heightFactor: 5,
-                     child: CircularProgressIndicator(),
-                    ),
+                    if (getbook.isEmpty && serviceItems.isEmpty)
+                      const Center(
+                        heightFactor: 5,
+                        child: CircularProgressIndicator(),
+                      ),
                     if (getbook.isNotEmpty && serviceItems.isNotEmpty)
                       for (int i = 0; i < getbook.length; i++)
-                       
                         bookingdesign(
                             serviceItems[i].images[0].toString(),
                             serviceItems[i].itemName.toString(),
@@ -199,24 +258,28 @@ class _ShowBookingState extends State<ShowBooking> {
                 ],
               ),
               const Divider(color: Colors.black26, indent: 20, endIndent: 20),
-              // Padding(
-              //   padding: const EdgeInsets.all(8),
-              //   child: Wrap(
-              //     runSpacing: 2,
-              //     spacing: 5,
-              //     children: [
-              //       ...bdesigngroom.map(
-              //         (vendor) => bookingdesign(
-              //           vendor['newimage']!,
-              //           vendor['texttitle']!,
-              //           int.parse(vendor['money']!),
-              //           vendor['eventdates']!,
-              //           context,
-              //         ),
-              //       )
-              //     ],
-              //   ),
-              // ),
+           Padding(
+                padding: const EdgeInsets.all(8),
+                child: Wrap(
+                  runSpacing: 2,
+                  spacing: 5,
+                  children: [
+                    if (getbookig.isEmpty && serviceItems1.isEmpty)
+                      const Center(
+                        heightFactor: 5,
+                        child: CircularProgressIndicator(),
+                      ),
+                    if (getbookig.isNotEmpty && serviceItems1.isNotEmpty)
+                      for (int i = 0; i < getbookig.length; i++)
+                        bookingdesign(
+                            serviceItems1[i].images[0].toString(),
+                            serviceItems1[i].itemName.toString(),
+                            serviceItems1[i].approxPrice.toInt(),
+                            getbookig[i].eventDate,
+                            context),
+                  ],
+                ),
+              ),
             ],
           ),
         ),

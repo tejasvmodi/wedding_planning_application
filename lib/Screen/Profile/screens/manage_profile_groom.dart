@@ -29,10 +29,10 @@ class _ManageMprofileState extends State<ManageMprofile> {
       log(getcouple.toString());
       if (getcouple.isNotEmpty) {
         // ignore: unrelated_type_equality_checks
-        if (int.parse(getcouple[0].bride) == widget.userid) {
-          getcoupleinformation(int.parse(getcouple[0].groom));
+        if (int.parse(getcouple[0].bride.toString()) == widget.userid) {
+          getcoupleinformation(int.parse(getcouple[0].groom.toString()));
         } else {
-          getcoupleinformation(int.parse(getcouple[0].bride));
+          getcoupleinformation(int.parse(getcouple[0].bride.toString()));
         }
       }
     });
@@ -388,7 +388,7 @@ class _ManageMprofileState extends State<ManageMprofile> {
                                   ),
                                   if (getcouple.isNotEmpty)
                                     Expanded(
-                                      child: int.parse(getcouple[0].bride) ==
+                                      child: int.parse(getcouple[0].bride.toString()) ==
                                               widget.userid
                                           ? const Text(
                                               'bride',

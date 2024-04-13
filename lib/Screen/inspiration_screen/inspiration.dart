@@ -21,7 +21,7 @@ class InspirationW extends StatefulWidget {
 
 class _InspirationWState extends State<InspirationW> {
   InspirationSefrvice ins = InspirationSefrvice();
-  final ProfileService userinfo = Get.find();
+  final ProfileService userinfo = ProfileService();
   List<inspirationModel> getinspiration = [];
   List<GetprofileModel> profil = [];
   @override

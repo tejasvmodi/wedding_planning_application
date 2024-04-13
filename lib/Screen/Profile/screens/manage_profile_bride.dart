@@ -27,7 +27,7 @@ class ManageFprofile extends StatefulWidget {
 }
 
 class _ManageFprofileState extends State<ManageFprofile> {
-  final ProfileService profile = Get.find();
+  final ProfileService profile = ProfileService();
   List<GetprofileModel> getuser = [];
   List<StateModel> getstate = [];
   List<CityModel> city = [];
@@ -625,7 +625,7 @@ class _ManageFprofileState extends State<ManageFprofile> {
                               ),
                               if(getcouple.isNotEmpty && getuser.isNotEmpty)
                               Expanded(
-                                child: int.parse(getcouple[0].bride) == getuser[0].userId
+                                child: int.parse(getcouple[0].bride.toString()) == getuser[0].userId
                                     ? const Text(
                                         'Bride',
                                         textAlign: TextAlign.left,
