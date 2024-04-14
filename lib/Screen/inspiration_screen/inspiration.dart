@@ -76,18 +76,18 @@ class _InspirationWState extends State<InspirationW> {
           ),
         ),
         elevation: 0,
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(
-              MdiIcons.bookmarkOutline,
-              size: 40,
-            ),
-          ),
-          const SizedBox(
-            width: 5,
-          )
-        ],
+        // actions: [
+        //   IconButton(
+        //     onPressed: () {},
+        //     icon: Icon(
+        //       MdiIcons.bookmarkOutline,
+        //       size: 40,
+        //     ),
+        //   ),
+        //   const SizedBox(
+        //     width: 5,
+        //   )
+        // ],
       ),
       drawer: const Drawer123(),
       body: Container(

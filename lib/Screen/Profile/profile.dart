@@ -2,11 +2,13 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:wedding_planning_application/Screen/Booking/WishList/Wishlist.dart';
+import 'package:wedding_planning_application/Screen/emergency_contacts/emergency_contact_list.dart';
 import 'package:wedding_planning_application/models/Inspiration/inspirationmodel.dart';
 import 'package:wedding_planning_application/models/ProfileModels/getprofilemodel.dart';
 import 'package:wedding_planning_application/screen/authentication/forms/login_form.dart';
 import 'package:wedding_planning_application/screen/booking/my_bookings/show_bookings.dart';
-import 'package:wedding_planning_application/screen/common_components/drawer.dart'; 
+import 'package:wedding_planning_application/screen/common_components/drawer.dart';
 import 'package:wedding_planning_application/screen/other_screens/review.dart';
 import 'package:wedding_planning_application/screen/other_screens/support.dart';
 import 'package:wedding_planning_application/screen/profile/components/account_items.dart';
@@ -30,37 +32,37 @@ class _ProfileState extends State<Profile> {
   final ProfileService profile = ProfileService();
   InspirationSefrvice ins = InspirationSefrvice();
   AddressService address = AddressService();
- 
+
   List<inspirationModel> getinspiration = [];
   // List<inspirationModel> inspiration = [];
-  List<GetprofileModel> profil =[];
- 
-@override
+  List<GetprofileModel> profil = [];
+
+  @override
   void initState() {
     super.initState();
     fetchProfileData();
-   
   }
 
-     Future<void> fetchProfileData() async {
+  Future<void> fetchProfileData() async {
     await getserviceitemdata();
     await fetchInspiration();
   }
-   
-  
- Future<void> fetchInspiration() async {
-  getinspiration = await ins.getallinspiration();
-  setState(() {
-    getinspiration = getinspiration.where((inspiration) => inspiration.user == profil[0].userId.toString()).toList();
-    // log(getinspiration.toString());
-  });
-}
 
+  Future<void> fetchInspiration() async {
+    getinspiration = await ins.getallinspiration();
+    setState(() {
+      getinspiration = getinspiration
+          .where(
+              (inspiration) => inspiration.user == profil[0].userId.toString())
+          .toList();
+      // log(getinspiration.toString());
+    });
+  }
 
   Future<void> getserviceitemdata() async {
     try {
-      profil = await profile.getprofile(); 
-    
+      profil = await profile.getprofile();
+
       setState(() {
         profil;
         // log(profil.toString());
@@ -70,7 +72,6 @@ class _ProfileState extends State<Profile> {
     }
   }
 
-  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -93,15 +94,15 @@ class _ProfileState extends State<Profile> {
             ),
           ),
           elevation: 0,
-          actions: [
-            IconButton(
-                onPressed: () {},
-                icon: Icon(
-                  MdiIcons.googleTranslate,
-                  size: 45,
-                  color: const Color.fromRGBO(85, 32, 32, 1),
-                ))
-          ],
+          // actions: [
+          //   IconButton(
+          //       onPressed: () {},
+          //       icon: Icon(
+          //         MdiIcons.googleTranslate,
+          //         size: 45,
+          //         color: const Color.fromRGBO(85, 32, 32, 1),
+          //       ))
+          // ],
         ),
         drawer: const Drawer123(),
         body: SingleChildScrollView(
@@ -113,9 +114,10 @@ class _ProfileState extends State<Profile> {
                   heightFactor: 10,
                   child: CircularProgressIndicator(),
                 ),
-            
-              if(profil.isNotEmpty)
-              profilephoto(profil[0].firstName, profil[0].avatar.url.toString()),
+
+              if (profil.isNotEmpty)
+                profilephoto(
+                    profil[0].firstName, profil[0].avatar.url.toString()),
               accountitem('My Booking', MdiIcons.listBoxOutline, context,
                   const ShowBooking()),
               const Divider(
@@ -124,16 +126,36 @@ class _ProfileState extends State<Profile> {
                 color: Color.fromRGBO(68, 45, 45, 1),
               ),
               accountitem('Manage Profile', MdiIcons.account, context,
-                 const ManageFprofile()),
+                  const ManageFprofile()),
               const Divider(
                 indent: 25,
                 endIndent: 25,
                 color: Color.fromRGBO(68, 45, 45, 1),
               ),
-              if(getinspiration.isNotEmpty && profil.isNotEmpty)
-               accountitem('Edit your inspiration', MdiIcons.lightbulbOutline, context,
-                 Editpost(getinspiration: getinspiration, username:"${profil[0].firstName}  ${profil[0].lastName}",)),
-                  if(getinspiration.isNotEmpty && profil.isNotEmpty)
+              if (getinspiration.isNotEmpty && profil.isNotEmpty)
+                accountitem(
+                    'Edit your inspiration',
+                    MdiIcons.lightbulbOutline,
+                    context,
+                    Editpost(
+                      getinspiration: getinspiration,
+                      username: "${profil[0].firstName}  ${profil[0].lastName}",
+                    )),
+              if (getinspiration.isNotEmpty && profil.isNotEmpty)
+                const Divider(
+                  indent: 25,
+                  endIndent: 25,
+                  color: Color.fromRGBO(68, 45, 45, 1),
+                ),
+              accountitem('Wishlist', MdiIcons.thumbUpOutline, context,
+                  const WishListW()),
+              const Divider(
+                indent: 25,
+                endIndent: 25,
+                color: Color.fromRGBO(68, 45, 45, 1),
+              ),
+              accountitem('Emergency Contacts', MdiIcons.contactsOutline, context,
+                  const EmergencycontlistW()),
               const Divider(
                 indent: 25,
                 endIndent: 25,
@@ -160,20 +182,20 @@ class _ProfileState extends State<Profile> {
               //   endIndent: 25,
               //   color: Color.fromRGBO(68, 45, 45, 1),
               // ),
-              accountitem('Contanct Support', MdiIcons.phoneOutline, context,
-                  const SupportW()),
-              const Divider(
-                indent: 25,
-                endIndent: 25,
-                color: Color.fromRGBO(68, 45, 45, 1),
-              ),
-              accountitem('Write a Review', MdiIcons.pencilOutline, context,
-                  const Revieww()),
-              const Divider(
-                indent: 25,
-                endIndent: 25,
-                color: Color.fromRGBO(68, 45, 45, 1),
-              ),
+              // accountitem('Contanct Support', MdiIcons.phoneOutline, context,
+              //     const SupportW()),
+              // const Divider(
+              //   indent: 25,
+              //   endIndent: 25,
+              //   color: Color.fromRGBO(68, 45, 45, 1),
+              // ),
+              // accountitem('Write a Review', MdiIcons.pencilOutline, context,
+              //     const Revieww()),
+              // const Divider(
+              //   indent: 25,
+              //   endIndent: 25,
+              //   color: Color.fromRGBO(68, 45, 45, 1),
+              // ),
               // accountitem(
               // 'Log In/Out', MdiIcons.login, context, const Login_form()),
               Row(
@@ -199,12 +221,16 @@ class _ProfileState extends State<Profile> {
                             letterSpacing: 0,
                             fontWeight: FontWeight.w600,
                             height: 1)),
-                    onTap: () async{
-                        SharedPreferences prefs = await SharedPreferences.getInstance();
-                        prefs.clear();
-                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-                        return const LoginForm();
-                      },));
+                    onTap: () async {
+                      SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
+                      prefs.clear();
+                      // ignore: use_build_context_synchronously
+                      Navigator.pushReplacement(context, MaterialPageRoute(
+                        builder: (context) {
+                          return const LoginForm();
+                        },
+                      ));
                     },
                   ),
                 ],
@@ -219,4 +245,3 @@ class _ProfileState extends State<Profile> {
         ));
   }
 }
-

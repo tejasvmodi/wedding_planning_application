@@ -136,16 +136,16 @@ class _CheckListWState extends State<CheckListW> {
             ),
           ),
         ),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(
-              allSelected ? MdiIcons.refresh : MdiIcons.check,
-              size: 30,
-              color: const Color.fromRGBO(62, 53, 53, 1),
-            ),
-          ),
-        ],
+        // actions: [
+        //   IconButton(
+        //     onPressed: () {},
+        //     icon: Icon(
+        //       allSelected ? MdiIcons.refresh : MdiIcons.check,
+        //       size: 30,
+        //       color: const Color.fromRGBO(62, 53, 53, 1),
+        //     ),
+        //   ),
+        // ],
       ),
       drawer: const Drawer123(),
       body: Container(

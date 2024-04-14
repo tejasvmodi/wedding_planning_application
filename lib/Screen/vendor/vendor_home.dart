@@ -90,63 +90,50 @@ class _VendorHomeState extends State<VendorHome> {
         ),
         child: Column(children: [
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.07,
+            height: MediaQuery.of(context).size.height * 0.01,
             child: Container(
-              decoration: BoxDecoration(
-                color: const Color.fromRGBO(255, 217, 249, 1),
-                border: Border.all(
-                  color: const Color.fromRGBO(111, 80, 80, 1),
-                  width: 1,
-                ),
-              ),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      MdiIcons.tuneVertical,
-                      size: MediaQuery.of(context).size.height * 0.056,
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.search,
-                      size: MediaQuery.of(context).size.height * 0.056,
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      MdiIcons.bookmarkOutline,
-                      size: MediaQuery.of(context).size.height * 0.056,
-                    ),
-                  ),
-                ],
-              ),
+              decoration: const BoxDecoration(
+                  color: Color.fromRGBO(255, 217, 249, 1),
+                  border: Border(top: BorderSide(color: Colors.black))),
+              // child: Row(
+              //   crossAxisAlignment: CrossAxisAlignment.stretch,
+              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //   children: [
+              //     IconButton(
+              //       onPressed: () {},
+              //       icon: Icon(
+              //         MdiIcons.tuneVertical,
+              //         size: MediaQuery.of(context).size.height * 0.056,
+              //       ),
+              //     ),
+              //     IconButton(
+              //       onPressed: () {},
+              //       icon: Icon(
+              //         Icons.search,
+              //         size: MediaQuery.of(context).size.height * 0.056,
+              //       ),
+              //     ),
+              //     IconButton(
+              //       onPressed: () {},
+              //       icon: Icon(
+              //         MdiIcons.bookmarkOutline,
+              //         size: MediaQuery.of(context).size.height * 0.056,
+              //       ),
+              //     ),
+              //   ],
+              // ),
             ),
           ),
           const SizedBox(height: 25),
-        Expanded(
-          
-  child: SingleChildScrollView(
-    scrollDirection: Axis.vertical,
-    child: 
-          Wrap( spacing: 8, children: [
-                    ...items.map((vendor) => vendorBox(
-                        vendor.category,
-                        vendor.variationOptions,
-
-                        context)),
-                  ]),
-
-                
-    ),
-  ),
-
-
+          Expanded(
+            child: items.isNotEmpty ? SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Wrap(spacing: 8, children: [
+                ...items.map((vendor) => vendorBox(
+                    vendor.category, vendor.variationOptions, context)),
+              ]),
+            ): const Center(child: CircularProgressIndicator()),
+          ),
         ]),
       ),
     );

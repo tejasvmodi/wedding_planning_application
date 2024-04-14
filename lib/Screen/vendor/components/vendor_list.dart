@@ -4,8 +4,8 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:wedding_planning_application/Screen/Booking/WishList/Wishlist.dart';
 import 'package:wedding_planning_application/screen/vendor/vendor_single_view.dart';
 
-Widget vendorList(
-    String imagedata, String texttitle, String textdata, String description, int serviceid,BuildContext context) {
+Widget vendorList(String imagedata, String texttitle, String textdata,
+    String description, int serviceid, BuildContext context) {
   return SizedBox(
     width: MediaQuery.of(context).size.width / 2 -
         12.0, // Divide by the number of photos per row
@@ -36,78 +36,74 @@ Widget vendorList(
           ),
         ),
         Positioned(
-          top: MediaQuery.of(context).size.height * 0.19,
+          top: MediaQuery.of(context).size.height * 0.20,
           left: -6,
           child: Container(
+            padding:
+                EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.04),
             margin: EdgeInsetsDirectional.zero,
             width: MediaQuery.of(context).size.width * 0.47,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                IconButton(
-                  onPressed: () {
-                    Get.to(() => const WishListW());
-                  },
-                  icon: Icon(
-                    MdiIcons.bookmarkOutline,
-                    size: 30,
-                    color: Colors.white,
-                  ),
-                ),
+                // IconButton(
+                //   onPressed: () {
+                //     Get.to(() => const WishListW());
+                //   },
+                //   icon: Icon(
+                //     MdiIcons.bookmarkOutline,
+                //     size: 30,
+                //     color: Colors.white,
+                //   ),
+                // ),
+
                 Expanded(
                   child: Column(
-                   mainAxisAlignment: MainAxisAlignment.start,
-                   crossAxisAlignment: CrossAxisAlignment.start,            
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                         texttitle,
+                        texttitle,
                         style: const TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'EBGaramond',
-                          fontSize: 15,
-                          letterSpacing: 0,
-                          fontWeight: FontWeight.bold,
-                          overflow: TextOverflow.ellipsis
-                        
-                        ),
-                      ),
-                    
-                      SizedBox(
-                      
-                        child: Text(
-                          textdata,
-                           textAlign: TextAlign.justify,
-                  
-                          style: const TextStyle(
                             color: Colors.white,
                             fontFamily: 'EBGaramond',
-                           fontStyle: FontStyle.normal,
-                             
-                            fontSize: 10,
+                            fontSize: 15,
                             letterSpacing: 0,
-                            fontWeight: FontWeight.normal,
-                            height: 1,
-                            overflow:  TextOverflow.ellipsis
-                          ),
+                            fontWeight: FontWeight.bold,
+                            overflow: TextOverflow.ellipsis),
+                      ),
+                      SizedBox(
+                        child: Text(
+                          textdata,
+                          textAlign: TextAlign.justify,
+                          style: const TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'EBGaramond',
+                              fontStyle: FontStyle.normal,
+                              fontSize: 10,
+                              letterSpacing: 0,
+                              fontWeight: FontWeight.normal,
+                              height: 1,
+                              overflow: TextOverflow.ellipsis),
                         ),
                       ),
                     ],
                   ),
                 ),
-                IconButton(
-                  onPressed: () {
-                    Icon(
-                      MdiIcons.heart,
-                      size: 30,
-                      color: Colors.black,
-                    );
-                  },
-                  icon: Icon(
-                    MdiIcons.heartOutline,
-                    size: 30,
-                    color: Colors.white,
-                  ),
-                ),
+                // IconButton(
+                //   onPressed: () {
+                //     Icon(
+                //       MdiIcons.heart,
+                //       size: 30,
+                //       color: Colors.black,
+                //     );
+                //   },
+                //   icon: Icon(
+                //     MdiIcons.heartOutline,
+                //     size: 30,
+                //     color: Colors.white,
+                //   ),
+                // ),
               ],
             ),
           ),
@@ -122,10 +118,9 @@ Widget vendorList(
             height: MediaQuery.of(context).size.height * 0.06,
             child: TextButton(
               onPressed: () {
-                
                 Get.to(() => VendorSingleView(
-                   serviceid: serviceid,
-                    description: description,
+                      serviceid: serviceid,
+                      description: description,
                     ));
               },
               style: ButtonStyle(

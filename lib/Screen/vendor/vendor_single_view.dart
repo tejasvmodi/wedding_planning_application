@@ -128,41 +128,42 @@ class _VendorSingleViewState extends State<VendorSingleView> {
           ),
           child: Column(
             children: [
-              SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.07,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: const Color.fromRGBO(255, 217, 249, 1),
-                      border: Border.all(
-                        color: const Color.fromRGBO(111, 80, 80, 1),
-                        width: 1,
-                      ),
-                    ),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        IconButton(
-                            onPressed: () {},
-                            icon: Icon(
-                              MdiIcons.tuneVertical,
-                              size: MediaQuery.of(context).size.height * 0.056,
-                            )),
-                        IconButton(
-                            onPressed: () {},
-                            icon: Icon(
-                              Icons.search,
-                              size: MediaQuery.of(context).size.height * 0.056,
-                            )),
-                        IconButton(
-                            onPressed: () {},
-                            icon: Icon(
-                              MdiIcons.bookmarkOutline,
-                              size: MediaQuery.of(context).size.height * 0.056,
-                            )),
-                      ],
-                    ),
-                  )),
+               const Divider(color: Colors.black,),
+              // SizedBox(
+              //     height: MediaQuery.of(context).size.height * 0.07,
+              //     child: Container(
+              //       decoration: BoxDecoration(
+              //         color: const Color.fromRGBO(255, 217, 249, 1),
+              //         border: Border.all(
+              //           color: const Color.fromRGBO(111, 80, 80, 1),
+              //           width: 1,
+              //         ),
+              //       ),
+                    // child: Row(
+                    //   crossAxisAlignment: CrossAxisAlignment.stretch,
+                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //   children: [
+                    //     IconButton(
+                    //         onPressed: () {},
+                    //         icon: Icon(
+                    //           MdiIcons.tuneVertical,
+                    //           size: MediaQuery.of(context).size.height * 0.056,
+                    //         )),
+                    //     IconButton(
+                    //         onPressed: () {},
+                    //         icon: Icon(
+                    //           Icons.search,
+                    //           size: MediaQuery.of(context).size.height * 0.056,
+                    //         )),
+                    //     IconButton(
+                    //         onPressed: () {},
+                    //         icon: Icon(
+                    //           MdiIcons.bookmarkOutline,
+                    //           size: MediaQuery.of(context).size.height * 0.056,
+                    //         )),
+                    //   ],
+                    // ),
+                  // )),
               Expanded(
                 child: SingleChildScrollView(
                     scrollDirection: Axis.vertical,
