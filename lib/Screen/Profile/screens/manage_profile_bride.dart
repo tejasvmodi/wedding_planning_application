@@ -696,7 +696,7 @@ class _ManageFprofileState extends State<ManageFprofile> {
                                   Expanded(
                                     child: bride
                                         ? const Text(
-                                            'Groom',
+                                            'Bride',
                                             textAlign: TextAlign.left,
                                             style: TextStyle(
                                               color:
@@ -709,7 +709,7 @@ class _ManageFprofileState extends State<ManageFprofile> {
                                             ),
                                           )
                                         : const Text(
-                                            'Bride',
+                                            'Groom',
                                             textAlign: TextAlign.left,
                                             style: TextStyle(
                                               color:

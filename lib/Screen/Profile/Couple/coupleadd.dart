@@ -2,8 +2,11 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:wedding_planning_application/Screen/Screen_Navigation.dart';
 import 'package:wedding_planning_application/screen/profile/screens/manage_profile_groom.dart';
 import 'package:wedding_planning_application/services/Couple/couple.dart';
+import 'package:wedding_planning_application/services/Userid/userid.dart';
 
 class AddCouple extends StatefulWidget {
   const AddCouple({super.key, required this.userid});
@@ -14,11 +17,26 @@ class AddCouple extends StatefulWidget {
 }
 
 class _AddCoupleState extends State<AddCouple> {
-  TextEditingController firstname= TextEditingController();
-  TextEditingController lastname= TextEditingController();
-  TextEditingController email= TextEditingController();
+  TextEditingController firstname = TextEditingController();
+  TextEditingController lastname = TextEditingController();
+  TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
-  String _selectedGender = 'BRIDE';
+  String _selectedGender = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _loadGenderFromPrefs();
+  }
+
+  Future<void> _loadGenderFromPrefs() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    log('add this in the ${prefs.getString('gender')}');
+    _selectedGender = (prefs.getString('gender') ?? 'BRIDE');
+    log(_selectedGender.toString());
+    log('No couples found in SharedPreferences.');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,12 +90,11 @@ class _AddCoupleState extends State<AddCouple> {
                 height: 60,
                 width: double.infinity,
               ),
-          
               const SizedBox(
                 height: 20,
               ),
               Container(
-                height: 450,
+                height: 390,
                 width: 340,
                 decoration: BoxDecoration(
                     border: Border.all(color: Colors.black),
@@ -106,7 +123,7 @@ class _AddCoupleState extends State<AddCouple> {
                         ],
                         color: Color.fromRGBO(245, 201, 238, 1),
                       ),
-                      child:  TextField(
+                      child: TextField(
                         controller: firstname,
                         keyboardType: TextInputType.multiline,
                         maxLines: 1,
@@ -122,95 +139,6 @@ class _AddCoupleState extends State<AddCouple> {
                               fontWeight: FontWeight.normal,
                               height: 1),
                         ),
-                        
-                        style: const TextStyle(
-                            color: Color.fromRGBO(85, 32, 32, 1),
-                            fontFamily: 'EBGaramond',
-                            fontSize: 20,
-                            letterSpacing: 0,
-                            fontWeight: FontWeight.normal,
-                            height: 1),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Container(
-                      width: 300,
-                      height: 50,
-                      decoration: const BoxDecoration(
-                        borderRadius:
-                            BorderRadius.all(Radius.elliptical(23, 23)),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Color.fromRGBO(0, 0, 0, 0.25),
-                            offset: Offset(0, 1),
-                            blurRadius: 4,
-                          )
-                        ],
-                        color: Color.fromRGBO(245, 201, 238, 1),
-                      ),
-                      child:  TextField(
-                        // keyboardType: TextInputType.number,
-                        controller:  lastname,
-                        maxLines: 1,
-                        decoration: const InputDecoration(
-                          border:
-                              OutlineInputBorder(borderSide: BorderSide.none),
-                          hintText: 'Last Name',
-                          hintStyle: TextStyle(
-                              color: Color.fromRGBO(85, 32, 32, 1),
-                              fontFamily: 'EBGaramond',
-                              fontSize: 20,
-                              letterSpacing: 0,
-                              fontWeight: FontWeight.normal,
-                              height: 1),
-                        ),
-                        
-                        style: const TextStyle(
-                            color: Color.fromRGBO(85, 32, 32, 1),
-                            fontFamily: 'EBGaramond',
-                            fontSize: 20,
-                            letterSpacing: 0,
-                            fontWeight: FontWeight.normal,
-                            height: 1),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Container(
-                      width: 300,
-                      height: 50,
-                      decoration: const BoxDecoration(
-                        borderRadius:
-                            BorderRadius.all(Radius.elliptical(23, 23)),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Color.fromRGBO(0, 0, 0, 0.25),
-                            offset: Offset(0, 1),
-                            blurRadius: 4,
-                          )
-                        ],
-                        color: Color.fromRGBO(245, 201, 238, 1),
-                      ),
-                       child:  TextField(
-                        // keyboardType: TextInputType.number,
-                        controller: email ,
-                        maxLines: 1,
-                        decoration: const InputDecoration(
-                          border:
-                              OutlineInputBorder(borderSide: BorderSide.none),
-                          hintText: 'Email',
-                          hintStyle: TextStyle(
-                              color: Color.fromRGBO(85, 32, 32, 1),
-                              fontFamily: 'EBGaramond',
-                              fontSize: 20,
-                              letterSpacing: 0,
-                              fontWeight: FontWeight.normal,
-                              height: 1),
-                        ),
-                        
                         style: const TextStyle(
                             color: Color.fromRGBO(85, 32, 32, 1),
                             fontFamily: 'EBGaramond',
@@ -240,7 +168,95 @@ class _AddCoupleState extends State<AddCouple> {
                       ),
                       child: TextField(
                         // keyboardType: TextInputType.number,
-                        controller: password ,
+                        controller: lastname,
+                        maxLines: 1,
+                        decoration: const InputDecoration(
+                          border:
+                              OutlineInputBorder(borderSide: BorderSide.none),
+                          hintText: 'Last Name',
+                          hintStyle: TextStyle(
+                              color: Color.fromRGBO(85, 32, 32, 1),
+                              fontFamily: 'EBGaramond',
+                              fontSize: 20,
+                              letterSpacing: 0,
+                              fontWeight: FontWeight.normal,
+                              height: 1),
+                        ),
+
+                        style: const TextStyle(
+                            color: Color.fromRGBO(85, 32, 32, 1),
+                            fontFamily: 'EBGaramond',
+                            fontSize: 20,
+                            letterSpacing: 0,
+                            fontWeight: FontWeight.normal,
+                            height: 1),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      width: 300,
+                      height: 50,
+                      decoration: const BoxDecoration(
+                        borderRadius:
+                            BorderRadius.all(Radius.elliptical(23, 23)),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Color.fromRGBO(0, 0, 0, 0.25),
+                            offset: Offset(0, 1),
+                            blurRadius: 4,
+                          )
+                        ],
+                        color: Color.fromRGBO(245, 201, 238, 1),
+                      ),
+                      child: TextField(
+                        // keyboardType: TextInputType.number,
+                        controller: email,
+                        maxLines: 1,
+                        decoration: const InputDecoration(
+                          border:
+                              OutlineInputBorder(borderSide: BorderSide.none),
+                          hintText: 'Email',
+                          hintStyle: TextStyle(
+                              color: Color.fromRGBO(85, 32, 32, 1),
+                              fontFamily: 'EBGaramond',
+                              fontSize: 20,
+                              letterSpacing: 0,
+                              fontWeight: FontWeight.normal,
+                              height: 1),
+                        ),
+
+                        style: const TextStyle(
+                            color: Color.fromRGBO(85, 32, 32, 1),
+                            fontFamily: 'EBGaramond',
+                            fontSize: 20,
+                            letterSpacing: 0,
+                            fontWeight: FontWeight.normal,
+                            height: 1),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      width: 300,
+                      height: 50,
+                      decoration: const BoxDecoration(
+                        borderRadius:
+                            BorderRadius.all(Radius.elliptical(23, 23)),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Color.fromRGBO(0, 0, 0, 0.25),
+                            offset: Offset(0, 1),
+                            blurRadius: 4,
+                          )
+                        ],
+                        color: Color.fromRGBO(245, 201, 238, 1),
+                      ),
+                      child: TextField(
+                        // keyboardType: TextInputType.number,
+                        controller: password,
                         maxLines: 1,
                         decoration: const InputDecoration(
                           border:
@@ -254,7 +270,7 @@ class _AddCoupleState extends State<AddCouple> {
                               fontWeight: FontWeight.normal,
                               height: 1),
                         ),
-                        
+
                         style: const TextStyle(
                             color: Color.fromRGBO(85, 32, 32, 1),
                             fontFamily: 'EBGaramond',
@@ -264,66 +280,66 @@ class _AddCoupleState extends State<AddCouple> {
                             height: 1),
                       ),
                     ),
-                    
+
                     const SizedBox(
                       height: 20,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 1, 0, 0),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: ListTile(
-                              leading: Radio<String>(
-                                activeColor:
-                                    const Color.fromRGBO(54, 29, 29, 1),
-                                value: 'BRIDE',
-                                groupValue: _selectedGender,
-                                onChanged: (value) {
-                                  setState(() {
-                                    _selectedGender = value!;
-                                  });
-                                },
-                              ),
-                              title: const Text('Bride',
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(
-                                      color: Color.fromRGBO(62, 53, 53, 1),
-                                      fontFamily: 'EBGaramond',
-                                      fontSize: 20,
-                                      letterSpacing: 0,
-                                      fontWeight: FontWeight.bold,
-                                      height: 1)),
-                            ),
-                          ),
-                          // Add spacing between options
-                          Expanded(
-                            child: ListTile(
-                              leading: Radio<String>(
-                                activeColor:
-                                    const Color.fromRGBO(54, 29, 29, 1),
-                                value: 'GROOM',
-                                groupValue: _selectedGender,
-                                onChanged: (value) {
-                                  setState(() {
-                                    _selectedGender = value!;
-                                  });
-                                },
-                              ),
-                              title: const Text('Groom',
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(
-                                      color: Color.fromRGBO(54, 29, 29, 1),
-                                      fontFamily: 'EBGaramond',
-                                      fontSize: 20,
-                                      letterSpacing: 0,
-                                      fontWeight: FontWeight.bold,
-                                      height: 1)),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                    // Padding(
+                    //   padding: const EdgeInsets.fromLTRB(0, 1, 0, 0),
+                    //   child: Row(
+                    //     children: [
+                    //       Expanded(
+                    //         child: ListTile(
+                    //           leading: Radio<String>(
+                    //             activeColor:
+                    //                 const Color.fromRGBO(54, 29, 29, 1),
+                    //             value: 'BRIDE',
+                    //             groupValue: _selectedGender,
+                    //             onChanged: (value) {
+                    //               setState(() {
+                    //                 _selectedGender = value!;
+                    //               });
+                    //             },
+                    //           ),
+                    //           title: const Text('Bride',
+                    //               textAlign: TextAlign.left,
+                    //               style: TextStyle(
+                    //                   color: Color.fromRGBO(62, 53, 53, 1),
+                    //                   fontFamily: 'EBGaramond',
+                    //                   fontSize: 20,
+                    //                   letterSpacing: 0,
+                    //                   fontWeight: FontWeight.bold,
+                    //                   height: 1)),
+                    //         ),
+                    //       ),
+                    //       // Add spacing between options
+                    //       Expanded(
+                    //         child: ListTile(
+                    //           leading: Radio<String>(
+                    //             activeColor:
+                    //                 const Color.fromRGBO(54, 29, 29, 1),
+                    //             value: 'GROOM',
+                    //             groupValue: _selectedGender,
+                    //             onChanged: (value) {
+                    //               setState(() {
+                    //                 _selectedGender = value!;
+                    //               });
+                    //             },
+                    //           ),
+                    //           title: const Text('Groom',
+                    //               textAlign: TextAlign.left,
+                    //               style: TextStyle(
+                    //                   color: Color.fromRGBO(54, 29, 29, 1),
+                    //                   fontFamily: 'EBGaramond',
+                    //                   fontSize: 20,
+                    //                   letterSpacing: 0,
+                    //                   fontWeight: FontWeight.bold,
+                    //                   height: 1)),
+                    //         ),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
                     SizedBox(
                       height: 50,
                       width: 300,
@@ -335,13 +351,42 @@ class _AddCoupleState extends State<AddCouple> {
                             log(password.text.toString());
                             log(_selectedGender.toString());
                             log(widget.userid.toString());
-                            Coupleservice couple = Coupleservice();
-                            couple.addcouple(firstname.text, lastname.text, email.text, password.text, _selectedGender, widget.userid).then((value) {
-                              Future.delayed( Duration(seconds: 1),(){
-                                Get.to(()=>  ManageMprofile(userid: int.parse(widget.userid),));
-                              });
-                            });
 
+                            if (_selectedGender.toString() == 'GROOM') {
+                              Coupleservice couple = Coupleservice();
+                              couple
+                                  .addcouple(
+                                      firstname.text,
+                                      lastname.text,
+                                      email.text,
+                                      password.text,
+                                      'BRIDE',
+                                      widget.userid)
+                                  .then((value) {
+                                Future.delayed(Duration(seconds: 1), () {
+                                  Get.to(() => ManageMprofile(
+                                        userid: int.parse(widget.userid),
+                                      ));
+                                });
+                              });
+                            } else {
+                              Coupleservice couple = Coupleservice();
+                              couple
+                                  .addcouple(
+                                      firstname.text,
+                                      lastname.text,
+                                      email.text,
+                                      password.text,
+                                      'GROOM',
+                                      widget.userid)
+                                  .then((value) {
+                                Future.delayed(const Duration(seconds: 1), () {
+                                  Get.to(() => ScreenNavigation(
+                                        currentIndex: 4,
+                                      ));
+                                });
+                              });
+                            }
                           },
                           style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all(

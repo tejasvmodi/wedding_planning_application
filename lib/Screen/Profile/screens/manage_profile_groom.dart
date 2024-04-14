@@ -458,7 +458,7 @@ class _ManageMprofileState extends State<ManageMprofile> {
                                     Expanded(
                                       child: bride
                                           ? const Text(
-                                              'Bride',
+                                              'Groom',
                                               textAlign: TextAlign.left,
                                               style: TextStyle(
                                                 color: Color.fromRGBO(
@@ -471,7 +471,7 @@ class _ManageMprofileState extends State<ManageMprofile> {
                                               ),
                                             )
                                           : const Text(
-                                              'Groom',
+                                              'Bride',
                                               textAlign: TextAlign.left,
                                               style: TextStyle(
                                                 color: Color.fromRGBO(
