@@ -8,12 +8,13 @@ import 'package:wedding_planning_application/util/constant.dart';
 
 class ServiceItemRepo {
   Future<Content<List<ServiceitemModel>>> getitemService(int serviceId) async {
+    log(serviceId.toString());
     final response = await http.get(
       Uri.parse('$apiUrl/service-item/service?service=$serviceId'),
       headers: createAuthorizationHeaders(await TokenManager.getToken()),
     );
     if (response.statusCode == 200) {
-      // log(response.body);
+      log(response.body);
       try {
         final Map<String, dynamic> jsonResponse = json.decode(response.body);
         List<ServiceitemModel> service = [];

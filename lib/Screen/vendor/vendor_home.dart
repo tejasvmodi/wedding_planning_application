@@ -16,7 +16,7 @@ class VendorHome extends StatefulWidget {
 }
 
 class _VendorHomeState extends State<VendorHome> {
-  final VendorService vendorService = Get.find();
+  final VendorService vendorService = VendorService();
   List<VendorData> items = [];
 
   @override

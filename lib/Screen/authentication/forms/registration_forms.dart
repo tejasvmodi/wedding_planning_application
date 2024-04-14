@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart'; // Add this import
 import 'package:wedding_planning_application/screen/authentication/forms/login_form.dart';
 import 'package:wedding_planning_application/services/authentication/auth_service.dart';
@@ -12,7 +11,7 @@ class RegistrationForm extends StatefulWidget {
 }
 
 class _RegistrationFormState extends State<RegistrationForm> {
-  final AuthenticationService authService = Get.find();
+  final AuthenticationService authService = AuthenticationService();
   String _selectedGender = 'BRIDE';
   TextEditingController firstName = TextEditingController();
   TextEditingController lastName = TextEditingController();

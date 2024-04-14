@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:wedding_planning_application/Screen/checklist/checklistgroomicon.dart';
 import 'package:wedding_planning_application/models/Booking/getbooking.dart';
 import 'package:wedding_planning_application/models/Booking/showBooking.dart';
 import 'package:wedding_planning_application/models/Couple/Getcouple.dart';
@@ -29,7 +30,8 @@ class _ShowBookingState extends State<ShowBooking> {
 
   String? _selectedGender;
   List<Getcouple> updatedCoupleList = [];
-  String userId1 = '';
+  bool bride = false;
+  int userId1 = 0;
 
   final List<Map<String, dynamic>> bdesignbride = [];
   @override
@@ -40,9 +42,9 @@ class _ShowBookingState extends State<ShowBooking> {
     _loadGenderFromPrefs().then((value) {
       if (updatedCoupleList.isNotEmpty) {
         log(updatedCoupleList[0].groom.toString());
-        log(userId1);
+        log(userId1.toString());
         if (int.parse(updatedCoupleList[0].groom.toString()) ==
-            int.parse(userId1)) {
+            int.parse(userId1.toString())) {
           getbookingcouple(int.parse(updatedCoupleList[0].bride.toString()));
           log('not come here');
           log(updatedCoupleList[0].bride.toString());
@@ -60,11 +62,11 @@ class _ShowBookingState extends State<ShowBooking> {
   Future<void> someFunction() async {
     final userId = await getUserId();
     if (userId != null) {
-      userId1 = userId.toString();
+      userId1 = userId;
       // Use the user ID for further processing
       setState(() {
         userId1;
-        log(userId1);
+        log(userId1.toString());
       });
     } else {
       log('User ID not found in SharedPreferences');
@@ -72,14 +74,22 @@ class _ShowBookingState extends State<ShowBooking> {
   }
 
   Future<void> _loadGenderFromPrefs() async {
-    // final Getcouple? storedCouple = await getCouple();
     final Getcouple? storedCouple = await getCouple();
 
     if (storedCouple != null) {
       setState(() {
         updatedCoupleList = [storedCouple];
-        log(storedCouple.toString());
       });
+
+      if (userId1 != 0 && updatedCoupleList.isNotEmpty) {
+        if (int.parse(updatedCoupleList[0].groom.toString()) != userId1) {
+          if (int.parse(updatedCoupleList[0].bride.toString()) == userId1) {
+            bride = true;
+          } else {
+            bride = false;
+          }
+        }
+      }
     } else {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       _selectedGender = (prefs.getString('gender') ?? 'BRIDE');
@@ -129,7 +139,6 @@ class _ShowBookingState extends State<ShowBooking> {
     }
   }
 
-  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -178,46 +187,38 @@ class _ShowBookingState extends State<ShowBooking> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(top: 10, left: 20),
-                    height: 50,
-                    width: 50,
-                    decoration: const BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage('assets/images/icon_bride.png'),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 30),
-                  const Text(
-                    'Bride',
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      color: Color.fromRGBO(85, 32, 32, 1),
-                      fontFamily: 'EBGaramond',
-                      fontSize: 30,
-                      letterSpacing: 0,
-                      fontWeight: FontWeight.bold,
-                      height: 1,
-                    ),
-                  )
-                ],
-              ),
-              const Divider(color: Colors.black26, indent: 20, endIndent: 20),
+              if (updatedCoupleList.isNotEmpty)
+                bride
+                    ? groomdesign(context, 'icon_bride.png', 'BRIDE')
+                    : groomdesign(context, 'icon_groom.png', 'GROOM'),
+              if (updatedCoupleList.isNotEmpty)
+                const Divider(
+                  indent: 15,
+                  color: Colors.black26,
+                ),
+
+              //for registration when no couple is created
+              if (_selectedGender != null)
+                _selectedGender != 'BRIDE'
+                    ? groomdesign(context, 'icon_groom.png', 'GROOM')
+                    : groomdesign(context, 'icon_bride.png', 'BRIDE'),
+              if (_selectedGender != null)
+                const Divider(
+                  indent: 15,
+                  color: Colors.black26,
+                ),
               Padding(
                 padding: const EdgeInsets.all(8),
                 child: Wrap(
                   runSpacing: 2,
                   spacing: 5,
                   children: [
-                    if (getbook.isEmpty && serviceItems.isEmpty)
-                      const Center(
-                        heightFactor: 5,
-                        child: CircularProgressIndicator(),
-                      ),
+                    if (updatedCoupleList.isNotEmpty)
+                      if (getbook.isEmpty && serviceItems.isEmpty)
+                        const Center(
+                          heightFactor: 5,
+                          child: CircularProgressIndicator(),
+                        ),
                     if (getbook.isNotEmpty && serviceItems.isNotEmpty)
                       for (int i = 0; i < getbook.length; i++)
                         bookingdesign(
@@ -225,50 +226,33 @@ class _ShowBookingState extends State<ShowBooking> {
                             serviceItems[i].itemName.toString(),
                             serviceItems[i].approxPrice.toInt(),
                             getbook[i].eventDate,
+                            int.parse(getbook[i].bookedService),
                             context),
                   ],
                 ),
               ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(top: 20, left: 20),
-                    height: 50,
-                    width: 50,
-                    decoration: const BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage('assets/images/icon_groom.png'),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 30),
-                  const Text(
-                    'Groom',
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      color: Color.fromRGBO(85, 32, 32, 1),
-                      fontFamily: 'EBGaramond',
-                      fontSize: 30,
-                      letterSpacing: 0,
-                      fontWeight: FontWeight.bold,
-                      height: 1,
-                    ),
-                  )
-                ],
-              ),
-              const Divider(color: Colors.black26, indent: 20, endIndent: 20),
-           Padding(
+              if (updatedCoupleList.isNotEmpty)
+                bride
+                    ? groomdesign(context, 'icon_groom.png', 'GROOM')
+                    : groomdesign(context, 'icon_bride.png', 'BRIDE'),
+
+              if (updatedCoupleList.isNotEmpty)
+                const Divider(
+                  indent: 15,
+                  color: Colors.black26,
+                ),
+              Padding(
                 padding: const EdgeInsets.all(8),
                 child: Wrap(
                   runSpacing: 2,
                   spacing: 5,
                   children: [
-                    if (getbookig.isEmpty && serviceItems1.isEmpty)
-                      const Center(
-                        heightFactor: 5,
-                        child: CircularProgressIndicator(),
-                      ),
+                    if (updatedCoupleList.isNotEmpty)
+                      if (getbookig.isEmpty && serviceItems1.isEmpty)
+                        const Center(
+                          heightFactor: 5,
+                          child: CircularProgressIndicator(),
+                        ),
                     if (getbookig.isNotEmpty && serviceItems1.isNotEmpty)
                       for (int i = 0; i < getbookig.length; i++)
                         bookingdesign(
@@ -276,6 +260,7 @@ class _ShowBookingState extends State<ShowBooking> {
                             serviceItems1[i].itemName.toString(),
                             serviceItems1[i].approxPrice.toInt(),
                             getbookig[i].eventDate,
+                            int.parse(getbook[i].bookedService),
                             context),
                   ],
                 ),

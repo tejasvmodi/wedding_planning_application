@@ -72,9 +72,21 @@ class AuthenticationRepository extends GetxController {
       await TokenManager.saveToken(data['token']);
       Get.offAll(() => ScreenNavigation());
     } else {
+        Get.offAll(() => const LoginForm());
+        showSnackkBar(
+          message: 'Added some invalid Credentials',
+          title: 'Try Again',
+          icon: const Icon(Icons.error),
+        );
       throw Exception('Failed to register user');
     }
   } catch (e) {
+     const ex = 'Added some invalid Credentials';
+      showSnackkBar(
+        message: ex,
+        title: 'Try Again',
+        icon: const Icon(Icons.error),
+      );
     log('Exception during registration: $e');
     throw Exception('Failed to register user');
   }

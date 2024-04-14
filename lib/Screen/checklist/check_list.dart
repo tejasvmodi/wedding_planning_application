@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -22,7 +21,8 @@ class _CheckListWState extends State<CheckListW> {
   CheckListService checklist = CheckListService();
   TextEditingController addchecklist = TextEditingController();
   bool allSelected = false;
-  String userId1 = '';
+  bool bride = false;
+  int userId1 = 0;
   List<Getchecklist> getcheck = [];
   List<Getchecklist> getcouplecheck = [];
   String? _selectedGender;
@@ -31,39 +31,39 @@ class _CheckListWState extends State<CheckListW> {
   @override
   void initState() {
     super.initState();
-    someFunction();
+    someFunction().then((value) {
+      setState(() {
+        log('set state from some function in initstate $userId1');
+      });
+    });
+
     getchecklist();
+
     _loadGenderFromPrefs().then((value) {
       if (updatedCoupleList.isNotEmpty) {
-        log(updatedCoupleList[0].groom.toString());
-        log(userId1);
         if (int.parse(updatedCoupleList[0].groom.toString()) ==
-            int.parse(userId1)) {
+            int.parse(userId1.toString())) {
           getchecklistcouple(int.parse(updatedCoupleList[0].bride.toString()));
-          log('not come here');
+          // log('bride here');
           log(updatedCoupleList[0].bride.toString());
         } else {
           getchecklistcouple(int.parse(updatedCoupleList[0].groom.toString()));
-          log('direct here ');
-          log(updatedCoupleList[0].groom.toString());
+          // log('Groom here ');
         }
       } else {
         log('Wait for the seconds ');
       }
     });
-
-    setState(() {});
-    log(_selectedGender.toString());
   }
 
   Future<void> someFunction() async {
     final userId = await getUserId();
     if (userId != null) {
-      userId1 = userId.toString();
+      userId1 = userId;
       // Use the user ID for further processing
       setState(() {
         userId1;
-        log(userId1);
+        log('Some function$userId1');
       });
     } else {
       log('User ID not found in SharedPreferences');
@@ -71,17 +71,28 @@ class _CheckListWState extends State<CheckListW> {
   }
 
   Future<void> _loadGenderFromPrefs() async {
-    // final Getcouple? storedCouple = await getCouple();
     final Getcouple? storedCouple = await getCouple();
 
     if (storedCouple != null) {
       setState(() {
         updatedCoupleList = [storedCouple];
-        log(storedCouple.toString());
       });
+      if (userId1 != 0 && updatedCoupleList.isNotEmpty) {
+        if (int.parse(updatedCoupleList[0].groom.toString()) != userId1) {
+          if (int.parse(updatedCoupleList[0].bride.toString()) == userId1) {
+            bride = true;
+          } else {
+
+            bride = false;
+          }
+        }
+
+      }
     } else {
       SharedPreferences prefs = await SharedPreferences.getInstance();
+      log('add this in the ${prefs.getString('gender')}');
       _selectedGender = (prefs.getString('gender') ?? 'BRIDE');
+      log(_selectedGender.toString());
       log('No couples found in SharedPreferences.');
     }
   }
@@ -98,7 +109,7 @@ class _CheckListWState extends State<CheckListW> {
     getcouplecheck = await checklist.getCheckListcouple(id);
     setState(() {
       getcouplecheck;
-      log(getcouplecheck.toString());
+      // log(getcouplecheck.toString());
     });
   }
 
@@ -156,8 +167,7 @@ class _CheckListWState extends State<CheckListW> {
               children: [
                 //after the couple is created
                 if (updatedCoupleList.isNotEmpty)
-                  int.parse(updatedCoupleList[0].bride.toString()) ==
-                          int.parse(userId1)
+                  bride
                       ? groomdesign(context, 'icon_bride.png', 'BRIDE')
                       : groomdesign(context, 'icon_groom.png', 'GROOM'),
 
@@ -169,7 +179,9 @@ class _CheckListWState extends State<CheckListW> {
 
                 //for registration when no couple is created
                 if (_selectedGender != null)
-                  groomdesign(context, 'icon_groom.png', 'GROOM'),
+                _selectedGender !='BRIDE'?
+                  groomdesign(context, 'icon_groom.png', 'GROOM'):
+                  groomdesign(context, 'icon_bride.png', 'BRIDE'),
                 if (_selectedGender != null)
                   const Divider(
                     indent: 15,
@@ -278,9 +290,8 @@ class _CheckListWState extends State<CheckListW> {
                       ],
                     ),
                   ),
-                if (updatedCoupleList.isNotEmpty && userId1.isNotEmpty)
-                  int.parse(updatedCoupleList[0].bride.toString()) !=
-                          int.parse(userId1)
+                if (updatedCoupleList.isNotEmpty)
+                  bride
                       ? groomdesign(context, 'icon_groom.png', 'GROOM')
                       : groomdesign(context, 'icon_bride.png', 'BRIDE'),
 

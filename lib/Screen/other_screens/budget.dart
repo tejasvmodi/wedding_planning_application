@@ -22,19 +22,20 @@ class Budget extends StatefulWidget {
 
 class _BudgetState extends State<Budget> {
   double count = 0;
-  double  count1 =0;
+  double count1 = 0;
   TextEditingController price = TextEditingController();
   TextEditingController changeprice = TextEditingController();
   String? id;
-
+  bool bride = false;
+  String? _selectedGender;
   List<Getcouple> updatedCoupleList = [];
-  String userId1 = '';
+  int userId1 = 0;
 
   String? title;
   BudgetService budget = BudgetService();
   List<Getbudget> getbudget = [];
   List<Getbudget> getbudgetcouple = [];
-   List<ServiceCategory> items = [];
+  List<ServiceCategory> items = [];
   @override
   void initState() {
     super.initState();
@@ -44,14 +45,15 @@ class _BudgetState extends State<Budget> {
     _loadGenderFromPrefs().then((value) {
       if (updatedCoupleList.isNotEmpty) {
         log(updatedCoupleList[0].groom.toString());
-        log(userId1);
-        if (int.parse(updatedCoupleList[0].groom.toString()) == int.parse(userId1)) {
+        log(userId1.toString());
+        if (int.parse(updatedCoupleList[0].groom.toString()) == userId1) {
           getbudgetdatacpouple(
-              int.parse(updatedCoupleList[0].bride.toString())); 
-              log('not come here');
-              log(updatedCoupleList[0].bride.toString());
+              int.parse(updatedCoupleList[0].bride.toString()));
+          log('not come here');
+          log(updatedCoupleList[0].bride.toString());
         } else {
-          getbudgetdatacpouple(int.parse(updatedCoupleList[0].groom.toString()));
+          getbudgetdatacpouple(
+              int.parse(updatedCoupleList[0].groom.toString()));
           log('direct here ');
           log(updatedCoupleList[0].groom.toString());
         }
@@ -59,38 +61,47 @@ class _BudgetState extends State<Budget> {
         log('Wait for the seconds ');
       }
     });
-    setState(() {});
   }
- Future<void> someFunction() async {
+
+  Future<void> someFunction() async {
     final userId = await getUserId();
     if (userId != null) {
-      userId1 = userId.toString();
+      userId1 = userId;
       // Use the user ID for further processing
       setState(() {
         userId1;
-        log(userId1);
+        log(userId1.toString());
       });
     } else {
       log('User ID not found in SharedPreferences');
     }
   }
 
-
   Future<void> _loadGenderFromPrefs() async {
-    // final Getcouple? storedCouple = await getCouple();
     final Getcouple? storedCouple = await getCouple();
 
     if (storedCouple != null) {
       setState(() {
         updatedCoupleList = [storedCouple];
-        log(storedCouple.toString());
       });
+
+      if (userId1 != 0 && updatedCoupleList.isNotEmpty) {
+        if (int.parse(updatedCoupleList[0].groom.toString()) != userId1) {
+          if (int.parse(updatedCoupleList[0].bride.toString()) == userId1) {
+            bride = true;
+          } else {
+            bride = false;
+          }
+        }
+      }
     } else {
       SharedPreferences prefs = await SharedPreferences.getInstance();
+      _selectedGender = (prefs.getString('gender') ?? 'BRIDE');
       log('No couples found in SharedPreferences.');
     }
   }
-Future<void> getbudgetdatacpouple(int id) async {
+
+  Future<void> getbudgetdatacpouple(int id) async {
     try {
       getbudgetcouple = await budget.getbudgetv(id);
       setState(() {
@@ -106,7 +117,7 @@ Future<void> getbudgetdatacpouple(int id) async {
       log(e.toString());
     }
   }
- 
+
   Future<void> getbudgetdata() async {
     try {
       getbudget = await budget.getbudget();
@@ -184,58 +195,67 @@ Future<void> getbudgetdatacpouple(int id) async {
           scrollDirection: Axis.vertical,
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Card(
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.elliptical(10, 10)),
-                  ),
-                  elevation: 5,
-                  child: ExpansionTile(
+              if (updatedCoupleList.isNotEmpty)
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Card(
                     shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.elliptical(10, 10)),
                     ),
-                    backgroundColor: const Color.fromRGBO(239, 226, 239, 1),
-                    iconColor: const Color.fromRGBO(96, 66, 66, 1),
-                    tilePadding: const EdgeInsets.all(5),
-                    collapsedIconColor: const Color.fromRGBO(96, 66, 66, 1),
-                    expandedCrossAxisAlignment: CrossAxisAlignment.end,
-                    title: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        child: expandedtitle(
-                          'assets/images/icon_groom.png',
-                          count1,
-                          "Groom's Budget: ",
-                        ),
+                    elevation: 5,
+                    child: ExpansionTile(
+                      shape: const RoundedRectangleBorder(
+                        borderRadius:
+                            BorderRadius.all(Radius.elliptical(10, 10)),
                       ),
-                    ),
-                    children: [
-                      SizedBox(
-                        height: 400, // Adjust the height to limit expansion
-                        child: ListView(
-                          shrinkWrap: true, // Allow the ListView to shrink
-                          children: [
-                            const SizedBox(height: 10),
-                            if (getbudgetcouple.isNotEmpty)
-                              for (int i = 0; i < getbudgetcouple.length; i++)
-                                InkWell(
-                                  child: budgetBox1(
-                                      getbudgetcouple[i].serviceCategory['icon'],
-                                      getbudgetcouple[i].serviceCategory[
-                                          'serviceCategoryName'],
-                                      getbudgetcouple[i].expenceAmount,
-                                      getbudgetcouple[i].budgetId),
-                                  onTap: () {},
+                      backgroundColor: const Color.fromRGBO(239, 226, 239, 1),
+                      iconColor: const Color.fromRGBO(96, 66, 66, 1),
+                      tilePadding: const EdgeInsets.all(5),
+                      collapsedIconColor: const Color.fromRGBO(96, 66, 66, 1),
+                      expandedCrossAxisAlignment: CrossAxisAlignment.end,
+                      title: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          child: bride == false
+                              ? expandedtitle(
+                                  'assets/images/icon_bride.png',
+                                  count1,
+                                  "Bride's Budget: ",
+                                )
+                              : expandedtitle(
+                                  'assets/images/icon_groom.png',
+                                  count1,
+                                  "Groom's Budget: ",
                                 ),
-                            const SizedBox(height: 10),
-                          ],
                         ),
                       ),
-                    ],
+                      children: [
+                        SizedBox(
+                          height: 400, // Adjust the height to limit expansion
+                          child: ListView(
+                            shrinkWrap: true, // Allow the ListView to shrink
+                            children: [
+                              const SizedBox(height: 10),
+                              if (getbudgetcouple.isNotEmpty)
+                                for (int i = 0; i < getbudgetcouple.length; i++)
+                                  InkWell(
+                                    child: budgetBox1(
+                                        getbudgetcouple[i]
+                                            .serviceCategory['icon'],
+                                        getbudgetcouple[i].serviceCategory[
+                                            'serviceCategoryName'],
+                                        getbudgetcouple[i].expenceAmount,
+                                        getbudgetcouple[i].budgetId),
+                                    onTap: () {},
+                                  ),
+                              const SizedBox(height: 10),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
               SingleChildScrollView(
                 scrollDirection: Axis.vertical,
                 child: Padding(
@@ -257,13 +277,31 @@ Future<void> getbudgetdatacpouple(int id) async {
                       expandedCrossAxisAlignment: CrossAxisAlignment.end,
                       title: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          child: expandedtitle(
-                            'assets/images/icon_bride.png',
-                            count,
-                            "Your's Budget: ",
-                          ),
-                        ),
+                        child: updatedCoupleList.isNotEmpty
+                            ? Container(
+                                child: bride
+                                    ? expandedtitle(
+                                        'assets/images/icon_bride.png',
+                                        count,
+                                        "Your's Budget: ",
+                                      )
+                                    : expandedtitle(
+                                        'assets/images/icon_groom.png',
+                                        count,
+                                        "Your's Budget: ",
+                                      ),
+                              )
+                            : _selectedGender != 'BRIDE'
+                                ? expandedtitle(
+                                    'assets/images/icon_groom.png',
+                                    count,
+                                    "Your's Budget: ",
+                                  )
+                                : expandedtitle(
+                                    'assets/images/icon_bride.png',
+                                    count,
+                                    "Your's Budget: ",
+                                  ),
                       ),
                       children: [
                         SizedBox(
@@ -656,7 +694,6 @@ Widget budgetBox(
   );
 }
 
-
 Widget budgetBox1(
     String imageLink, String venueName, double venuePrice, int id) {
   final formattedPrice =
@@ -756,12 +793,10 @@ Widget budgetBox1(
             ],
           ),
         ),
-  
       ],
     ),
   );
 }
-
 
 Future<void> _showMyDialog(BuildContext context) async {
   return showDialog<void>(

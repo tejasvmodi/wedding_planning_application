@@ -1,6 +1,5 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wedding_planning_application/models/ProfileModels/getprofilemodel.dart';
 import 'package:wedding_planning_application/models/Couple/Getcouple.dart';
@@ -115,7 +114,7 @@ Future<void> getserviceitemdata() async {
   }
 
   Future<void> getServiceCategories() async {
-    final ServicecategoryService categoryService = Get.find();
+    final ServicecategoryService categoryService =ServicecategoryService();
     await categoryService.getServicecategories().then((value) {
       setState(() {
         items = value.items;
@@ -373,18 +372,18 @@ Future<void> getserviceitemdata() async {
                         ],
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 0, right: 195),
-                      child: feature(
-                        'assets/images/Ceremoney.jpg',
-                        'Ceremony',
-                        26,
-                        context,
-                        ScreenNavigation(
-                          currentIndex: 2,
-                        ),
-                      ),
-                    ),
+                    // Padding(
+                    //   padding: const EdgeInsets.only(left: 0, right: 195),
+                    //   child: feature(
+                    //     'assets/images/Ceremoney.jpg',
+                    //     'Ceremony',
+                    //     26,
+                    //     context,
+                    //     ScreenNavigation(
+                    //       currentIndex: 2,
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
               ),

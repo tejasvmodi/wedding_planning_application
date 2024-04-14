@@ -37,7 +37,9 @@ class _CategoryBarState extends State<CategoryBar> {
                           BorderRadius.all(Radius.elliptical(8, 8))))),
               onPressed: () {
                 clr = const Color.fromRGBO(96, 67, 67, 0.8);
-                setState(() {});
+                setState(() {
+                  
+                });
               },
               child: Text(
                 widget.categories[index],

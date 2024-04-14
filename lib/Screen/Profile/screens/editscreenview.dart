@@ -266,7 +266,7 @@ void conformation(BuildContext context,int id) {
         actions: <Widget>[
           TextButton(
             onPressed: () {
-                final Deleteinspiration del = Get.find(); 
+                final Deleteinspiration del = Deleteinspiration(); 
                   del.deleteinspiration(id);
             Get.to(()=>ScreenNavigation(currentIndex: 4,));
             },

@@ -12,7 +12,7 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
-  final AuthenticationService authService = Get.find();
+  final AuthenticationService authService =AuthenticationService();
 
   TextEditingController username = TextEditingController();
   TextEditingController password = TextEditingController();

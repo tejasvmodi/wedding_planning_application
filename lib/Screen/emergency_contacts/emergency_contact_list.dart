@@ -6,6 +6,7 @@ import 'package:get/get_navigation/get_navigation.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wedding_planning_application/Screen/Screen_Navigation.dart';
+import 'package:wedding_planning_application/Screen/checklist/checklistgroomicon.dart';
 import 'package:wedding_planning_application/models/Couple/Getcouple.dart';
 import 'package:wedding_planning_application/models/Emergency%20Contanct/getcontact.dart';
 import 'package:wedding_planning_application/screen/emergency_contacts/add_emergency_contact.dart';
@@ -24,26 +25,25 @@ class _EmergencycontlistWState extends State<EmergencycontlistW> {
   List<Getcontact> get = [];
   List<Getcontact> getcouple = [];
   EmergencyContactService emergency = EmergencyContactService();
-
-String? _selectedGender;
+  bool bride = false;
+  String? _selectedGender;
   List<Getcouple> updatedCoupleList = [];
-  String userId1 = '';
-
+  int userId1 = 0;
 
   @override
   void initState() {
     super.initState();
     someFunction();
     getcontact();
-     _loadGenderFromPrefs().then((value) {
+    _loadGenderFromPrefs().then((value) {
       if (updatedCoupleList.isNotEmpty) {
         log(updatedCoupleList[0].groom.toString());
-        log(userId1);
-        if (int.parse(updatedCoupleList[0].groom.toString()) == int.parse(userId1)) {
-          getcontactcouple(
-              int.parse(updatedCoupleList[0].bride.toString())); 
-              log('not come here');
-              log(updatedCoupleList[0].bride.toString());
+        log(userId1.toString());
+        if (int.parse(updatedCoupleList[0].groom.toString()) ==
+            int.parse(userId1.toString())) {
+          getcontactcouple(int.parse(updatedCoupleList[0].bride.toString()));
+          log('not come here');
+          log(updatedCoupleList[0].bride.toString());
         } else {
           getcontactcouple(int.parse(updatedCoupleList[0].groom.toString()));
           log('direct here ');
@@ -55,38 +55,45 @@ String? _selectedGender;
     });
   }
 
-    Future<void> someFunction() async {
+  Future<void> someFunction() async {
     final userId = await getUserId();
     if (userId != null) {
-      userId1 = userId.toString();
+      userId1 = userId;
       // Use the user ID for further processing
       setState(() {
         userId1;
-        log(userId1);
+        // log(userId1);
       });
     } else {
       log('User ID not found in SharedPreferences');
     }
   }
 
-
-
- Future<void> _loadGenderFromPrefs() async {
-    // final Getcouple? storedCouple = await getCouple();
+  Future<void> _loadGenderFromPrefs() async {
     final Getcouple? storedCouple = await getCouple();
 
     if (storedCouple != null) {
       setState(() {
         updatedCoupleList = [storedCouple];
-        log(storedCouple.toString());
       });
+
+      if (userId1 != 0 && updatedCoupleList.isNotEmpty) {
+        if (int.parse(updatedCoupleList[0].groom.toString()) != userId1) {
+          if (int.parse(updatedCoupleList[0].bride.toString()) == userId1) {
+            bride = true;
+          } else {
+            bride = false;
+          }
+        }
+      }
     } else {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       _selectedGender = (prefs.getString('gender') ?? 'BRIDE');
       log('No couples found in SharedPreferences.');
     }
   }
- Future<void> getcontactcouple(int id) async {
+
+  Future<void> getcontactcouple(int id) async {
     getcouple = await emergency.getcontactservicecouple(id);
     setState(() {
       getcouple;
@@ -109,7 +116,9 @@ String? _selectedGender;
         backgroundColor: const Color.fromRGBO(255, 217, 249, 1),
         leading: IconButton(
           onPressed: () {
-            Get.to(ScreenNavigation(currentIndex: 0,));                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+            Get.to(ScreenNavigation(
+              currentIndex: 0,
+            ));
           },
           icon: const Icon(
             Icons.arrow_back_ios,
@@ -149,39 +158,27 @@ String? _selectedGender;
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(top: 10, left: 20),
-                    height: 50,
-                    width: 50,
-                    decoration: const BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage('assets/images/icon_groom.png'),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 30),
-                  const Text(
-                    'Groom',
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      color: Color.fromRGBO(85, 32, 32, 1),
-                      fontFamily: 'EBGaramond',
-                      fontSize: 30,
-                      letterSpacing: 0,
-                      fontWeight: FontWeight.bold,
-                      height: 1,
-                    ),
-                  ),
-                ],
-              ),
-              const Divider(
-                color: Colors.black26,
-                indent: 20,
-                endIndent: 20,
-              ),
+              if (updatedCoupleList.isNotEmpty)
+                bride
+                    ? groomdesign(context, 'icon_bride.png', 'BRIDE')
+                    : groomdesign(context, 'icon_groom.png', 'GROOM'),
+
+              if (updatedCoupleList.isNotEmpty)
+                const Divider(
+                  indent: 15,
+                  color: Colors.black26,
+                ),
+
+              //for registration when no couple is created
+              if (_selectedGender != null)
+                  _selectedGender !='BRIDE'?
+                  groomdesign(context, 'icon_groom.png', 'GROOM'):
+                  groomdesign(context, 'icon_bride.png', 'BRIDE'),
+              if (_selectedGender != null)
+                const Divider(
+                  indent: 15,
+                  color: Colors.black26,
+                ),
               if (get.isNotEmpty)
                 for (int i = 0; i < get.length; i++)
                   EmergencyCallDesign(
@@ -194,40 +191,20 @@ String? _selectedGender;
                 const Center(
                   child: CircularProgressIndicator(),
                 ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(top: 10, left: 20),
-                    height: 50,
-                    width: 50,
-                    decoration: const BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage('assets/images/icon_bride.png'),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 30),
-                  const Text(
-                    'Bride',
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      color: Color.fromRGBO(85, 32, 32, 1),
-                      fontFamily: 'EBGaramond',
-                      fontSize: 30,
-                      letterSpacing: 0,
-                      fontWeight: FontWeight.bold,
-                      height: 1,
-                    ),
-                  )
-                ],
-              ),
-              const Divider(
-                color: Colors.black26,
-                indent: 20,
-                endIndent: 20,
-              ),
-               if (getcouple.isNotEmpty)
+              if (updatedCoupleList.isNotEmpty)
+                bride
+                    ? groomdesign(context, 'icon_groom.png', 'GROOM')
+                    : groomdesign(context, 'icon_bride.png', 'BRIDE'),
+
+              if (updatedCoupleList.isNotEmpty)
+                const Divider(
+                  indent: 15,
+                  color: Colors.black26,
+                ),
+
+              //for registration when no couple is created
+
+              if (getcouple.isNotEmpty)
                 for (int i = 0; i < getcouple.length; i++)
                   EmergencyCallDesign(
                       id: getcouple[i].contactId,
@@ -235,10 +212,11 @@ String? _selectedGender;
                       status: getcouple[i].status,
                       number: getcouple[i].numbers[0],
                       alternativenumber: getcouple[i].numbers[1]),
-              if (getcouple.isEmpty)
-                const Center(
-                  child: CircularProgressIndicator(),
-                ),
+              if (updatedCoupleList.isNotEmpty)
+                if (getcouple.isEmpty )
+                  const Center(
+                    child: CircularProgressIndicator(),
+                  ),
             ],
           ),
         ),

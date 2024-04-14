@@ -7,7 +7,6 @@ import 'package:wedding_planning_application/models/Inspiration/inspirationmodel
 import 'package:wedding_planning_application/models/ProfileModels/getprofilemodel.dart';
 import 'package:wedding_planning_application/screen/common_components/drawer.dart';
 import 'package:wedding_planning_application/screen/inspiration_screen/addinspiration.dart';
-import 'package:wedding_planning_application/screen/inspiration_screen/components/category_bar.dart';
 import 'package:wedding_planning_application/screen/inspiration_screen/show_inspiration.dart';
 import 'package:wedding_planning_application/services/Inspiration/insapiration_service.dart';
 import 'package:wedding_planning_application/services/profile.dart';
@@ -91,74 +90,76 @@ class _InspirationWState extends State<InspirationW> {
         ],
       ),
       drawer: const Drawer123(),
-      body: Column(
-        children: [
-          const SizedBox(
-            height: 50,
-            child: CategoryBar(categories: [
-              'Dress',
-              'Rustic Theme',
-              'Red Wedding Dress',
-              'Decoration',
-            ]),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          if (getinspiration.isEmpty)
-            const Center(
-              heightFactor: 15,
-              child: CircularProgressIndicator(),
+      body: Container(
+        decoration: const BoxDecoration(border: Border(top: BorderSide(color: Colors.black))),
+        child: Column(
+          children: [
+            //  SizedBox(
+            //   height: 60,
+            //   child: CategoryBar(categories: [
+            //    for(int i = 0; i< getinspiration.length;i++)
+            //              getinspiration[i].tags.toString()
+               
+            //   ]),
+            // ),
+            const SizedBox(
+              height: 20,
             ),
-          if (getinspiration.isNotEmpty)
-          
-               Expanded(
-                child: CustomScrollView(
-                  slivers: [
-                    SliverStaggeredGrid.countBuilder(
-                      crossAxisCount: 4,
-                      itemCount: getinspiration.length,
-                      itemBuilder: (BuildContext context, int index) => Card(
-                        child: Container(
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.black),
-                              boxShadow: const [
-                                BoxShadow(
-                                    blurRadius: 2,
-                                    spreadRadius: 2,
-                                    color: Colors.grey)
-                              ]),
-                          child: InkWell(
-                            child: Image.network(
-                              getinspiration[index].image,
-                              fit: BoxFit.cover,
+            if (getinspiration.isEmpty)
+              const Center(
+                heightFactor: 15,
+                child: CircularProgressIndicator(),
+              ),
+            if (getinspiration.isNotEmpty)
+            
+                 Expanded(
+                  child: CustomScrollView(
+                    slivers: [
+                      SliverStaggeredGrid.countBuilder(
+                        crossAxisCount: 4,
+                        itemCount: getinspiration.length,
+                        itemBuilder: (BuildContext context, int index) => Card(
+                          child: Container(
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.black),
+                                boxShadow: const [
+                                  BoxShadow(
+                                      blurRadius: 2,
+                                      spreadRadius: 2,
+                                      color: Colors.grey)
+                                ]),
+                            child: InkWell(
+                              child: Image.network(
+                                getinspiration[index].image,
+                                fit: BoxFit.cover,
+                              ),
+                              onTap: () {
+                                log(profil.toString());
+                                Get.to(() => ShowinspirationPhoto(
+                                      index: getinspiration[index].inspiration,
+                                      description:
+                                          getinspiration[index].description,
+                                      name: getinspiration[index].user,
+                                      image: getinspiration[index].image,
+                                      tags: getinspiration[index].tags.join(','),
+                                      userId: profil[0].userId,
+                                    ));
+                              },
                             ),
-                            onTap: () {
-                              log(profil.toString());
-                              Get.to(() => ShowinspirationPhoto(
-                                    index: getinspiration[index].inspiration,
-                                    description:
-                                        getinspiration[index].description,
-                                    name: getinspiration[index].user,
-                                    image: getinspiration[index].image,
-                                    tags: getinspiration[index].tags.join(','),
-                                    userId: profil[0].userId,
-                                  ));
-                            },
                           ),
                         ),
+                        staggeredTileBuilder: (int index) =>
+                            const StaggeredTile.fit(2),
+                        mainAxisSpacing: 3.0,
+                        crossAxisSpacing: 3.0,
                       ),
-                      staggeredTileBuilder: (int index) =>
-                          const StaggeredTile.fit(2),
-                      mainAxisSpacing: 3.0,
-                      crossAxisSpacing: 3.0,
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            
-      
-        ],
+              
+        
+          ],
+        ),
       ),
       floatingActionButton: Column(
         crossAxisAlignment: CrossAxisAlignment.end,

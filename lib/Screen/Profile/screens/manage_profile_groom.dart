@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wedding_planning_application/Screen/Screen_Navigation.dart';
 import 'package:wedding_planning_application/models/Couple/Getcouple.dart';
 import 'package:wedding_planning_application/models/getUsername.dart';
@@ -8,6 +9,7 @@ import 'package:wedding_planning_application/screen/profile/components/profile_p
 import 'package:wedding_planning_application/screen/profile/components/profileitemgroom.dart';
 import 'package:wedding_planning_application/screen/profile/screens/manage_profile_bride.dart';
 import 'package:wedding_planning_application/services/Couple/couple.dart';
+import 'package:wedding_planning_application/services/Userid/userid.dart';
 import 'package:wedding_planning_application/services/profile.dart';
 
 class ManageMprofile extends StatefulWidget {
@@ -18,11 +20,14 @@ class ManageMprofile extends StatefulWidget {
 }
 
 class _ManageMprofileState extends State<ManageMprofile> {
-
   ProfileService profile = ProfileService();
   Coupleservice couple = Coupleservice();
   List<Getcouple> getcouple = [];
   List<getUserName> getcoupleinfo = [];
+  int userId1 = 0;
+  bool bride = false;
+  String? _selectedGender;
+  List<Getcouple> updatedCoupleList = [];
 
   @override
   void initState() {
@@ -38,6 +43,51 @@ class _ManageMprofileState extends State<ManageMprofile> {
         }
       }
     });
+    someFunction().then((value) {
+      setState(() {
+        log('set state from some function in initstate $userId1');
+      });
+    });
+    _loadGenderFromPrefs();
+  }
+
+  Future<void> someFunction() async {
+    final userId = await getUserId();
+    if (userId != null) {
+      userId1 = userId;
+      // Use the user ID for further processing
+      setState(() {
+        userId1;
+        log('Some function$userId1');
+      });
+    } else {
+      log('User ID not found in SharedPreferences');
+    }
+  }
+
+  Future<void> _loadGenderFromPrefs() async {
+    final Getcouple? storedCouple = await getCouple();
+
+    if (storedCouple != null) {
+      setState(() {
+        updatedCoupleList = [storedCouple];
+      });
+      if (userId1 != 0 && updatedCoupleList.isNotEmpty) {
+        if (int.parse(updatedCoupleList[0].groom.toString()) != userId1) {
+          if (int.parse(updatedCoupleList[0].bride.toString()) == userId1) {
+            bride = true;
+          } else {
+            bride = false;
+          }
+        }
+      }
+    } else {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      log('add this in the ${prefs.getString('gender')}');
+      _selectedGender = (prefs.getString('gender') ?? 'BRIDE');
+      log(_selectedGender.toString());
+      log('No couples found in SharedPreferences.');
+    }
   }
 
   Future<void> getcoupleinformation(int id) async {
@@ -94,7 +144,9 @@ class _ManageMprofileState extends State<ManageMprofile> {
           backgroundColor: const Color.fromARGB(255, 238, 190, 221),
           leading: IconButton(
             onPressed: () {
-             Get.to(()=>  ScreenNavigation(currentIndex: 4,));
+              Get.to(() => ScreenNavigation(
+                    currentIndex: 4,
+                  ));
             },
             icon: const Icon(
               Icons.arrow_back_ios,
@@ -118,22 +170,30 @@ class _ManageMprofileState extends State<ManageMprofile> {
           ),
           elevation: 0,
           actions: [
-            InkWell(
-              child: const Image(
-                image: AssetImage(
-                  'assets/images/icon_bride.png',
-                ),
-                height: 40,
+            if (updatedCoupleList.isNotEmpty)
+              InkWell(
+                child: bride
+                    ? const Image(
+                        image: AssetImage(
+                          'assets/images/icon_groom.png',
+                        ),
+                        height: 40,
+                      )
+                    : const Image(
+                        image: AssetImage(
+                          'assets/images/icon_bride.png',
+                        ),
+                        height: 40,
+                      ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ManageFprofile(),
+                    ),
+                  );
+                },
               ),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const ManageFprofile(),
-                  ),
-                );
-              },
-            ),
             const SizedBox(
               width: 5,
             )
@@ -299,7 +359,14 @@ class _ManageMprofileState extends State<ManageMprofile> {
                     const SizedBox(
                       height: 25,
                     ),
-                    if (getcoupleinfo.isNotEmpty)
+                    if (getcoupleinfo.isNotEmpty &&
+                        getcoupleinfo[0].phone == null)
+                      profiledetailsq(
+                        'Phone',
+                        'not enter the phone number',
+                      ),
+                    if (getcoupleinfo.isNotEmpty &&
+                        getcoupleinfo[0].phone != null)
                       profiledetailsq(
                         'Phone',
                         getcoupleinfo[0].phone.toString(),
@@ -313,18 +380,6 @@ class _ManageMprofileState extends State<ManageMprofile> {
                         'Address line 1',
                         getcoupleinfo[0].addressInfo!.addressLine1.toString(),
                       ),
-                    const SizedBox(
-                      height: 25,
-                    ),
-                    if (getcoupleinfo.isNotEmpty &&
-                        getcoupleinfo[0].addressInfo != null)
-                      profiledetailsq(
-                        'Address line 2',
-                        getcoupleinfo[0].addressInfo!.addressLine2.toString(),
-                      ),
-                    const SizedBox(
-                      height: 25,
-                    ),
                     if (getcoupleinfo.isNotEmpty &&
                         getcoupleinfo[0].addressInfo == null)
                       profiledetailsq(
@@ -335,11 +390,20 @@ class _ManageMprofileState extends State<ManageMprofile> {
                       height: 25,
                     ),
                     if (getcoupleinfo.isNotEmpty &&
+                        getcoupleinfo[0].addressInfo != null)
+                      profiledetailsq(
+                        'Address line 2',
+                        getcoupleinfo[0].addressInfo!.addressLine2.toString(),
+                      ),
+                    if (getcoupleinfo.isNotEmpty &&
                         getcoupleinfo[0].addressInfo == null)
                       profiledetailsq(
                         'Address line 2',
                         'enter the Address ',
                       ),
+                    const SizedBox(
+                      height: 25,
+                    ),
                     SizedBox(
                       width: 370,
                       height: 60,
@@ -388,12 +452,13 @@ class _ManageMprofileState extends State<ManageMprofile> {
                                       height: 1,
                                     ),
                                   ),
+                                  
+                                  const SizedBox(width: 10,),
                                   if (getcouple.isNotEmpty)
                                     Expanded(
-                                      child: int.parse(getcouple[0].bride.toString()) ==
-                                              widget.userid
+                                      child: bride
                                           ? const Text(
-                                              'bride',
+                                              'Bride',
                                               textAlign: TextAlign.left,
                                               style: TextStyle(
                                                 color: Color.fromRGBO(

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-Widget bookingdesign(String newimage, String textdata, int money,  String eventdates,BuildContext context) {
+import 'package:wedding_planning_application/Screen/vendor/vendor_single_view.dart';
+Widget bookingdesign(String newimage, String textdata, int money,  String eventdates,int bokedby,BuildContext context) {
   return SizedBox(
     height: 320,
     width: MediaQuery.of(context).size.width / 2 - 12.0,
@@ -163,7 +165,9 @@ Widget bookingdesign(String newimage, String textdata, int money,  String eventd
           width: 190,
           height: 40,
           child: TextButton(
-            onPressed: () {},
+            onPressed: () {
+              Get.to(()=>VendorSingleView(serviceid: bokedby ));
+            },
             style: ButtonStyle(
               backgroundColor: const MaterialStatePropertyAll(
                 Color.fromRGBO(96, 67, 67, 1),

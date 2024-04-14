@@ -1,10 +1,13 @@
 import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wedding_planning_application/Models/Couple/Getcouple.dart';
 import 'package:wedding_planning_application/Screen/Profile/Couple/coupleadd.dart';
 import 'package:wedding_planning_application/Screen/Profile/Couple/fetchemail.dart';
+import 'package:wedding_planning_application/Screen/Screen_Navigation.dart';
 import 'package:wedding_planning_application/models/Address/citymodel.dart';
 import 'package:wedding_planning_application/models/Address/statemdel.dart';
 import 'package:wedding_planning_application/models/ProfileModels/getprofilemodel.dart';
@@ -14,6 +17,7 @@ import 'package:wedding_planning_application/screen/profile/components/profile_d
 import 'package:wedding_planning_application/screen/profile/screens/manage_profile_groom.dart';
 import 'package:wedding_planning_application/services/Address/addressService.dart';
 import 'package:wedding_planning_application/services/Couple/couple.dart';
+import 'package:wedding_planning_application/services/Userid/userid.dart';
 import 'package:wedding_planning_application/services/profile.dart';
 
 class ManageFprofile extends StatefulWidget {
@@ -46,6 +50,12 @@ class _ManageFprofileState extends State<ManageFprofile> {
   int? selectedcity;
   String? selectedstate;
   int? id;
+  int userId1 = 0;
+  bool bride = false;
+  String? _selectedGender;
+  List<Getcouple> updatedCoupleList = [];
+  bool press = false;
+
   @override
   void initState() {
     super.initState();
@@ -56,15 +66,13 @@ class _ManageFprofileState extends State<ManageFprofile> {
       fname.text = getuser[0].firstName.toString();
       lname.text = getuser[0].lastName.toString();
     }
-    getcoupledata()
-//     .then((value) => {
-//  getcouple,
-//          log(getcouple.toString()),
-//          setState(() {
-
-//          })
-//     });
-        ;
+    getcoupledata();
+    someFunction().then((value) {
+      setState(() {
+        log('set state from some function in initstate $userId1');
+      });
+    });
+    _loadGenderFromPrefs();
     setState(() {});
   }
 
@@ -87,6 +95,7 @@ class _ManageFprofileState extends State<ManageFprofile> {
         source: ImageSource.gallery); // Open image picker
     if (pickedImage != null) {
       setState(() {
+        press = true;
         _image = pickedImage; // Update selected image
       });
     }
@@ -106,6 +115,45 @@ class _ManageFprofileState extends State<ManageFprofile> {
     setState(() {
       // log(getstate.toString());
     });
+  }
+
+  Future<void> someFunction() async {
+    final userId = await getUserId();
+    if (userId != null) {
+      userId1 = userId;
+      // Use the user ID for further processing
+      setState(() {
+        userId1;
+        log('Some function$userId1');
+      });
+    } else {
+      log('User ID not found in SharedPreferences');
+    }
+  }
+
+  Future<void> _loadGenderFromPrefs() async {
+    final Getcouple? storedCouple = await getCouple();
+
+    if (storedCouple != null) {
+      setState(() {
+        updatedCoupleList = [storedCouple];
+      });
+      if (userId1 != 0 && updatedCoupleList.isNotEmpty) {
+        if (int.parse(updatedCoupleList[0].groom.toString()) != userId1) {
+          if (int.parse(updatedCoupleList[0].bride.toString()) == userId1) {
+            bride = true;
+          } else {
+            bride = false;
+          }
+        }
+      }
+    } else {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      log('add this in the ${prefs.getString('gender')}');
+      _selectedGender = (prefs.getString('gender') ?? 'BRIDE');
+      log(_selectedGender.toString());
+      log('No couples found in SharedPreferences.');
+    }
   }
 
   Future<void> getserviceitemdata() async {
@@ -152,17 +200,22 @@ class _ManageFprofileState extends State<ManageFprofile> {
         ),
         elevation: 0,
         actions: [
-          InkWell(
-              child: const Image(
-                image: AssetImage(
-                  'assets/images/icon_groom.png',
-                ),
-                height: 40,
-              ),
-              onTap: () async {
-                if (getcouple.isEmpty) {
-                 _showMyDialog(context,getuser[0].userId);
-                } else {
+          if (updatedCoupleList.isNotEmpty)
+            InkWell(
+                child: bride
+                    ? const Image(
+                        image: AssetImage(
+                          'assets/images/icon_bride.png',
+                        ),
+                        height: 40,
+                      )
+                    : const Image(
+                        image: AssetImage(
+                          'assets/images/icon_groom.png',
+                        ),
+                        height: 40,
+                      ),
+                onTap: () async {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -170,8 +223,25 @@ class _ManageFprofileState extends State<ManageFprofile> {
                               userid: getuser[0].userId,
                             )),
                   );
-                }
-              }),
+                }),
+          if (_selectedGender != null)
+            InkWell(
+                child: _selectedGender != 'BRIDE'
+                    ? const Image(
+                        image: AssetImage(
+                          'assets/images/icon_bride.png',
+                        ),
+                        height: 40,
+                      )
+                    : const Image(
+                        image: AssetImage(
+                          'assets/images/icon_groom.png',
+                        ),
+                        height: 40,
+                      ),
+                onTap: () async {
+                  _showMyDialog(context, getuser[0].userId);
+                }),
           const SizedBox(
             width: 5,
           )
@@ -249,7 +319,7 @@ class _ManageFprofileState extends State<ManageFprofile> {
                               borderRadius: const BorderRadius.all(
                                   Radius.elliptical(195, 195)),
                             ),
-                            child: TextButton.icon(
+                            child: press ? TextButton.icon(
                                 style: const ButtonStyle(
                                     backgroundColor: MaterialStatePropertyAll(
                                         Color.fromARGB(255, 254, 191, 191))),
@@ -257,7 +327,11 @@ class _ManageFprofileState extends State<ManageFprofile> {
                                   if (_image != null) {
                                     MyRepository repository = MyRepository();
                                     repository.uploadFile(_image!);
-                                    await getserviceitemdata();
+                                    await getserviceitemdata().then((value) {
+                                      Future.delayed(const Duration(milliseconds: 1),(){
+                                        Get.to(()=>ScreenNavigation(currentIndex: 4,));
+                                      });
+                                    });
                                   }
 
                                   setState(() {});
@@ -267,7 +341,7 @@ class _ManageFprofileState extends State<ManageFprofile> {
                                   MdiIcons.pen,
                                   size: 20,
                                 ),
-                                label: const Text(''))),
+                                label: const Text('Done')):const Text('')),
                       ),
                     ),
                     Padding(
@@ -419,7 +493,10 @@ class _ManageFprofileState extends State<ManageFprofile> {
                 const SizedBox(
                   height: 25,
                 ),
-                profiledetails('Phone', getuser[0].phone.toString(), phone),
+                if (getuser.isNotEmpty && getuser[0].phone == null)
+                  profiledetails('Phone', 'Enter the phone number', phone),
+                if (getuser.isNotEmpty && getuser[0].phone != null)
+                  profiledetails('Phone', getuser[0].phone.toString(), phone),
                 const SizedBox(
                   height: 25,
                 ),
@@ -431,9 +508,7 @@ class _ManageFprofileState extends State<ManageFprofile> {
                     getuser[0].addressInfo!.addressLine1.toString(),
                     address1,
                   ),
-                const SizedBox(
-                  height: 25,
-                ),
+
                 if (getuser.isNotEmpty && getuser[0].addressInfo != null)
                   profiledetails(
                     'Address line 2',
@@ -441,9 +516,6 @@ class _ManageFprofileState extends State<ManageFprofile> {
                     address2,
                   ),
 
-                const SizedBox(
-                  height: 25,
-                ),
                 if (getuser.isNotEmpty && getuser[0].addressInfo == null)
                   // Use addressInfo safely
                   // Access addressLine2 safely
@@ -566,99 +638,102 @@ class _ManageFprofileState extends State<ManageFprofile> {
                   height: 25,
                 ),
                 // profiledetails('City', getuser[0].addressInfo.toString()),
-                const SizedBox(
-                  height: 25,
-                ),
-                SizedBox(
-                  width: 370,
-                  height: 60,
-                  child: Stack(
-                    children: <Widget>[
-                      Positioned(
-                        top: 0,
-                        left: 0,
-                        child: Container(
-                          width: 370,
-                          height: 60,
-                          decoration: BoxDecoration(
-                              borderRadius: const BorderRadius.only(
-                                  topRight: Radius.circular(10),
-                                  bottomLeft: Radius.circular(10),
-                                  bottomRight: Radius.circular(10),
-                                  topLeft: Radius.circular(10)),
-                              boxShadow: const [
-                                BoxShadow(
-                                  color: Color.fromRGBO(0, 0, 0, 0.25),
-                                  offset: Offset(0, 1),
-                                  blurRadius: 4,
-                                )
-                              ],
-                              color: const Color.fromRGBO(239, 226, 226, 1),
-                              border: Border.all(
-                                color: const Color.fromRGBO(77, 43, 43, 1),
-                                width: 0.5,
-                              )),
-                          child: Row(
-                            children: [
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              const Text(
-                                'Logged In as  :',
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                  color: Color.fromRGBO(85, 32, 32, 1),
-                                  fontFamily: 'EBGaramond',
-                                  fontSize: 15,
-                                  letterSpacing: 0,
-                                  fontWeight: FontWeight.bold,
-                                  height: 1,
-                                ),
-                              ),
-                              if (getcouple.isNotEmpty && getuser.isNotEmpty)
-                                Expanded(
-                                  child: int.parse(
-                                              getcouple[0].bride.toString()) ==
-                                          getuser[0].userId
-                                      ? const Text(
-                                          'Bride',
-                                          textAlign: TextAlign.left,
-                                          style: TextStyle(
-                                            color:
-                                                Color.fromRGBO(85, 32, 32, 1),
-                                            fontFamily: 'EBGaramond',
-                                            fontSize: 15,
-                                            letterSpacing: 0,
-                                            fontWeight: FontWeight.normal,
-                                            height: 1,
-                                          ),
-                                        )
-                                      : const Text(
-                                          'Groom',
-                                          textAlign: TextAlign.left,
-                                          style: TextStyle(
-                                            color:
-                                                Color.fromRGBO(85, 32, 32, 1),
-                                            fontFamily: 'EBGaramond',
-                                            fontSize: 15,
-                                            letterSpacing: 0,
-                                            fontWeight: FontWeight.normal,
-                                            height: 1,
-                                          ),
-                                        ),
-                                ),
-                              IconButton(
-                                onPressed: () {},
-                                icon: Icon(MdiIcons
-                                    .pencilOutline), // Use MdiIcons, not MdiIcons
-                              ),
-                            ],
-                          ),
-                        ),
-                      )
-                    ],
+                if (getcouple.isNotEmpty && getuser.isNotEmpty)
+                  const SizedBox(
+                    height: 25,
                   ),
-                ),
+                if (getcouple.isNotEmpty && getuser.isNotEmpty)
+                  SizedBox(
+                    width: 370,
+                    height: 60,
+                    child: Stack(
+                      children: <Widget>[
+                        Positioned(
+                          top: 0,
+                          left: 0,
+                          child: Container(
+                            width: 370,
+                            height: 60,
+                            decoration: BoxDecoration(
+                                borderRadius: const BorderRadius.only(
+                                    topRight: Radius.circular(10),
+                                    bottomLeft: Radius.circular(10),
+                                    bottomRight: Radius.circular(10),
+                                    topLeft: Radius.circular(10)),
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: Color.fromRGBO(0, 0, 0, 0.25),
+                                    offset: Offset(0, 1),
+                                    blurRadius: 4,
+                                  )
+                                ],
+                                color: const Color.fromRGBO(239, 226, 226, 1),
+                                border: Border.all(
+                                  color: const Color.fromRGBO(77, 43, 43, 1),
+                                  width: 0.5,
+                                )),
+                            child: Row(
+                              children: [
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                const Text(
+                                  'Logged In as  :',
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                    color: Color.fromRGBO(85, 32, 32, 1),
+                                    fontFamily: 'EBGaramond',
+                                    fontSize: 15,
+                                    letterSpacing: 0,
+                                    fontWeight: FontWeight.bold,
+                                    height: 1,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                if (getcouple.isNotEmpty)
+                                  Expanded(
+                                    child: bride
+                                        ? const Text(
+                                            'Groom',
+                                            textAlign: TextAlign.left,
+                                            style: TextStyle(
+                                              color:
+                                                  Color.fromRGBO(85, 32, 32, 1),
+                                              fontFamily: 'EBGaramond',
+                                              fontSize: 15,
+                                              letterSpacing: 0,
+                                              fontWeight: FontWeight.normal,
+                                              height: 1,
+                                            ),
+                                          )
+                                        : const Text(
+                                            'Bride',
+                                            textAlign: TextAlign.left,
+                                            style: TextStyle(
+                                              color:
+                                                  Color.fromRGBO(85, 32, 32, 1),
+                                              fontFamily: 'EBGaramond',
+                                              fontSize: 15,
+                                              letterSpacing: 0,
+                                              fontWeight: FontWeight.normal,
+                                              height: 1,
+                                            ),
+                                          ),
+                                  ),
+                                IconButton(
+                                  onPressed: () {},
+                                  icon: Icon(MdiIcons
+                                      .pencilOutline), // Use MdiIcons, not MdiIcons
+                                ),
+                              ],
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
                 const SizedBox(
                   height: 25,
                 ),
@@ -913,110 +988,116 @@ class _CitydropdownState extends State<Citydropdown> {
   }
 }
 
-  Future<void> _showMyDialog(BuildContext context,int userid) async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: true,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          shadowColor: Colors.black38,
-          title: Center(
-            child: Icon(
-              MdiIcons.accountOutline,
-              size: 50,
-            ),
+Future<void> _showMyDialog(BuildContext context, int userid) async {
+  return showDialog<void>(
+    context: context,
+    barrierDismissible: true,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        shadowColor: Colors.black38,
+        title: Center(
+          child: Icon(
+            MdiIcons.accountOutline,
+            size: 50,
           ),
-          content: const SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Center(
-                  child: Text(
-                    'Add Couple',
+        ),
+        content: const SingleChildScrollView(
+          child: ListBody(
+            children: <Widget>[
+              Center(
+                child: Text(
+                  'Add Couple',
+                  style: TextStyle(
+                    color: Color.fromRGBO(62, 53, 53, 1),
+                    fontFamily: 'EBGaramond',
+                    fontSize: 20,
+                    letterSpacing: 0,
+                    fontWeight: FontWeight.bold,
+                    height: 1,
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          Column(
+            children: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(
+                      builder: (context) {
+                        return AddCouple(
+                          userid: userid.toString(),
+                        );
+                      },
+                    ));
+                  },
+                  style: ButtonStyle(
+                    minimumSize: MaterialStatePropertyAll(Size(
+                        MediaQuery.of(context).size.width * 0.60,
+                        MediaQuery.of(context).size.height * 0.07)),
+                    backgroundColor: const MaterialStatePropertyAll(
+                        Color.fromRGBO(54, 29, 29, 1)),
+                    shape: const MaterialStatePropertyAll(
+                      RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.all(Radius.elliptical(8, 8))),
+                    ),
+                  ),
+                  child: const Text(
+                    'create new Account',
                     style: TextStyle(
-                      color: Color.fromRGBO(62, 53, 53, 1),
+                      color: Colors.white,
                       fontFamily: 'EBGaramond',
-                      fontSize: 20,
+                      fontSize: 18,
                       letterSpacing: 0,
                       fontWeight: FontWeight.bold,
                       height: 1,
                     ),
-                  ),
-                )
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            Column(
-              children: [
-                 TextButton(
-                      onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(
-                          builder: (context) {
-                            return AddCouple(userid: userid.toString(),);
-                          },
-                        ));
-                      },
-                      style: ButtonStyle(
-                        minimumSize: MaterialStatePropertyAll(Size(
-                            MediaQuery.of(context).size.width * 0.60,
-                            MediaQuery.of(context).size.height * 0.07)),
-                        backgroundColor: const MaterialStatePropertyAll(
-                            Color.fromRGBO(54, 29, 29, 1)),
-                        shape: const MaterialStatePropertyAll(
-                          RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.elliptical(8, 8))),
-                        ),
-                      ),
-                      child: const Text(
-                        'create new Account',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'EBGaramond',
-                          fontSize: 18,
-                          letterSpacing: 0,
-                          fontWeight: FontWeight.bold,
-                          height: 1,
-                        ),
-                      )),
-              const SizedBox(height: 10,),
-                Center(
-                  child: TextButton(
-                      onPressed: () {
+                  )),
+              const SizedBox(
+                height: 10,
+              ),
+              Center(
+                child: TextButton(
+                    onPressed: () {
                       Navigator.push(context, MaterialPageRoute(
-                          builder: (context) {
-                            return  Fetchemail(userid: userid,);
-                          },
-                        ));
-                      },
-                      style: ButtonStyle(
-                        minimumSize: MaterialStatePropertyAll(Size(
-                            MediaQuery.of(context).size.width * 0.50,
-                            MediaQuery.of(context).size.height * 0.07)),
-                        backgroundColor: const MaterialStatePropertyAll(
-                            Color.fromRGBO(54, 29, 29, 1)),
-                        shape: const MaterialStatePropertyAll(
-                          RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.elliptical(8, 8))),
-                        ),
+                        builder: (context) {
+                          return Fetchemail(
+                            userid: userid,
+                          );
+                        },
+                      ));
+                    },
+                    style: ButtonStyle(
+                      minimumSize: MaterialStatePropertyAll(Size(
+                          MediaQuery.of(context).size.width * 0.50,
+                          MediaQuery.of(context).size.height * 0.07)),
+                      backgroundColor: const MaterialStatePropertyAll(
+                          Color.fromRGBO(54, 29, 29, 1)),
+                      shape: const MaterialStatePropertyAll(
+                        RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.elliptical(8, 8))),
                       ),
-                      child: const Text(
-                        'Connect with existing account ',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'EBGaramond',
-                          fontSize: 18,
-                          letterSpacing: 0,
-                          fontWeight: FontWeight.bold,
-                          height: 1,
-                        ),
-                      )),
-                ),
-              ],
-            ),
-          ],
-        );
-      },
-    );
-  }
+                    ),
+                    child: const Text(
+                      'Connect with existing account ',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontFamily: 'EBGaramond',
+                        fontSize: 18,
+                        letterSpacing: 0,
+                        fontWeight: FontWeight.bold,
+                        height: 1,
+                      ),
+                    )),
+              ),
+            ],
+          ),
+        ],
+      );
+    },
+  );
+}

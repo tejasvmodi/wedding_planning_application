@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:wedding_planning_application/models/getUsername.dart';
 import 'package:wedding_planning_application/screen/inspiration_screen/components/category_bar.dart';
@@ -103,13 +102,10 @@ class _ShowinspirationPhotoState extends State<ShowinspirationPhoto> {
         ),
         child: Column(
           children: [
-            const SizedBox(
+           SizedBox(
               height: 50,
               child: CategoryBar(categories: [
-                'Dress',
-                'Rustic Theme',
-                'Red Wedding Dress',
-                'Decoration',
+               widget.tags
               ]),
             ),
             Expanded(
@@ -137,14 +133,14 @@ class _ShowinspirationPhotoState extends State<ShowinspirationPhoto> {
                         child: CircularProgressIndicator(),
                       ),
                     if (getuser.isNotEmpty)
-                      const Padding(
-                        padding: EdgeInsets.only(left: 22, top: 10),
+                       Padding(
+                        padding: const EdgeInsets.only(left: 22, top: 10),
                         child: SizedBox(
                           child: Text(
-                          "",
-                            // "${getuser[0].firstName}  ${getuser[0].lastName}",
+                          "${getuser[0].firstName} ${getuser[0].lastName}"
+                         ,
                             textAlign: TextAlign.left,
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Color.fromRGBO(96, 68, 68, 1),
                               fontFamily: 'EBGaramond',
                               fontSize: 25,
