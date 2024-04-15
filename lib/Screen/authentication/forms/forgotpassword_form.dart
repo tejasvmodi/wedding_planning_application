@@ -104,11 +104,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                           setState(() {
                             
                           });
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const LoginForm(),
-                              ));
+                         
                         },
                         style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(

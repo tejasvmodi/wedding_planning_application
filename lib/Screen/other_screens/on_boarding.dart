@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:get/get.dart';
 import 'package:wedding_planning_application/screen/authentication/forms/login_form.dart';
 import 'package:wedding_planning_application/screen/common_components/dots_indicator.dart';
@@ -66,32 +67,50 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           fit: BoxFit.cover,
                           width: double.infinity,
                           height: double.infinity,
+                          colorBlendMode: BlendMode.darken,
+                          filterQuality: FilterQuality.medium,
                         ),
                         Positioned(
-                          top: MediaQuery.of(context).size.width * 0.04,
-                          left: MediaQuery.of(context).size.width * 0.04,
-                          right: MediaQuery.of(context).size.width * 0.04,
-                          child: Center(
-                              child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                SizedBox(
-                                  width: MediaQuery.of(context)
-                                      .size
-                                      .width, // Adjust the width as needed
-                                  child: Text(
-                                    data['text']!,
-                                    style: const TextStyle(
-                                      fontFamily: 'EBGaramond',
-                                      color: Color.fromRGBO(255, 254, 254, 1),
-                                      fontSize: 18.0,
-                                      fontStyle: FontStyle.italic,
-                                      fontWeight: FontWeight.bold,
+                          child: Container(
+                            height: MediaQuery.of(context).size.height * 0.09,
+                            padding: EdgeInsets.only(
+                              top: MediaQuery.of(context).size.width * 0.04,
+                              left: MediaQuery.of(context).size.width * 0.04,
+                              right: MediaQuery.of(context).size.width * 0.04,
+                            ),
+                            decoration: BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black
+                                      .withOpacity(0.4), // Shadow color
+                                  offset: const Offset(
+                                      2, 2), // Specify the offset of the shadow
+                                  blurRadius: 5, // Specify the blur radius
+                                  spreadRadius: 5, // Specify the spread radius
+                                ),
+                              ],
+                            ),
+                            child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    width: MediaQuery.of(context)
+                                        .size
+                                        .width, // Adjust the width as needed
+                                    child: Text(
+                                      data['text']!,
+                                      style: const TextStyle(
+                                        fontFamily: 'EBGaramond',
+                                        color: Color.fromRGBO(255, 254, 254, 1),
+                                        fontSize: 18.0,
+                                        fontStyle: FontStyle.italic,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ])),
+                                ]),
+                          ),
                         ),
 
                         if (activePage == imageData.length - 1)

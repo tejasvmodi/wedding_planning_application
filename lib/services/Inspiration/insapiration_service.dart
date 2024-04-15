@@ -1,8 +1,6 @@
 
 import 'dart:developer';
 import 'dart:io';
-
-import 'package:get/get.dart';
 import 'package:wedding_planning_application/models/Inspiration/addinspirationmodel.dart';
 import 'package:wedding_planning_application/models/Inspiration/inspirationmodel.dart';
 import 'package:wedding_planning_application/repository/Inspiration/addinspirationrepo.dart';
@@ -11,8 +9,8 @@ import 'package:wedding_planning_application/services/core/getinspiration.dart';
 
 class InspirationSefrvice{
   AddInspirationrepo addinspiration = AddInspirationrepo();
-  final Getinspiration getinspiration = Get.find();
-  final Deleteinspiration deleteins = Get.find();
+  final Getinspiration getinspiration = Getinspiration();
+  final Deleteinspiration deleteins =Deleteinspiration();
  
     Future<void> addinspiratinserv(File file,
      String description,

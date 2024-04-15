@@ -1,9 +1,8 @@
-import 'package:get/get.dart';
 import 'package:wedding_planning_application/models/data/registration_data.dart';
 import 'package:wedding_planning_application/repository/authentication/authentication_repository.dart';
 
 class AuthenticationService {
-  final AuthenticationRepository authRepo = Get.find();
+  final AuthenticationRepository authRepo = AuthenticationRepository();
 
   Future<void> loginWithUsernameAndPassword(
       String email, String password) async {
