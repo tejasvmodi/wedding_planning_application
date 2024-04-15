@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:wedding_planning_application/Util/utils.dart';
 import 'package:wedding_planning_application/models/Address/addAdress.dart';
 import 'package:wedding_planning_application/models/token_manager.dart';
 import 'package:wedding_planning_application/util/constant.dart';
@@ -35,6 +37,11 @@ class AddAddress{
       log(response.body.toString());
       if (response.statusCode == 200) {
         log('address  added successfully.');
+          showSnackkBar(
+          message: 'address changed successfully',
+          title: 'Complete',
+          icon: const Icon(Icons.update),
+        );
       } else {
         throw Exception('Failed to add address : ${response.reasonPhrase}');
       }

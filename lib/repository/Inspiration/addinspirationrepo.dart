@@ -1,5 +1,9 @@
 import 'dart:developer';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:wedding_planning_application/Screen/Screen_Navigation.dart';
+import 'package:wedding_planning_application/Util/utils.dart';
 import 'package:wedding_planning_application/models/Inspiration/addinspirationmodel.dart';
 import 'package:wedding_planning_application/models/token_manager.dart';
 import 'package:wedding_planning_application/util/constant.dart';
@@ -36,6 +40,12 @@ class AddInspirationrepo {
       // Check the response status code
       if (response.statusCode == 200) {
         log('Inspiration added successfully.');
+          showSnackkBar(
+          message: 'information changed successfully',
+          title: 'Complete',
+          icon: const Icon(Icons.add),
+        );
+        Get.to(()=> ScreenNavigation(currentIndex: 3,));
       } else {
         throw Exception('Failed to add inspiration: ${response.reasonPhrase}');
       }

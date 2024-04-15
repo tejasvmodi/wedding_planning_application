@@ -1,6 +1,10 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:wedding_planning_application/Screen/emergency_contacts/emergency_contact_list.dart';
+import 'package:wedding_planning_application/Util/utils.dart';
 import 'package:wedding_planning_application/models/Emergency%20Contanct/updatecontact.dart';
 import 'package:wedding_planning_application/models/token_manager.dart';
 import 'package:wedding_planning_application/util/constant.dart';
@@ -41,12 +45,28 @@ class UpdateEmergergencyContact {
       log(response.statusCode.toString());
       log(response.body.toString());
       if (response.statusCode == 200) {
+            showSnackkBar(
+          message: 'Emergency contact updated successfully',
+          title: 'updated',
+          icon: const Icon(Icons.update),
+        );
+        Get.offAll(() => const EmergencycontlistW());
         log('EmergencyContanct Updated successfully.');
       } else {
+           showSnackkBar(
+          message: 'Emergency contact not updated successfully',
+          title: ' not updated',
+          icon: const Icon(Icons.error),
+        );
         throw Exception(
             'Failed to update EmergencyContanct: ${response.reasonPhrase}');
       }
     } catch (e) {
+       showSnackkBar(
+          message: 'Emergency contact not updated successfully',
+          title: ' not updated',
+          icon: const Icon(Icons.error),
+        );
       log('Error updating EmergencyContanct: $e');
       throw Exception('Failed to update EmergencyContanct: $e');
     }

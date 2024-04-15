@@ -262,13 +262,13 @@ void conformation(BuildContext context,int id) {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        content: const Text('Inspiration POst deleted Sucessfully'),
+        content: const Text('Inspiration Post deleted Sucessfully'),
         actions: <Widget>[
           TextButton(
             onPressed: () {
                 final Deleteinspiration del = Deleteinspiration(); 
                   del.deleteinspiration(id);
-            Get.to(()=>ScreenNavigation(currentIndex: 4,));
+
             },
             child: const Text('Ok'),
           ),

@@ -175,13 +175,13 @@ class _ManageMprofileState extends State<ManageMprofile> {
                 child: bride
                     ? const Image(
                         image: AssetImage(
-                          'assets/images/icon_groom.png',
+                          'assets/images/icon_bride.png', 
                         ),
                         height: 40,
                       )
                     : const Image(
                         image: AssetImage(
-                          'assets/images/icon_bride.png',
+                          'assets/images/icon_groom.png',
                         ),
                         height: 40,
                       ),

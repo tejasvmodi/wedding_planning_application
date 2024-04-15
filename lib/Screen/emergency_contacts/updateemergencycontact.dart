@@ -205,10 +205,7 @@ class _UpdatecontactwidgetState extends State<Updatecontactwidget> {
                             service
                                 .updateEmergencyService(
                                     name.text, widget.id, widget.relationship)
-                                .then((value) => Future.delayed(
-                                        const Duration(seconds: 0), () {
-                                      Get.to(() => const EmergencycontlistW());
-                                    }));
+                                ;
                           },
                           style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all(

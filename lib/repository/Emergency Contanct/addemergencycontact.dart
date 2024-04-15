@@ -1,6 +1,10 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:wedding_planning_application/Screen/emergency_contacts/emergency_contact_list.dart';
+import 'package:wedding_planning_application/Util/utils.dart';
 import 'package:wedding_planning_application/models/Emergency%20Contanct/addcontact.dart';
 import 'package:wedding_planning_application/models/token_manager.dart';
 import 'package:wedding_planning_application/util/constant.dart';
@@ -43,10 +47,27 @@ class AddEmergergencyContact{
       log(response.body.toString());
       if (response.statusCode == 200) {
         log('EmergencyContanct added successfully.');
+          showSnackkBar(
+          message: 'Emergency contact added successfully',
+          title: 'added',
+          icon: const Icon(Icons.add),
+        );
+        Get.offAll(() => const EmergencycontlistW());
       } else {
+          showSnackkBar(
+          message: 'Emergency contact not  added successfully',
+          title: 'error',
+          icon: const Icon(Icons.error),
+        );
+     
         throw Exception('Failed to add EmergencyContanct: ${response.reasonPhrase}');
       }
     } catch (e) {
+        showSnackkBar(
+          message: 'Emergency contact not  added successfully',
+          title: 'error',
+          icon: const Icon(Icons.error),
+        );
       log('Error adding EmergencyContanct: $e');
       throw Exception('Failed to add EmergencyContanct: $e');
     }

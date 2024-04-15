@@ -1,6 +1,10 @@
 import 'dart:developer';
 
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:wedding_planning_application/Screen/other_screens/budget.dart';
+import 'package:wedding_planning_application/Util/utils.dart';
 import 'package:wedding_planning_application/models/token_manager.dart';
 import 'package:wedding_planning_application/util/constant.dart';
 
@@ -13,6 +17,12 @@ class Deletebudgetrepo{
 
     try {
       final response = await request.send();
+        showSnackkBar(
+          message: 'item removed successfully',
+          title: 'Updated',
+          icon: const Icon(Icons.delete),
+        );
+        Get.offAll(() => const Budget());
       log(response.statusCode.toString());
 
       if (response.statusCode == 200) {

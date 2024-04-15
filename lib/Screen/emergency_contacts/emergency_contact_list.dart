@@ -29,6 +29,7 @@ class _EmergencycontlistWState extends State<EmergencycontlistW> {
   String? _selectedGender;
   List<Getcouple> updatedCoupleList = [];
   int userId1 = 0;
+  bool showEmptyBookingText = false;
 
   @override
   void initState() {
@@ -52,6 +53,11 @@ class _EmergencycontlistWState extends State<EmergencycontlistW> {
       } else {
         log('Wait for the seconds ');
       }
+    });
+    Future.delayed(const Duration(seconds: 3), () {
+      setState(() {
+        showEmptyBookingText = true;
+      });
     });
   }
 
@@ -171,9 +177,9 @@ class _EmergencycontlistWState extends State<EmergencycontlistW> {
 
               //for registration when no couple is created
               if (_selectedGender != null)
-                  _selectedGender !='BRIDE'?
-                  groomdesign(context, 'icon_groom.png', 'GROOM'):
-                  groomdesign(context, 'icon_bride.png', 'BRIDE'),
+                _selectedGender != 'BRIDE'
+                    ? groomdesign(context, 'icon_groom.png', 'GROOM')
+                    : groomdesign(context, 'icon_bride.png', 'BRIDE'),
               if (_selectedGender != null)
                 const Divider(
                   indent: 15,
@@ -187,9 +193,25 @@ class _EmergencycontlistWState extends State<EmergencycontlistW> {
                       status: get[i].status,
                       number: get[i].numbers[0],
                       alternativenumber: get[i].numbers[1]),
-              if (get.isEmpty)
+              if (get.isEmpty && !showEmptyBookingText)
                 const Center(
                   child: CircularProgressIndicator(),
+                ),
+              if (get.isEmpty && showEmptyBookingText)
+                const Center(
+                  heightFactor: 5,
+                  child: Text(
+                    'No Contact are added ',
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      color: Color.fromRGBO(85, 32, 32, 1),
+                      fontFamily: 'EBGaramond',
+                      fontSize: 25,
+                      letterSpacing: 0,
+                      fontWeight: FontWeight.bold,
+                      height: 1,
+                    ),
+                  ),
                 ),
               if (updatedCoupleList.isNotEmpty)
                 bride
@@ -213,10 +235,26 @@ class _EmergencycontlistWState extends State<EmergencycontlistW> {
                       number: getcouple[i].numbers[0],
                       alternativenumber: getcouple[i].numbers[1]),
               if (updatedCoupleList.isNotEmpty)
-                if (getcouple.isEmpty )
-                  const Center(
-                    child: CircularProgressIndicator(),
+               if (getcouple.isEmpty && !showEmptyBookingText)
+                const Center(
+                  child: CircularProgressIndicator(),
+                ),
+              if (getcouple.isEmpty && showEmptyBookingText)
+                const Center(
+                  heightFactor: 5,
+                  child: Text(
+                    'No Contact are added ',
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      color: Color.fromRGBO(85, 32, 32, 1),
+                      fontFamily: 'EBGaramond',
+                      fontSize: 25,
+                      letterSpacing: 0,
+                      fontWeight: FontWeight.bold,
+                      height: 1,
+                    ),
                   ),
+                ),
             ],
           ),
         ),

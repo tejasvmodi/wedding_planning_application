@@ -3,7 +3,6 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:wedding_planning_application/screen/Screen_Navigation.dart';
 import 'package:wedding_planning_application/services/core/updateinspiration.dart';
 
 class Updateinspiration extends StatefulWidget {
@@ -30,14 +29,12 @@ class _UpdateinspirationState extends State<Updateinspiration> {
   TextEditingController description = TextEditingController();
   List<String> tags = [];
   File? _image;
-
+  bool ispress = true;
   @override
   void initState() {
     super.initState();
-    tag.text =
-        widget.tag; 
-    description.text = widget
-        .description; 
+    tag.text = widget.tag;
+    description.text = widget.description;
   }
 
   void _pickImage() async {
@@ -175,77 +172,85 @@ class _UpdateinspirationState extends State<Updateinspiration> {
                 const SizedBox(
                   height: 10,
                 ),
-                TextButton(
-                  style: ButtonStyle(
-                    backgroundColor: const MaterialStatePropertyAll(
-                      Color.fromRGBO(77, 43, 43, 1),
+                if (ispress)
+                  TextButton(
+                    style: ButtonStyle(
+                      backgroundColor: const MaterialStatePropertyAll(
+                        Color.fromRGBO(77, 43, 43, 1),
+                      ),
+                      shape: MaterialStatePropertyAll(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(7),
+                        ),
+                      ),
                     ),
-                    shape: MaterialStatePropertyAll(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(7),
+                    onPressed: () async {
+                      ispress = false;
+
+                      List<String> enteredTags = tag.text.split('#');
+
+                      List<String> cleanedTags = enteredTags
+                          .map((tag) => tag.trim())
+                          .where((tag) => tag.isNotEmpty)
+                          .toList();
+
+                      File imageFile = File(widget.image);
+                      log(imageFile.toString());
+                      if (_image != null) {
+                        update.updateinspiration(
+                          widget.index,
+                          widget.description,
+                          _image!,
+                          cleanedTags,
+                        );
+                      } else {
+                        update.updateinspiration(
+                          widget.index,
+                          widget.description,
+                          imageFile,
+                          cleanedTags,
+                        );
+                      }
+
+                      setState(() {});
+                      // showDialog(
+                      //   context: context,
+                      //   builder: (context) => AlertDialog(
+                      //     title: const Text('Success'),
+                      //     content:
+                      //         const Text('Inspiration Updated successfully.'),
+                      //     actions: [
+                      //       TextButton(
+                      //         onPressed: () {
+                      //           Navigator.of(context).pushReplacement(
+                      //             MaterialPageRoute(
+                      //               builder: (context) =>
+                      //                   ScreenNavigation(currentIndex: 3),
+                      //             ),
+                      //           );
+                      //         },
+                      //         child: const Text('Done'),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // );
+                    },
+                    child: const Text(
+                      "Edit Post",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontFamily: 'EBGaramond',
+                        fontSize: 30,
+                        letterSpacing: 0,
+                        fontWeight: FontWeight.normal,
+                        height: 1,
                       ),
                     ),
                   ),
-                  onPressed: () async {
-                    List<String> enteredTags = tag.text.split('#');
-
-                    List<String> cleanedTags = enteredTags
-                        .map((tag) => tag.trim())
-                        .where((tag) => tag.isNotEmpty)
-                        .toList();
-                   
-                    File imageFile = File(widget.image);
-                    log(imageFile.toString());
-                    if (_image != null) {           
-                      update.updateinspiration(
-                        widget.index,
-                        widget.description,
-                        _image!,
-                        cleanedTags,
-                      );
-                    } else {
-                      update.updateinspiration(
-                        widget.index,
-                        widget.description,
-                        imageFile, 
-                        cleanedTags,
-                      );
-                    }
-
-                    showDialog(
-                      context: context,
-                      builder: (context) => AlertDialog(
-                        title: const Text('Success'),
-                        content:
-                            const Text('Inspiration Updated successfully.'),
-                        actions: [
-                          TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pushReplacement(
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      ScreenNavigation(currentIndex: 3),
-                                ),
-                              );
-                            },
-                            child: const Text('Done'),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                  child: const Text(
-                    "Edit Post",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontFamily: 'EBGaramond',
-                      fontSize: 30,
-                      letterSpacing: 0,
-                      fontWeight: FontWeight.normal,
-                      height: 1,
-                    ),
-                  ),
-                ),
+                if (!ispress)
+                  const Center(
+                    child: CircularProgressIndicator(),
+                  )
               ],
             ),
           ),

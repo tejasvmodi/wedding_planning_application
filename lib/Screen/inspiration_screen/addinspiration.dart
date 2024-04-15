@@ -1,8 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:wedding_planning_application/screen/Screen_Navigation.dart';
 import 'package:wedding_planning_application/services/Inspiration/insapiration_service.dart';
 
 
@@ -18,7 +16,7 @@ class _AddinspirationWState extends State<AddinspirationW> {
   TextEditingController tag = TextEditingController();
   TextEditingController description = TextEditingController();
   List<String> tags = [];
-
+bool pressed = true;
   File? _image;
 
   void _pickImage() async {
@@ -165,6 +163,7 @@ class _AddinspirationWState extends State<AddinspirationW> {
                 const SizedBox(
                   height: 10,
                 ),
+                if(pressed)
                 TextButton(
                     style: ButtonStyle(
                       backgroundColor: const MaterialStatePropertyAll(
@@ -177,6 +176,7 @@ class _AddinspirationWState extends State<AddinspirationW> {
                       ),
                     ),
                     onPressed: () async {
+                      pressed = false;
                      
                       List<String> enteredTags = tag.text.split('#');
 
@@ -186,7 +186,7 @@ class _AddinspirationWState extends State<AddinspirationW> {
                           .where((tag) => tag.isNotEmpty)
                           .toList();
                            insadd.addinspiratinserv(_image!, description.text.toString(), cleanedTags);
-                          Get.to(()=> ScreenNavigation(currentIndex: 3,));
+                          
                        setState(() {
                          
                        });                      
@@ -201,7 +201,11 @@ class _AddinspirationWState extends State<AddinspirationW> {
                         fontWeight: FontWeight.normal,
                         height: 1,
                       ),
-                    ))
+                    )),
+                    if(!pressed)
+                      const Center(
+                        heightFactor: 0,
+                        child: CircularProgressIndicator(),)
               ],
             ),
           ),

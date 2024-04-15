@@ -31,6 +31,7 @@ class _ShowBookingState extends State<ShowBooking> {
   String? _selectedGender;
   List<Getcouple> updatedCoupleList = [];
   bool bride = false;
+  bool showEmptyBookingText = false;
   int userId1 = 0;
 
   final List<Map<String, dynamic>> bdesignbride = [];
@@ -56,6 +57,11 @@ class _ShowBookingState extends State<ShowBooking> {
       } else {
         log('Wait for the seconds ');
       }
+    });
+    Future.delayed(const Duration(seconds: 3), () {
+      setState(() {
+        showEmptyBookingText = true;
+      });
     });
   }
 
@@ -214,11 +220,31 @@ class _ShowBookingState extends State<ShowBooking> {
                   spacing: 5,
                   children: [
                     if (updatedCoupleList.isNotEmpty)
-                      if (getbook.isEmpty && serviceItems.isEmpty)
+                      if (getbook.isEmpty &&
+                          serviceItems.isEmpty &&
+                          !showEmptyBookingText)
                         const Center(
                           heightFactor: 5,
                           child: CircularProgressIndicator(),
                         ),
+                    if (getbook.isEmpty &&
+                        serviceItems.isEmpty &&
+                        showEmptyBookingText)
+                      const Center(
+                        heightFactor: 5,
+                        child: Text(
+                          'No Vendor Booked  🤕🤕',
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                            color: Color.fromRGBO(85, 32, 32, 1),
+                            fontFamily: 'EBGaramond',
+                            fontSize: 25,
+                            letterSpacing: 0,
+                            fontWeight: FontWeight.bold,
+                            height: 1,
+                          ),
+                        ),
+                      ),
                     if (getbook.isNotEmpty && serviceItems.isNotEmpty)
                       for (int i = 0; i < getbook.length; i++)
                         bookingdesign(
@@ -248,11 +274,31 @@ class _ShowBookingState extends State<ShowBooking> {
                   spacing: 5,
                   children: [
                     if (updatedCoupleList.isNotEmpty)
-                      if (getbookig.isEmpty && serviceItems1.isEmpty)
+                      if (getbookig.isEmpty &&
+                          serviceItems1.isEmpty &&
+                          !showEmptyBookingText)
                         const Center(
                           heightFactor: 5,
                           child: CircularProgressIndicator(),
                         ),
+                    if (getbookig.isEmpty &&
+                        serviceItems1.isEmpty &&
+                        showEmptyBookingText)
+                      const Center(
+                        heightFactor: 5,
+                        child: Text(
+                          'No Vendor Booked  🤕🤕',
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                            color: Color.fromRGBO(85, 32, 32, 1),
+                            fontFamily: 'EBGaramond',
+                            fontSize: 25,
+                            letterSpacing: 0,
+                            fontWeight: FontWeight.bold,
+                            height: 1,
+                          ),
+                        ),
+                      ),
                     if (getbookig.isNotEmpty && serviceItems1.isNotEmpty)
                       for (int i = 0; i < getbookig.length; i++)
                         bookingdesign(

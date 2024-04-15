@@ -205,13 +205,13 @@ class _ManageFprofileState extends State<ManageFprofile> {
                 child: bride
                     ? const Image(
                         image: AssetImage(
-                          'assets/images/icon_bride.png',
+                          'assets/images/icon_groom.png',
                         ),
                         height: 40,
                       )
                     : const Image(
                         image: AssetImage(
-                          'assets/images/icon_groom.png',
+                          'assets/images/icon_bride.png',
                         ),
                         height: 40,
                       ),
@@ -341,7 +341,7 @@ class _ManageFprofileState extends State<ManageFprofile> {
                                   MdiIcons.pen,
                                   size: 20,
                                 ),
-                                label: const Text('Done')):const Text('')),
+                                label: const Text('')):const Text('')),
                       ),
                     ),
                     Padding(

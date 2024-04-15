@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:wedding_planning_application/Util/utils.dart';
 import 'package:wedding_planning_application/models/ProfileModels/getprofilemodel.dart';
 import 'package:wedding_planning_application/models/token_manager.dart';
 import 'package:wedding_planning_application/util/constant.dart';
@@ -16,7 +18,9 @@ class GetProfileRepo {
       try {
         
         final Map<String, dynamic> jsonData = json.decode(response.body);
+         
         return GetprofileModel.fromJson(jsonData);
+        
       } catch (e) {
         throw Exception('Failed to parse JSON data: $e');
       }

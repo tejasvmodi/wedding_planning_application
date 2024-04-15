@@ -117,16 +117,20 @@ class _ShowinspirationPhotoState extends State<ShowinspirationPhoto> {
                     Padding(
                       padding: const EdgeInsets.only(
                           left: 22.0, top: 10, bottom: 10, right: 22),
-                      child: Container(
-                        height: 600,
-                        width: 340,
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black),
-                          image: DecorationImage(
-                              image: NetworkImage(widget.image),
-                              fit: BoxFit.fill),
-                        ),
-                      ),
+                          child: Container(
+                            decoration: BoxDecoration(border: Border.all(color: Colors.black,),),
+                            child: Image.network(widget.image,)),
+                      // child: Container(
+                      //   height: 600,
+                      //   width: 340,
+                      //   decoration: BoxDecoration(
+                      //     // border: Border.all(color: Colors.black),
+                      //     image: DecorationImage(
+                      //         image: NetworkImage(widget.image),
+                      //         fit: BoxFit.fill,
+                      //         ),
+                      //   ),
+                      // ),
                     ),
                     if (getuser.isEmpty)
                       const Center(
@@ -137,7 +141,7 @@ class _ShowinspirationPhotoState extends State<ShowinspirationPhoto> {
                         padding: const EdgeInsets.only(left: 22, top: 10),
                         child: SizedBox(
                           child: Text(
-                          "${getuser[0].firstName} ${getuser[0].lastName}"
+                          "${getuser[0].firstName} ${getuser[0].lastName} "
                          ,
                             textAlign: TextAlign.left,
                             style: const TextStyle(

@@ -278,7 +278,7 @@ class _AddEmergencyContanctState extends State<AddEmergencyContanct> {
                            log(emergencyContanct.toString());
                            log(selectedRelationship.toString());
                            emergency.addEmergencyService(name.text, emergencyContanct,selectedRelationship!);
-                           Get.back();  
+                           
                           },
                           style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all(

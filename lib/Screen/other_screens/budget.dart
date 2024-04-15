@@ -30,7 +30,7 @@ class _BudgetState extends State<Budget> {
   String? _selectedGender;
   List<Getcouple> updatedCoupleList = [];
   int userId1 = 0;
-
+  bool pressed = false;
   String? title;
   BudgetService budget = BudgetService();
   List<Getbudget> getbudget = [];
@@ -684,9 +684,7 @@ Widget budgetBox(
         TextButton(
             onPressed: () {
               BudgetService service = BudgetService();
-              service.deletbudget(id).then((value) {
-                Get.back();
-              });
+              service.deletbudget(id);
             },
             child: Icon(MdiIcons.delete))
       ],
@@ -1007,13 +1005,7 @@ Future<void> updatebudget(
                   budget
                       .updatebudget(double.parse(changeprice.text), budgetid,
                           serviceCategoryId)
-                      .then(
-                    (value) {
-                      Future.delayed(const Duration(milliseconds: 10), () {
-                        Get.back();
-                      });
-                    },
-                  );
+                ;
                 },
                 style: ButtonStyle(
                   minimumSize: MaterialStatePropertyAll(Size(

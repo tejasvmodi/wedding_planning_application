@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wedding_planning_application/screen/authentication/forms/forgotpassword_form.dart';
@@ -124,6 +126,7 @@ class _LoginFormState extends State<LoginForm> {
                           0),
                       child: ElevatedButton(
                         onPressed: () {
+                          
                           authService.loginWithUsernameAndPassword(
                               username.text, password.text);
                         },

@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:wedding_planning_application/Util/utils.dart';
 import 'package:wedding_planning_application/models/token_manager.dart';
 import 'package:wedding_planning_application/util/constant.dart';
 import 'package:wedding_planning_application/models/ProfileModels/addprofileeinformation.dart';
@@ -34,6 +36,11 @@ class Updatepersoninfo{
       log(response.body.toString());
       if (response.statusCode == 200) {
         log('information  Updated successfully.');
+         showSnackkBar(
+          message: 'information changed successfully',
+          title: 'Complete',
+          icon: const Icon(Icons.update),
+        );
       } else {
         throw Exception('Failed to add information : ${response.reasonPhrase}');
       }

@@ -21,6 +21,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
+      scrollDirection: Axis.vertical  ,
       child: Container(
         height: MediaQuery.of(context).size.height,
         decoration: const BoxDecoration(
