@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:wedding_planning_application/Models/token_manager.dart';
+import 'package:wedding_planning_application/Screen/other_screens/on_boarding.dart';
 import 'package:wedding_planning_application/screen/Screen_Navigation.dart';
-import 'package:wedding_planning_application/screen/authentication/forms/login_form.dart';
 import 'package:wedding_planning_application/repository/repository_initializer.dart';
 import 'package:wedding_planning_application/services/services_initializer.dart';
 
@@ -59,7 +59,7 @@ class _MyAppState extends State<MyApp> {
         // ),),
         useMaterial3: true,
       ),
-      home: _isLoggedIn ? ScreenNavigation() : const LoginForm(),
+      home: _isLoggedIn ? ScreenNavigation() : const OnboardingScreen(),
     );
   }
 }

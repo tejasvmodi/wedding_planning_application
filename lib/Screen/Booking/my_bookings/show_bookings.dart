@@ -260,7 +260,7 @@ class _ShowBookingState extends State<ShowBooking> {
                             serviceItems1[i].itemName.toString(),
                             serviceItems1[i].approxPrice.toInt(),
                             getbookig[i].eventDate,
-                            int.parse(getbook[i].bookedService),
+                            int.parse(getbookig[i].bookedService),
                             context),
                   ],
                 ),

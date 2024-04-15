@@ -6,8 +6,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wedding_planning_application/Screen/Screen_Navigation.dart';
 import 'package:wedding_planning_application/screen/profile/screens/manage_profile_groom.dart';
 import 'package:wedding_planning_application/services/Couple/couple.dart';
-import 'package:wedding_planning_application/services/Userid/userid.dart';
-
 class AddCouple extends StatefulWidget {
   const AddCouple({super.key, required this.userid});
   final String userid;
@@ -256,6 +254,7 @@ class _AddCoupleState extends State<AddCouple> {
                       ),
                       child: TextField(
                         // keyboardType: TextInputType.number,
+                         obscureText: true,
                         controller: password,
                         maxLines: 1,
                         decoration: const InputDecoration(

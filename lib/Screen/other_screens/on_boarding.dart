@@ -17,7 +17,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   final List<Map<String, String>> imageData = [
     {
-      'imagePath': 'assets/images/Splash1.jpg',
+      'imagePath': 'assets/images/splash1.jpg',
       'text':
           'A Stylish Event Begins Long Before the guests arrive . It Begins with masterful planning .',
     },
@@ -26,7 +26,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       'text': 'Creative and elegant event design and planning. ',
     },
     {
-      'imagePath': 'assets/images/Splash3.jpg',
+      'imagePath': 'assets/images/splash3.jpg',
       'text': 'From smallest details to grandest event ',
     },
     // Add more image paths and text as needed
@@ -136,7 +136,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
                         // if (activePage != imageData.length - 1)
                         Positioned(
-                          left: MediaQuery.of(context).size.width * 0.43,
+                          left: MediaQuery.of(context).size.width * 0.40,
                           bottom: MediaQuery.of(context).size.height * 0.05,
 
                           // dot indicator for .....started

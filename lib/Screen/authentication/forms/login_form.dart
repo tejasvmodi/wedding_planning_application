@@ -93,6 +93,7 @@ class _LoginFormState extends State<LoginForm> {
                           0,
                           0),
                       child: TextField(
+                        obscureText: true,
                         controller: password,
                         decoration: const InputDecoration(
                             border: OutlineInputBorder(

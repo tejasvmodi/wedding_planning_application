@@ -155,6 +155,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                         0,
                         0),
                     child: TextField(
+                       obscureText: true,
                       controller: password,
                       decoration: const InputDecoration(
                           border: OutlineInputBorder(
