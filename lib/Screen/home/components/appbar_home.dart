@@ -22,6 +22,7 @@ class _AppbarHomeState extends State<AppbarHome> {
             height: 40,
             width:300,
             child: TextField(
+               enabled: false,
               style: TextStyle(
                   color: Colors.white,
                   fontFamily: 'EBGaramond',
@@ -30,6 +31,7 @@ class _AppbarHomeState extends State<AppbarHome> {
                   fontWeight: FontWeight.w300,
                   height: 1),
               decoration: InputDecoration(
+                
                 border: OutlineInputBorder(
                   borderSide: BorderSide(color: Colors.white),
                   borderRadius: BorderRadius.all(Radius.circular(10)),

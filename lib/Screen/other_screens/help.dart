@@ -12,39 +12,42 @@ class HelpW extends StatefulWidget {
 class _HelpWState extends State<HelpW> {
   final List<Map<String, dynamic>> _items = [
     {
-      'title': 'How to Use this Application?',
+      'title': 'What is a wedding planner app?',
       'data':
-          'The app is Designed as simple as possible to use, there are many services like vendors checklist, and inspiration section, you can play for a while and get familiar.'
+          'A wedding planner app is a digital tool designed to help users plan and organize their weddings efficiently.'
     },
     {
-      'title': 'How can i remove my account?',
+      'title': 'What features does the wedding planner app offer?',
       'data':
-          'The app is Designed as simple as possible to use, there are many services like vendors checklist, and inspiration section, you can play for a while and get familiar.'
+          'The app typically offers features such as budget management, vendor management, checklist creation, wedding day timeline and much more.'
+    },
+    {
+      'title': 'Is the wedding planner app free to use?',
+      'data': 'Yes it is absolutely free for consumers.',
     },
     {
       'title':
-          'What kind of support is available if I encounter issues or have specific questions about the app ?',
-      'data':
-          'The app is Designed as simple as possible to use, there are many services like vendors checklist, and inspiration section, you can play for a while and get familiar.'
+          'Can I collaborate with my partner or wedding planner through the app?',
+      'data': 'No, but you can see their progress on each step.'
     },
     {
-      'title': 'Some Other Questions ?',
+      'title': 'Do you have monthly and yearly billing options?',
       'data':
-          'The app is Designed as simple as possible to use, there are many services like vendors checklist, and inspiration section, you can play for a while and get familiar.'
+          'Vestibulum faucibus lectus eget augue pharetra, quis semper lectus gravida. Vestibulum pretium in elit sed iaculis. Curabitur elementum turpis at ipsum molestie, id maximus odio tincidunt. Praesent id lacinia orci. Phasellus at varius arcu. Ut nec lobortis velit.'
     },
     {
-      'title': 'Some Other Questions ? ',
+      'title': 'Does the app provide vendor recommendations?',
       'data':
-          'The app is Designed as simple as possible to use, there are many services like vendors checklist, and inspiration section, you can play for a while and get familiar.'
+          'Yes, wedding planner app offers vendor directories or recommendations based on location, budget, and user reviews to help users find and hire wedding vendors such as photographers, florists, and caterers.'
     },
     {
-      'title': 'Some Other Questions ?',
+      'title':
+          'Some Other Questions What support options are available if I have questions or issues with the app?',
       'data':
-          'The app is Designed as simple as possible to use, there are many services like vendors checklist, and inspiration section, you can play for a while and get familiar.'
+          'wedding planner app offers customer support through email, chat, or FAQs within the app to assist users with any questions or technical issues they may encounter.'
     },
   ];
 
-  final String videoUrl = 'https://youtu.be/x9l2VRJ5-3k?si=IH-Cx46hJIm1UXZh';
 
   @override
   Widget build(BuildContext context) {
@@ -108,7 +111,7 @@ class _HelpWState extends State<HelpW> {
                         color: Colors.white,
                         fontFamily: 'EBGaramond',
                         fontSize: 20,
-                        letterSpacing: 0,  
+                        letterSpacing: 0,
                         fontWeight: FontWeight.bold,
                         height: 1,
                       ),
@@ -142,7 +145,8 @@ class _HelpWState extends State<HelpW> {
                       width: 20,
                     ),
                     GestureDetector(
-                        onTap: () => launchUrl(Uri.parse('https://youtu.be/JtKjcyc5wh0?si=bFciwnMu3zY3V-f0')),
+                        onTap: () => launchUrl(Uri.parse(
+                            'https://youtu.be/JtKjcyc5wh0?si=bFciwnMu3zY3V-f0')),
                         child: Container(
                           height: 160,
                           width: 190,
@@ -163,7 +167,8 @@ class _HelpWState extends State<HelpW> {
                       width: 20,
                     ),
                     GestureDetector(
-                        onTap: () => launchUrl(Uri.parse('https://youtu.be/guHHhEUYAQ4?si=5qRpnjro5WyBGAcD')),
+                        onTap: () => launchUrl(Uri.parse(
+                            'https://youtu.be/guHHhEUYAQ4?si=5qRpnjro5WyBGAcD')),
                         child: Container(
                           height: 160,
                           width: 190,
@@ -184,7 +189,8 @@ class _HelpWState extends State<HelpW> {
                       width: 20,
                     ),
                     GestureDetector(
-                        onTap: () => launchUrl(Uri.parse('https://youtu.be/v941giGV-Tg?si=kCQvm1wWRtlzD6Vx')),
+                        onTap: () => launchUrl(Uri.parse(
+                            'https://youtu.be/v941giGV-Tg?si=kCQvm1wWRtlzD6Vx')),
                         child: Container(
                           height: 160,
                           width: 190,
@@ -276,7 +282,7 @@ class _HelpWState extends State<HelpW> {
                                     height: 1,
                                   ),
                                 ),
-                                
+
                                 // This button is used to remove this item
                               ]),
                         );
