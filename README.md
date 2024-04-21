@@ -26,14 +26,13 @@
   </style>
 </head>
 <body>
-  <h1> Wedding Planner </h1>
+  <h1>Wedding Planner</h1>
 
   <p>Welcome to the Wedding Planner! This Flutter project serves as the frontend interface for users and vendors to interact with the wedding services offered through the Wedding Planner platform.</p>
 
   <h2>Features</h2>
-
   <ul>
-    <li><strong>User Interface:</strong> Intuitive and user-friendly interface for users .</li>
+    <li><strong>User Interface:</strong> Intuitive and user-friendly interface for users.</li>
     <li><strong>Browsing Services:</strong> Users can easily browse through various wedding services offered by vendors.</li>
     <li><strong>Purchasing Services:</strong> Users can select and purchase services directly through the app.</li>
     <li><strong>Service Categories:</strong> Services are categorized for easy navigation and discovery.</li>
@@ -41,7 +40,6 @@
   </ul>
 
   <h2>Technologies Used</h2>
-
   <ul>
     <li><strong>Flutter:</strong> Framework for building natively compiled applications for mobile, web, and desktop from a single codebase.</li>
     <li><strong>Dart:</strong> Programming language used to develop Flutter applications.</li>
@@ -50,13 +48,7 @@
     <li><strong>Flutter Image Picker:</strong> For selecting images from the device's gallery.</li>
   </ul>
 
-
-
-
-
-
   <h2>Project Structure</h2>
-
   <pre>
 flutter_wedding_planner/
 |- lib/
@@ -66,10 +58,10 @@ flutter_wedding_planner/
    |- widgets/           # Reusable widgets used throughout the app
 |- pubspec.yaml          # Flutter project configuration file
   </pre>
+
   <p>Due to the free plan, the service may be down sometimes.</p>
 
   <h2>Getting Started</h2>
-
   <ol>
     <li>Clone the repository:<br><code>git clone https://github.com/tejasvmodi/wedding_planning_application.git</code></li>
     <li>Navigate into the project directory:<br><code>cd wedding_planning_application</code></li>
@@ -80,14 +72,12 @@ flutter_wedding_planner/
   </ol>
 
   <h2>Contributing</h2>
-
   <a href="https://github.com/tejasvmodi/wedding_planning_application/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=tejasvmodi/wedding_planning_application&max=4" />
-</a>
+    <img src="https://contrib.rocks/image?repo=tejasvmodi/wedding_planning_application&max=4" />
+  </a>
   <p>Contributions are welcome! If you have any suggestions, improvements, or new features to add, feel free to submit a pull request.</p>
 
   <h2>Contact</h2>
-
   <p>For any inquiries or support, please contact <a href="mailto:moditejasv@gmail.com">Your Name</a>.</p>
   <p>You can also connect with me on <a href="https://www.linkedin.com/in/tejasv-modi-b2b875236">LinkedIn</a>.</p>
 
