@@ -24,8 +24,9 @@ Welcome to the Wedding Planner! This Flutter project serves as the frontend inte
 flutter_wedding_planner/
 |- lib/
    |- models/            # Data models used within the application
+   |- repository/        # Repository classes for making API calls
    |- screens/           # UI screens for different sections of the app
-   |- services/          # Service classes for making API calls and managing data
+   |- services/          # Service classes for managing data
    |- widgets/           # Reusable widgets used throughout the app
 |- pubspec.yaml          # Flutter project configuration file
 ```
